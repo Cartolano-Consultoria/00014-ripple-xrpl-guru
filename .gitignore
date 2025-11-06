@@ -1,0 +1,269 @@
+# ============================================
+# XRPL Guru - .gitignore
+# ============================================
+
+# ============================================
+# Claude / Cursor
+# ============================================
+.claude/
+.cursor/
+*.claude-backup
+*.cursor-backup
+
+# ============================================
+# BMAD Framework
+# ============================================
+bmad/**/.cache/
+bmad/**/.temp/
+bmad/**/logs/
+bmad/**/*.log
+bmad/**/temp-*
+bmad/**/*-temp.*
+
+# Arquivos de trabalho temporários do BMAD
+bmad/**/*-wip.*
+bmad/**/*-draft.*
+bmad/**/.working/
+
+# ============================================
+# Node.js / NPM
+# ============================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+.pnpm-debug.log*
+
+# ============================================
+# Python
+# ============================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+pip-log.txt
+pip-delete-this-directory.txt
+*.egg-info/
+dist/
+build/
+
+# ============================================
+# Azure
+# ============================================
+.azure/
+*.azureauth
+azureProfile.json
+
+# SWA CLI
+.swa/
+swa-cli.config.json
+
+# ============================================
+# Sistema Operacional
+# ============================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ============================================
+# IDEs e Editores
+# ============================================
+
+# Visual Studio Code / Cursor
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+.history/
+
+# JetBrains IDEs
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+Session.vim
+Sessionx.vim
+.netrwhist
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# ============================================
+# Logs e Temporários
+# ============================================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+pids
+*.pid
+*.seed
+*.pid.lock
+lib-cov
+coverage
+*.lcov
+.nyc_output
+.grunt
+bower_components
+.lock-wscript
+build/Release
+.npm
+.eslintcache
+.stylelintcache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+.node_repl_history
+*.tgz
+.yarn-integrity
+
+# ============================================
+# Arquivos Sensíveis
+# ============================================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.key
+*.pem
+*.p12
+*.pfx
+secrets.json
+credentials.json
+config.local.*
+
+# Deployment tokens
+deployment-token.txt
+*.token
+
+# ============================================
+# Build / Dist
+# ============================================
+dist/
+build/
+out/
+.output/
+.next/
+.nuxt/
+.cache/
+.parcel-cache/
+.temp/
+tmp/
+temp/
+
+# ============================================
+# Testes
+# ============================================
+coverage/
+*.cover
+*.coverage
+.hypothesis/
+.pytest_cache/
+test-results/
+playwright-report/
+
+# ============================================
+# Documentação Gerada
+# ============================================
+docs/_build/
+docs/.doctrees/
+
+# ============================================
+# Backups
+# ============================================
+*.bak
+*.backup
+*.old
+*.orig
+*~.nib
+
+# ============================================
+# Archives
+# ============================================
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+*.dmg
+*.iso
+
+# ============================================
+# Misc
+# ============================================
+.sass-cache/
+*.css.map
+*.sass.map
+*.scss.map
+thumbs.db
+
+bmad/

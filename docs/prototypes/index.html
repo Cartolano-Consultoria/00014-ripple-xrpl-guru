@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XRPL Guru - Dashboard</title>
+    <link rel="stylesheet" href="styles/common.css">
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <a href="index.html" class="logo">XRPL Guru</a>
+        <nav class="nav">
+            <a href="index.html" class="active">Dashboard</a>
+            <a href="knowledge-matrix.html">Learning</a>
+            <a href="profile.html">Profile</a>
+            <a href="settings.html">Settings</a>
+        </nav>
+        <input type="text" class="search" placeholder="Search opportunities...">
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+        <!-- 3 Cards Section -->
+        <div class="cards-section">
+            <!-- Card 1: Primary/Focus -->
+            <a href="opportunity-detail.html?id=1" class="card primary" style="text-decoration: none;">
+                <div class="card-meta">
+                    <span class="card-time">2 hours ago</span>
+                </div>
+
+                <h2 class="card-title">XRPL Grant Program Q1 2024</h2>
+
+                <p class="card-description">
+                    $50,000 grant for DeFi applications on XRPL. Deadline: February 15th.
+                </p>
+
+                <div class="card-why">
+                    ✓ Your NFT marketplace project<br>
+                    ✓ 73% of knowledge matrix complete<br>
+                    ✓ TypeScript and DeFi skills meet requirements
+                </div>
+
+                <div class="card-actions">
+                    <button class="btn btn-primary" onclick="event.preventDefault(); window.location.href='opportunity-detail.html?id=1'">Explore</button>
+                    <button class="btn btn-secondary">Save</button>
+                    <button class="btn btn-ghost">Dismiss</button>
+                </div>
+            </a>
+
+            <!-- Card 2: Regular -->
+            <div class="card">
+                <div class="card-meta">
+                    <span class="card-time">Yesterday</span>
+                </div>
+
+                <h2 class="card-title">You completed: Advanced Smart Contracts</h2>
+
+                <p class="card-description">
+                    Advanced Smart Contracts module completed. This unlocked 2 new grant opportunities that match your profile.
+                </p>
+
+                <div class="card-actions">
+                    <button class="btn btn-primary" onclick="window.location.href='knowledge-matrix.html'">View Learning</button>
+                </div>
+            </div>
+
+            <!-- Card 3: Regular -->
+            <a href="opportunity-detail.html?id=2" class="card" style="text-decoration: none;">
+                <div class="card-meta">
+                    <span class="card-time">2 days ago</span>
+                </div>
+
+                <h2 class="card-title">Hackathon: Build on XRPL</h2>
+
+                <p class="card-description">
+                    3 days, virtual, focus on payment solutions. 127 devs already registered. Total prize: $25K.
+                </p>
+
+                <div class="card-actions">
+                    <button class="btn btn-primary" onclick="event.preventDefault(); window.location.href='opportunity-detail.html?id=2'">Register</button>
+                    <button class="btn btn-ghost">Dismiss</button>
+                </div>
+            </a>
+        </div>
+
+        <!-- History Section -->
+        <div class="history-section">
+            <div class="history-title">Recent History</div>
+            <ul class="history-list">
+                <a href="opportunity-detail.html?id=3" class="history-item" style="text-decoration: none;">
+                    <div class="history-item-content">
+                        <div class="history-item-title">Ambassador Program Application</div>
+                        <div class="history-item-meta">3 days ago • Saved</div>
+                    </div>
+                    <div class="history-item-badge saved">Saved</div>
+                </a>
+
+                <a href="#" class="history-item" style="text-decoration: none;">
+                    <div class="history-item-content">
+                        <div class="history-item-title">DevConnect Conference</div>
+                        <div class="history-item-meta">5 days ago • Dismissed</div>
+                    </div>
+                </a>
+
+                <a href="#" class="history-item" style="text-decoration: none;">
+                    <div class="history-item-content">
+                        <div class="history-item-title">Workshop: XRPL Hooks</div>
+                        <div class="history-item-meta">1 week ago • Completed</div>
+                    </div>
+                    <div class="history-item-badge done">Done</div>
+                </a>
+
+                <a href="#" class="history-item" style="text-decoration: none;">
+                    <div class="history-item-content">
+                        <div class="history-item-title">NFT Tutorial Series</div>
+                        <div class="history-item-meta">1 week ago • Completed</div>
+                    </div>
+                    <div class="history-item-badge done">Done</div>
+                </a>
+
+                <a href="#" class="history-item" style="text-decoration: none;">
+                    <div class="history-item-content">
+                        <div class="history-item-title">Grant Writing Workshop</div>
+                        <div class="history-item-meta">2 weeks ago • Saved</div>
+                    </div>
+                    <div class="history-item-badge saved">Saved</div>
+                </a>
+
+                <a href="#" class="history-item" style="text-decoration: none;">
+                    <div class="history-item-content">
+                        <div class="history-item-title">DeFi Security Best Practices</div>
+                        <div class="history-item-meta">2 weeks ago • Completed</div>
+                    </div>
+                    <div class="history-item-badge done">Done</div>
+                </a>
+
+                <a href="#" class="history-item" style="text-decoration: none;">
+                    <div class="history-item-content">
+                        <div class="history-item-title">Q4 2023 Grant Opportunity</div>
+                        <div class="history-item-meta">3 weeks ago • Dismissed</div>
+                    </div>
+                </a>
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>

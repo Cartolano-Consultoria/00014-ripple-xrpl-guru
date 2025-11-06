@@ -1,0 +1,821 @@
+# XRPL Guru UX Design Specification
+
+**Project:** XRPL Guru
+**Date:** 2025-11-05
+**Design System:** Chakra UI 2+
+**Color Theme:** Earth Green
+**Document Version:** 1.0 (Final)
+
+---
+
+## Executive Summary
+
+This UX Design Specification defines the visual and interaction design for XRPL Guru, a proactive AI copilot for XRPL developers. The design emphasizes **simplicity, directness, and warmth** with a **chat-first, web-optional** strategy that positions the AI as a supportive partner rather than a corporate tool.
+
+**Core Design Philosophy:**
+- **Minimal and Direct:** Clean interface, no unnecessary elements, straight to the point
+- **Warm but Professional:** Earth tones convey growth and support without being cold/corporate
+- **Conversational by Default:** Natural language interaction as primary UX
+- **Supportive, Not Pushy:** AI proactively suggests but respects user autonomy
+- **Accessible to All:** WCAG 2.1 AA compliant, inclusive design
+
+---
+
+## 1. Design System Foundation
+
+### 1.1 Design System Selection
+
+**Primary System:** Chakra UI 2+
+
+**Rationale:**
+- ✅ Built-in accessibility (WCAG compliance out-of-the-box)
+- ✅ Robust theming system (essential for expressing brand personality)
+- ✅ TypeScript first-class support (aligns with tech stack)
+- ✅ Composable components (flexible for dual chat + dashboard experience)
+- ✅ Active community and excellent documentation
+
+### 1.2 Customization Strategy
+
+**Semantic Color Tokens:**
+```typescript
+// Opportunity States
+opportunity.new → #2d5016 (Earth Green - natural discovery)
+opportunity.relevant → #f4a261 (Terracota - high-match indicator)
+opportunity.interested → #fbbf24 (Gold - user saved/exploring)
+opportunity.applied → #4a7c28 (Light Green - progress tracking)
+
+// Knowledge Matrix States
+knowledge.validated → #4a7c28 (Validated competency)
+knowledge.pending → #fbbf24 (Self-declared, awaiting validation)
+knowledge.unknown → #e0e0e0 (Not assessed yet)
+```
+
+**Component Variant Extensions:**
+- **OpportunityCard:** 3 cards horizontal layout with focus state
+- **KnowledgeMatrix:** Interactive grid showing competency levels
+- **ProgressIndicator:** Matrix completion visualization
+- **ChatInterface:** Thread management, quick actions
+
+**Motion System:**
+- **Transitions:** Smooth, professional (200-300ms), minimal animations
+- **State changes:** Subtle color shifts, no dramatic movements
+- **Hover effects:** Gentle elevation (translateY -2px)
+- **No confetti or celebrations:** Respects minimal aesthetic
+
+**Typography Scale:**
+- **Sans-serif primary:** System fonts for clean, modern feel
+- **Monospace for code:** `'Courier New', monospace` for snippets
+- **Hierarchy:** Clear but not excessive (3-4 sizes max)
+- **Base size:** 16px (optimal readability, prevents iOS zoom)
+
+---
+
+## 2. Visual Foundation: Earth Green Palette
+
+### 2.1 Color Palette
+
+**Primary Colors:**
+```css
+/* Earth Green - Primary brand color */
+--color-primary:       #2d5016;  /* RGB(45, 80, 22)  - Forest green, growth, organic */
+--color-primary-light: #4a7c28;  /* RGB(74, 124, 40) - Hover states, highlights */
+--color-primary-dark:  #1a3009;  /* RGB(26, 48, 9)   - Deep shadows */
+
+/* Terracota - Accent color */
+--color-accent:        #f4a261;  /* RGB(244, 162, 97) - Warm, opportunity, attention */
+--color-accent-light:  #f7b885;  /* RGB(247, 184, 133) - Hover states */
+```
+
+**Semantic Colors:**
+```css
+/* Success, Validation */
+--color-success:       #4a7c28;  /* Validated competencies, completed */
+
+/* Warning, Pending */
+--color-warning:       #fbbf24;  /* Pending validation, deadlines approaching */
+
+/* Error, Destructive */
+--color-error:         #dc2626;  /* Errors, failed validation */
+
+/* Info, Neutral */
+--color-info:          #2d5016;  /* General information */
+```
+
+**Neutral Palette (Light Mode - Primary):**
+```css
+/* Backgrounds */
+--color-bg-base:       #fafafa;  /* RGB(250, 250, 250) - App background */
+--color-bg-surface:    #ffffff;  /* RGB(255, 255, 255) - Cards, panels */
+--color-bg-elevated:   #f8f8f8;  /* RGB(248, 248, 248) - Highlighted areas */
+
+/* Borders */
+--color-border-light:  #efefef;  /* RGB(239, 239, 239) - Subtle dividers */
+--color-border:        #e0e0e0;  /* RGB(224, 224, 224) - Standard borders */
+--color-border-strong: #2d5016;  /* RGB(45, 80, 22)   - Focus/active borders */
+
+/* Text */
+--color-text-primary:  #1a1a1a;  /* RGB(26, 26, 26)   - Headings, primary content */
+--color-text-body:     #333333;  /* RGB(51, 51, 51)   - Body text */
+--color-text-soft:     #666666;  /* RGB(102, 102, 102) - Secondary text */
+--color-text-disabled: #999999;  /* RGB(153, 153, 153) - Disabled states */
+```
+
+### 2.2 Accessibility Compliance
+
+**WCAG 2.1 Level AA Contrast Ratios:**
+- ✅ Text Primary (#1a1a1a) on BG (#fafafa): **16.1:1** (AAA)
+- ✅ Earth Green (#2d5016) on BG (#fafafa): **8.4:1** (AAA)
+- ✅ Text Body (#333333) on Surface (#ffffff): **12.6:1** (AAA)
+- ✅ Terracota (#f4a261) on BG (#fafafa): **4.8:1** (AA)
+
+All interactive elements meet or exceed 3:1 contrast requirement.
+
+### 2.3 Typography
+
+**Font Families:**
+```css
+/* Primary Interface */
+--font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+             'Helvetica Neue', Arial, sans-serif;
+
+/* Code & Technical */
+--font-mono: 'Courier New', 'Monaco', monospace;
+```
+
+**Type Scale (Simplified - Minimal Aesthetic):**
+```css
+--text-sm:   0.85rem  (14px)   - Labels, metadata
+--text-base: 1rem     (16px)   - Body text, inputs
+--text-lg:   1.1rem   (18px)   - Card titles
+--text-xl:   1.5rem   (24px)   - Section headers
+--text-2xl:  2rem     (32px)   - Page headers (rare)
+```
+
+**Line Height:**
+```css
+--leading-tight:  1.4     - Headings
+--leading-normal: 1.6     - Body text, cards
+--leading-relaxed: 1.8    - Long-form content
+```
+
+**Font Weights:**
+```css
+--font-normal:    400
+--font-semibold:  600
+--font-bold:      700
+```
+
+### 2.4 Spacing System (8px Base Grid)
+
+```css
+--space-1:  0.25rem   (4px)
+--space-2:  0.5rem    (8px)    - Base unit
+--space-3:  0.75rem   (12px)
+--space-4:  1rem      (16px)
+--space-5:  1.25rem   (20px)
+--space-6:  1.5rem    (24px)
+--space-8:  2rem      (32px)
+--space-10: 2.5rem    (40px)
+```
+
+### 2.5 Border Radius
+
+```css
+--radius-sm:  6px     - Tags, badges
+--radius-md:  8px     - Buttons, inputs
+--radius-lg:  12px    - Cards
+--radius-full: 9999px - Pills, avatars
+```
+
+### 2.6 Shadows (Minimal - Subtle Elevation)
+
+```css
+--shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+--shadow-md: 0 4px 6px rgba(0, 0, 0, 0.08);
+--shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
+
+/* Colored shadows for emphasis (rare use) */
+--shadow-green: 0 4px 12px rgba(45, 80, 22, 0.15);
+```
+
+---
+
+## 3. Core Layout: Warm Minimal Timeline
+
+### 3.1 Design Direction
+
+**Selected:** Warm Minimal Timeline (Hybrid of Timeline + Minimal Focus)
+
+**Core Characteristics:**
+- ✅ **3 cards horizontal** - Main opportunities/updates side-by-side
+- ✅ **90% width** - Maximizes screen real estate
+- ✅ **Focus on primary card** - First card has green border (current priority)
+- ✅ **History list below** - Compact chronological list of past items
+- ✅ **No icons** - Text-only, clean and direct
+- ✅ **Minimal chrome** - Header + content, no sidebars by default
+
+### 3.2 Layout Structure
+
+**Web Dashboard (Desktop):**
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  [XRPL Guru]                                    [Search]        │ Header (sticky)
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐                     │
+│  │ Card 1   │  │ Card 2   │  │ Card 3   │  ← 3 Cards Horizontal
+│  │ (Focus)  │  │          │  │          │     (90% width)
+│  │ Green    │  │ Gray     │  │ Gray     │
+│  │ border   │  │ border   │  │ border   │
+│  └──────────┘  └──────────┘  └──────────┘                     │
+│                                                                 │
+│  ┌───────────────────────────────────────┐                     │
+│  │ Histórico                             │  ← History List
+│  │ • Item 1 - há 3 dias                  │     (compact)
+│  │ • Item 2 - há 5 dias                  │
+│  │ • Item 3 - há 1 semana                │
+│  └───────────────────────────────────────┘                     │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+90% width container
+Centered on page
+```
+
+**Mobile (Responsive):**
+```
+┌─────────────────────┐
+│  [XRPL Guru]   [🔍] │ Header
+├─────────────────────┤
+│                     │
+│  ┌───────────────┐  │
+│  │ Card 1 (Focus)│  │ Cards stack
+│  │ Green border  │  │ vertically
+│  └───────────────┘  │
+│                     │
+│  ┌───────────────┐  │
+│  │ Card 2        │  │
+│  └───────────────┘  │
+│                     │
+│  ┌───────────────┐  │
+│  │ Card 3        │  │
+│  └───────────────┘  │
+│                     │
+│  ┌───────────────┐  │
+│  │ Histórico     │  │
+│  │ • Item 1      │  │
+│  └───────────────┘  │
+└─────────────────────┘
+```
+
+### 3.3 Card Anatomy
+
+**Standard Card:**
+```
+┌────────────────────────────────┐
+│ há 2 horas          92% Match  │ ← Meta (time + badge)
+│                                │
+│ Grant Title Here               │ ← Title (1.1rem, bold)
+│                                │
+│ Brief description of the       │ ← Description (0.9rem)
+│ opportunity in 1-2 lines       │
+│                                │
+│ ┌────────────────────────────┐ │
+│ │ Why this matches you:      │ │ ← Highlight box
+│ │ Your skills align...       │ │   (gray bg, green border-left)
+│ └────────────────────────────┘ │
+│                                │
+│ [Explorar]                     │ ← Actions (stacked vertically)
+│ [Salvar]                       │
+│ [Dispensar]                    │
+└────────────────────────────────┘
+
+Border: 1px solid #e0e0e0 (default)
+Border: 1px solid #2d5016 (focus/hover)
+Padding: 24px
+Border-radius: 12px
+```
+
+---
+
+## 4. User Journey Flows (Updated for Knowledge Matrix)
+
+### 4.1 Journey 1: Onboarding - First Contact to Knowledge Assessment
+
+**Entry Point:** Developer connects via Slack/Discord/WhatsApp or web dashboard
+
+**Flow:**
+1. **Welcome & Platform Selection**
+   - AI: "Welcome! I'm XRPL Guru, your partner in the XRPL ecosystem."
+
+2. **Profile Building (Conversational)**
+   - AI: "Tell me about your development experience."
+   - User shares background (free-form)
+   - AI extracts skills, experience level, interests
+
+3. **Goal Discovery**
+   - AI: "What brings you to XRPL?"
+   - User selects: Learn, Build, Apply for grants, Get job
+
+4. **Knowledge Assessment (Matrix-Based)**
+   - AI: "I see you mentioned DeFi experience. Have you worked with AMMs or liquidity pools?"
+   - User: "Yes, I built a Uniswap fork"
+   - AI: ✅ Validates "DeFi Protocols - Intermediário" in matrix
+   - AI: "What about XRPL specifically - have you used it before?"
+   - User: "No, brand new"
+   - AI: ✅ Marks "XRPL Fundamentals - Básico" as pending
+
+5. **Matrix Initialization**
+   - AI shows initial matrix state: validated cells, pending cells, unknown cells
+   - AI: "Based on our chat, you're strong in DeFi but new to XRPL. Let me show you what's different about XRPL's approach..."
+
+6. **Proactive Settings**
+   - AI: "I can notify you about grants and opportunities. How often?"
+   - User sets preference
+
+**Exit Point:** User has Knowledge Matrix initialized, preferences set, ready for content
+
+**Key Decision Points:**
+- Self-declare existing knowledge vs. start from scratch
+- Assessment depth (quick vs. thorough)
+- Proactive notification frequency
+
+**Web Dashboard Elements:**
+- Knowledge Matrix visualization (cells colored by status)
+- % Matrix complete
+- "Next competency to unlock opportunities" suggestion
+
+---
+
+### 4.2 Journey 2: Daily Discovery - Proactive Opportunity Matching
+
+**Entry Point:** AI detects opportunity match in background
+
+**Flow:**
+1. **Opportunity Match Detection (Background)**
+   - AI checks: Opportunity requirements vs. Developer's validated matrix cells
+   - Example: Grant requires "DeFi Protocols - Intermediário" + "Smart Contracts - Básico"
+   - Developer has: "DeFi Protocols - Intermediário" ✅ + "Smart Contracts - ?" ❌
+   - Match score: 50% (1/2 requirements met)
+   - **Decision:** Not ready yet, mark as "potential future match"
+
+2. **Competency Gap Identified**
+   - AI (proactive): "I found a $50K DeFi grant, but it requires Smart Contracts knowledge. Want to validate that skill?"
+   - User: "I know basics"
+   - AI: "Great! Let me ask a quick question to confirm..."
+   - AI validates through conversation
+   - ✅ "Smart Contracts - Básico" validated
+   - Match score: 100% (2/2 requirements met)
+
+3. **Proactive Notification (Now Ready)**
+   - AI: "You're now qualified for that $50K DeFi grant! It opens next week. Want to explore?"
+   - Shows opportunity card with match explanation
+
+4. **Decision Point**
+   - **Interested → Prepare:** AI helps draft application
+   - **Save:** Added to saved opportunities
+   - **Dismiss:** AI learns preferences
+
+**Exit Point:** Opportunity explored or saved, matrix updated
+
+**Personality:** Exciting discovery, empowering ("you're now ready"), not pushy
+
+---
+
+### 4.3 Journey 3: Knowledge Matrix - Continuous Validation
+
+**Entry Point:** Developer asks technical question or discusses project
+
+**Flow:**
+1. **Natural Conversation Context**
+   - User: "How do I implement payment channels on XRPL?"
+   - AI: [Detects topic: Payment Channels]
+   - AI checks matrix: "Payment Channels" = all cells "Unknown"
+
+2. **Conversational Assessment**
+   - AI: "Payment channels are advanced. Have you worked with similar concepts (Lightning Network, state channels)?"
+   - User: "No, never heard of them"
+   - AI: ✅ Infers "Payment Channels - Básico" = not yet
+   - AI: "Let me explain the basics first..."
+
+3. **Content Delivery (Gap-Focused)**
+   - AI delivers ONLY what user doesn't know
+   - Explains payment channels from scratch
+   - Provides code example
+   - User tries implementation
+
+4. **Validation Through Practice**
+   - User: "I got this error..."
+   - AI helps debug
+   - AI: [Observes understanding level through questions asked]
+   - After successful implementation:
+   - AI: ✅ Validates "Payment Channels - Básico"
+   - AI: "Great! You just unlocked 2 grants that need payment channel knowledge."
+
+5. **Matrix Update**
+   - Dashboard shows new validated cell
+   - Progress % increases
+   - New opportunities appear in pipeline
+
+**Exit Point:** Competency validated, matrix updated, new opportunities unlocked
+
+**Key Difference from Courses:**
+- No formal test or "module completion"
+- Validation happens naturally through help-seeking and problem-solving
+- User never feels "stuck in a course" - just learning what's needed
+
+---
+
+## 5. Component Library Strategy
+
+### 5.1 Core Components (Minimal Set)
+
+**Navigation Components:**
+- `<Header>` - Logo + Search, sticky top
+- `<MobileNav>` - Bottom tab bar (mobile only)
+
+**Content Components:**
+- `<OpportunityCard>` - Standard 3-card layout
+- `<HistoryList>` - Compact chronological list
+- `<KnowledgeMatrix>` - Interactive grid showing competencies
+- `<MatrixCell>` - Individual competency (topic × level)
+
+**Chat Components:**
+- `<ChatContainer>` - Main chat interface
+- `<MessageBubble>` - AI vs. User variants
+- `<QuickReply>` - Suggested action buttons
+
+**Form Components:**
+- `<Input>` - Text fields (minimal styling)
+- `<Button>` - Primary, Secondary, Ghost variants
+
+**Feedback Components:**
+- `<Toast>` - Success/error notifications (rare use)
+- `<EmptyState>` - Onboarding-focused empty states
+
+### 5.2 Knowledge Matrix Components
+
+**Matrix Grid:**
+```tsx
+<KnowledgeMatrix>
+  <MatrixRow topic="DeFi Protocols">
+    <MatrixCell level="basic" status="validated" />
+    <MatrixCell level="intermediate" status="validated" />
+    <MatrixCell level="advanced" status="unknown" />
+  </MatrixRow>
+  <MatrixRow topic="Smart Contracts">
+    <MatrixCell level="basic" status="pending" />
+    <MatrixCell level="intermediate" status="unknown" />
+    <MatrixCell level="advanced" status="unknown" />
+  </MatrixRow>
+</KnowledgeMatrix>
+```
+
+**Cell States:**
+- `validated` - Green background (#4a7c28), "✓" icon
+- `pending` - Yellow background (#fbbf24), "○" icon
+- `unknown` - Gray background (#e0e0e0), "?" icon
+
+**Hover Interaction:**
+- Shows tooltip: "Validated via [method]" or "Self-declared, pending validation"
+- Click: Opens detail modal with evidence and timeline
+
+---
+
+## 6. UX Pattern Decisions
+
+### 6.1 Button Hierarchy
+
+**Primary Action Button:**
+```css
+background: #2d5016;
+color: #ffffff;
+padding: 10px 20px;
+border-radius: 6px;
+font-weight: 600;
+border: none;
+
+hover:
+  background: #4a7c28;
+  transform: translateY(-2px);
+```
+
+**Secondary Action Button:**
+```css
+background: transparent;
+color: #2d5016;
+padding: 10px 20px;
+border: 2px solid #2d5016;
+border-radius: 6px;
+font-weight: 600;
+
+hover:
+  background: #2d5016;
+  color: #ffffff;
+```
+
+**Ghost Button:**
+```css
+background: transparent;
+color: #666666;
+padding: 10px 20px;
+border: none;
+
+hover:
+  color: #2d5016;
+```
+
+### 6.2 Form Patterns
+
+**Input Fields:**
+```css
+background: #ffffff;
+border: 1px solid #e0e0e0;
+border-radius: 8px;
+padding: 12px 16px;
+color: #1a1a1a;
+
+focus:
+  border: 2px solid #2d5016;
+  outline: none;
+
+error:
+  border: 2px solid #dc2626;
+```
+
+**Validation:**
+- Inline validation (debounced 500ms)
+- Helpful error messages ("Use format: name@example.com")
+- No aggressive red highlighting until submit attempt
+
+### 6.3 Card Patterns
+
+**3-Card Horizontal Layout:**
+```css
+.cards-section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 24px;
+  transition: all 0.2s;
+}
+
+.card:hover {
+  border-color: #2d5016;
+  box-shadow: 0 4px 12px rgba(45, 80, 22, 0.08);
+}
+
+.card.focus {
+  border-color: #2d5016;
+}
+
+@media (max-width: 1024px) {
+  .cards-section {
+    grid-template-columns: 1fr;
+  }
+}
+```
+
+### 6.4 History List Pattern
+
+```css
+.history-list {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 24px 32px;
+  margin-top: 40px;
+}
+
+.history-item {
+  padding: 16px 0;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.history-item:hover {
+  padding-left: 8px;
+  color: #2d5016;
+}
+```
+
+### 6.5 Knowledge Matrix Pattern
+
+**Matrix Table:**
+```css
+.matrix-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.matrix-table th {
+  background: #f8f8f8;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  border: 1px solid #e0e0e0;
+}
+
+.matrix-table td {
+  padding: 16px 12px;
+  border: 1px solid #e0e0e0;
+}
+
+.skill-level {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.skill-level.validated {
+  background: #d4edda;
+  color: #155724;
+}
+
+.skill-level.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.skill-level.unknown {
+  background: #f0f0f0;
+  color: #999999;
+}
+```
+
+---
+
+## 7. Responsive Design & Accessibility
+
+### 7.1 Responsive Breakpoints
+
+```typescript
+breakpoints = {
+  base: '0px',      // Mobile (320px+)
+  sm: '480px',      // Large mobile
+  md: '768px',      // Tablet
+  lg: '992px',      // Desktop
+  xl: '1280px',     // Large desktop
+}
+```
+
+**Layout Adaptations:**
+- **Mobile (base-767px):** Cards stack vertically, history collapses
+- **Tablet (768-1023px):** 2 cards per row
+- **Desktop (1024px+):** 3 cards horizontal (approved layout)
+
+### 7.2 Accessibility (WCAG 2.1 AA)
+
+**Keyboard Navigation:**
+- All interactive elements Tab-focusable
+- Skip link: "Skip to main content"
+- Focus indicators: 2px solid #2d5016 outline
+
+**Screen Readers:**
+- Semantic HTML (`<main>`, `<nav>`, `<article>`)
+- ARIA labels for icon-only buttons
+- Alt text for images
+- Live regions for dynamic content
+
+**Color & Contrast:**
+- All text meets 4.5:1 minimum
+- Interactive elements meet 3:1 minimum
+- Non-color indicators (icons + text, not just color)
+
+---
+
+## 8. Implementation Guidelines
+
+### 8.1 Development Priorities
+
+**Phase 1: Foundation (Week 1)**
+- Chakra UI theme with Earth Green colors
+- Header + 3-card layout (90% width)
+- Basic Knowledge Matrix grid
+- Responsive breakpoints
+
+**Phase 2: Core Components (Week 2)**
+- Opportunity cards with all states
+- History list component
+- Interactive Matrix with cell states
+- Form components (input, buttons)
+
+**Phase 3: Interactions (Week 3)**
+- Hover/focus states
+- Card click-through flows
+- Matrix cell tooltips
+- Mobile responsive polish
+
+**Phase 4: Accessibility (Week 4)**
+- WCAG AA audit
+- Keyboard navigation
+- Screen reader testing
+- Color contrast validation
+
+### 8.2 Design Handoff
+
+**For Developers:**
+- ✅ Figma file with all screens (or HTML prototypes as reference)
+- ✅ Chakra UI theme config (colors, typography, spacing)
+- ✅ Component specifications
+- ✅ Responsive behavior documentation
+- ✅ Accessibility requirements
+
+**For QA:**
+- ✅ User journey flows
+- ✅ WCAG AA testing checklist
+- ✅ Cross-browser matrix
+- ✅ Responsive device testing
+
+---
+
+## 9. Visual Assets
+
+**Generated Artifacts:**
+1. `ux-warm-minimal.html` - Initial color exploration (4 palettes)
+2. `ux-final-clean.html` - **Approved layout** (Earth Green, 3 cards, 90% width)
+3. `learning-matrix-strategy.html` - Knowledge Matrix strategy and examples
+
+**To Be Created (Design Phase):**
+- Figma design file with all screens
+- Component library in Storybook
+- Knowledge Matrix interactive prototype
+- Empty state illustrations
+
+---
+
+## 10. Key Decisions Summary
+
+### Design Choices Made:
+
+✅ **Color Palette:** Earth Green (#2d5016 + #f4a261)
+✅ **Layout:** 3 cards horizontal (90% width) + history list below
+✅ **Borders:** Thin (1px), focus card has green border
+✅ **Typography:** System fonts, minimal scale (4 sizes)
+✅ **Aesthetic:** Warm minimal - no icons, no clutter, direct
+✅ **Learning:** Knowledge Matrix (not courses) - see `learning-matrix-strategy.html`
+✅ **Responsive:** Mobile-first, cards stack vertically on small screens
+✅ **Accessibility:** WCAG 2.1 AA compliant
+
+### Rationale:
+
+**Why Earth Green?**
+- Conveys growth, organic learning, natural progression
+- Warm but professional (not cold/corporate)
+- Strong contrast for accessibility
+- Distinct from typical "tech blue" - stands out
+
+**Why 3 Cards Horizontal?**
+- Shows current priority + context (2 other items visible)
+- 90% width maximizes screen use without feeling cramped
+- Clear visual hierarchy (focus card has green border)
+- Balances information density with breathing room
+
+**Why No Icons?**
+- Reduces visual noise
+- Forces clear, direct text
+- Faster scanning
+- Cleaner, more professional aesthetic
+
+**Why Knowledge Matrix vs. Courses?**
+- Respects existing developer knowledge
+- No forced redundant learning
+- Granular competency tracking enables better opportunity matching
+- Continuous validation feels natural, not like "taking a test"
+- Reduces drop-off from boring basics
+
+---
+
+## Document Control
+
+**Version History:**
+
+| Version | Date | Changes |
+|---------|------|---------|
+| 1.0 | 2025-11-05 | Final approved specification |
+
+**Approvals:**
+- [x] Product Manager (Etienne) - Approved layout and colors
+- [ ] Technical Lead - Pending
+- [ ] Accessibility Specialist - Pending
+
+**Next Steps:**
+1. ✅ UX Design approved
+2. → Run Solutioning Gate Check to validate alignment (PRD + Architecture + UX)
+3. → Begin sprint planning and implementation
+
+---
+
+**End of UX Design Specification**

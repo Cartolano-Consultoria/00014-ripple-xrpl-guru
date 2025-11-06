@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XRPL Guru - Profile</title>
+    <link rel="stylesheet" href="styles/common.css">
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <a href="index.html" class="logo">XRPL Guru</a>
+        <nav class="nav">
+            <a href="index.html">Dashboard</a>
+            <a href="knowledge-matrix.html">Learning</a>
+            <a href="profile.html" class="active">Profile</a>
+            <a href="settings.html">Settings</a>
+        </nav>
+        <input type="text" class="search" placeholder="Search...">
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+        <!-- Profile Hero -->
+        <div style="background: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 40px; margin-bottom: 40px;">
+            <div style="display: flex; gap: 32px; align-items: start;">
+                <!-- Avatar -->
+                <div style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, #2d5016, #4a7c28); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem; font-weight: 700; flex-shrink: 0;">
+                    DP
+                </div>
+
+                <!-- Info -->
+                <div style="flex: 1;">
+                    <h1 style="font-size: 2rem; font-weight: 700; color: #1a1a1a; margin-bottom: 8px;">
+                        Diego Pacheco
+                    </h1>
+                    <div style="font-size: 1rem; color: #666; margin-bottom: 16px;">
+                        Full-Stack Developer | XRPL Specialist | DeFi Enthusiast
+                    </div>
+                    <p style="color: #666; line-height: 1.6; margin-bottom: 20px;">
+                        Developer with 5 years of experience in blockchain and DeFi. Passionate about creating decentralized solutions that solve real problems. Specialized in TypeScript, Solidity and XRPL Hooks.
+                    </p>
+
+                    <!-- Social Links -->
+                    <div style="display: flex; gap: 12px; margin-bottom: 20px;">
+                        <a href="#" style="color: #2d5016; text-decoration: none; font-size: 0.9rem; font-weight: 600;">
+                            🔗 GitHub
+                        </a>
+                        <a href="#" style="color: #2d5016; text-decoration: none; font-size: 0.9rem; font-weight: 600;">
+                            🔗 LinkedIn
+                        </a>
+                        <a href="#" style="color: #2d5016; text-decoration: none; font-size: 0.9rem; font-weight: 600;">
+                            🔗 Twitter
+                        </a>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="window.location.href='settings.html'">
+                        Edit Profile
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Two Column Layout -->
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px; margin-bottom: 40px;">
+            <!-- Left Column: Projects -->
+            <div>
+                <h2 style="font-size: 1.3rem; font-weight: 700; color: #1a1a1a; margin-bottom: 24px;">
+                    Featured Projects
+                </h2>
+
+                <!-- Project 1 -->
+                <div style="background: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 24px; margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
+                        <h3 style="font-size: 1.1rem; font-weight: 700; color: #2d5016;">
+                            NFT Marketplace on XRPL
+                        </h3>
+                        <span style="background: #d4edda; color: #155724; padding: 4px 12px; border-radius: 12px; font-size: 0.8rem; font-weight: 600;">
+                            Completed
+                        </span>
+                    </div>
+                    <p style="color: #666; margin-bottom: 16px; line-height: 1.6;">
+                        Decentralized marketplace for NFTs on XRPL with support for auctions, offers and automatic royalties. Implemented using TypeScript and xrpl.js.
+                    </p>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;">
+                        <span style="background: #f0f0f0; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; color: #666;">TypeScript</span>
+                        <span style="background: #f0f0f0; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; color: #666;">React</span>
+                        <span style="background: #f0f0f0; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; color: #666;">XRPL</span>
+                        <span style="background: #f0f0f0; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; color: #666;">NFTs</span>
+                    </div>
+                    <a href="#" style="color: #2d5016; text-decoration: none; font-weight: 600; font-size: 0.9rem;">
+                        View on GitHub →
+                    </a>
+                </div>
+
+                <!-- Project 2 -->
+                <div style="background: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 24px; margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
+                        <h3 style="font-size: 1.1rem; font-weight: 700; color: #2d5016;">
+                            DeFi Lending Protocol
+                        </h3>
+                        <span style="background: #fff3cd; color: #856404; padding: 4px 12px; border-radius: 12px; font-size: 0.8rem; font-weight: 600;">
+                            In Progress
+                        </span>
+                    </div>
+                    <p style="color: #666; margin-bottom: 16px; line-height: 1.6;">
+                        Peer-to-peer lending protocol on XRPL using Hooks. Allows asset collateralization and dynamic interest rates.
+                    </p>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;">
+                        <span style="background: #f0f0f0; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; color: #666;">Hooks</span>
+                        <span style="background: #f0f0f0; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; color: #666;">C</span>
+                        <span style="background: #f0f0f0; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; color: #666;">DeFi</span>
+                        <span style="background: #f0f0f0; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; color: #666;">XRPL</span>
+                    </div>
+                    <a href="#" style="color: #2d5016; text-decoration: none; font-weight: 600; font-size: 0.9rem;">
+                        View on GitHub →
+                    </a>
+                </div>
+
+                <!-- Project 3 -->
+                <div style="background: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 24px;">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
+                        <h3 style="font-size: 1.1rem; font-weight: 700; color: #2d5016;">
+                            XRPL Payment Gateway
+                        </h3>
+                        <span style="background: #d4edda; color: #155724; padding: 4px 12px; border-radius: 12px; font-size: 0.8rem; font-weight: 600;">
+                            Completed
+                        </span>
+                    </div>
+                    <p style="color: #666; margin-bottom: 16px; line-height: 1.6;">
+                        Payment gateway for e-commerce with support for multiple currencies and automatic conversion via DEX.
+                    </p>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;">
+                        <span style="background: #f0f0f0; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; color: #666;">Node.js</span>
+                        <span style="background: #f0f0f0; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; color: #666;">Express</span>
+                        <span style="background: #f0f0f0; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; color: #666;">XRPL</span>
+                        <span style="background: #f0f0f0; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; color: #666;">Payments</span>
+                    </div>
+                    <a href="#" style="color: #2d5016; text-decoration: none; font-weight: 600; font-size: 0.9rem;">
+                        View on GitHub →
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right Column: Skills & Info -->
+            <div>
+                <h2 style="font-size: 1.3rem; font-weight: 700; color: #1a1a1a; margin-bottom: 24px;">
+                    Top Skills
+                </h2>
+
+                <!-- Skill 1 -->
+                <div style="background: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 20px; margin-bottom: 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <span style="font-weight: 600; color: #1a1a1a;">Smart Contracts (Hooks)</span>
+                        <span style="background: #d4edda; color: #155724; padding: 2px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 600;">
+                            Advanced
+                        </span>
+                    </div>
+                    <div style="width: 100%; height: 8px; background: #f0f0f0; border-radius: 4px; overflow: hidden;">
+                        <div style="width: 100%; height: 100%; background: linear-gradient(90deg, #2d5016, #4a7c28);"></div>
+                    </div>
+                </div>
+
+                <!-- Skill 2 -->
+                <div style="background: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 20px; margin-bottom: 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <span style="font-weight: 600; color: #1a1a1a;">DeFi Protocols</span>
+                        <span style="background: #d4edda; color: #155724; padding: 2px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 600;">
+                            Intermediate
+                        </span>
+                    </div>
+                    <div style="width: 100%; height: 8px; background: #f0f0f0; border-radius: 4px; overflow: hidden;">
+                        <div style="width: 75%; height: 100%; background: linear-gradient(90deg, #2d5016, #4a7c28);"></div>
+                    </div>
+                </div>
+
+                <!-- Skill 3 -->
+                <div style="background: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 20px; margin-bottom: 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <span style="font-weight: 600; color: #1a1a1a;">NFTs & Tokenization</span>
+                        <span style="background: #d4edda; color: #155724; padding: 2px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 600;">
+                            Intermediate
+                        </span>
+                    </div>
+                    <div style="width: 100%; height: 8px; background: #f0f0f0; border-radius: 4px; overflow: hidden;">
+                        <div style="width: 70%; height: 100%; background: linear-gradient(90deg, #2d5016, #4a7c28);"></div>
+                    </div>
+                </div>
+
+                <!-- Skill 4 -->
+                <div style="background: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 20px; margin-bottom: 24px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <span style="font-weight: 600; color: #1a1a1a;">Security & Best Practices</span>
+                        <span style="background: #d4edda; color: #155724; padding: 2px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 600;">
+                            Intermediate
+                        </span>
+                    </div>
+                    <div style="width: 100%; height: 8px; background: #f0f0f0; border-radius: 4px; overflow: hidden;">
+                        <div style="width: 65%; height: 100%; background: linear-gradient(90deg, #2d5016, #4a7c28);"></div>
+                    </div>
+                </div>
+
+                <button class="btn btn-secondary" onclick="window.location.href='knowledge-matrix.html'" style="width: 100%; margin-bottom: 24px;">
+                    View Learning
+                </button>
+
+                <!-- Channels Connected -->
+                <h3 style="font-size: 1.1rem; font-weight: 700; color: #1a1a1a; margin-bottom: 16px;">
+                    Connected Channels
+                </h3>
+                <div style="background: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 20px;">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                        <div style="width: 32px; height: 32px; background: #4a154b; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 0.9rem;">
+                            S
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; font-size: 0.9rem;">Slack</div>
+                            <div style="font-size: 0.75rem; color: #999;">Connected</div>
+                        </div>
+                        <span style="color: #4a7c28; font-size: 1.2rem;">✓</span>
+                    </div>
+
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                        <div style="width: 32px; height: 32px; background: #5865F2; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 0.9rem;">
+                            D
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; font-size: 0.9rem;">Discord</div>
+                            <div style="font-size: 0.75rem; color: #999;">Connected</div>
+                        </div>
+                        <span style="color: #4a7c28; font-size: 1.2rem;">✓</span>
+                    </div>
+
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div style="width: 32px; height: 32px; background: #25D366; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 0.9rem;">
+                            W
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; font-size: 0.9rem;">WhatsApp</div>
+                            <div style="font-size: 0.75rem; color: #999;">Not connected</div>
+                        </div>
+                        <span style="color: #999; font-size: 1.2rem;">○</span>
+                    </div>
+                </div>
+
+                <button class="btn btn-ghost" onclick="window.location.href='settings.html'" style="width: 100%; margin-top: 12px;">
+                    Manage Channels
+                </button>
+            </div>
+        </div>
+
+        <!-- Activity Timeline -->
+        <div style="background: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 32px;">
+            <h2 style="font-size: 1.3rem; font-weight: 700; color: #1a1a1a; margin-bottom: 24px;">
+                Recent Activity
+            </h2>
+
+            <div style="display: grid; gap: 20px;">
+                <div style="display: flex; gap: 16px;">
+                    <div style="width: 40px; height: 40px; background: #d4edda; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #155724; font-size: 1.2rem; flex-shrink: 0;">
+                        ✓
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-weight: 600; margin-bottom: 4px;">Validated: Smart Contracts - Advanced</div>
+                        <div style="font-size: 0.85rem; color: #666;">Hooks project code review approved</div>
+                        <div style="font-size: 0.8rem; color: #999; margin-top: 4px;">Yesterday at 2:30 PM</div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 16px;">
+                    <div style="width: 40px; height: 40px; background: #fff3cd; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #856404; font-size: 1.2rem; flex-shrink: 0;">
+                        📝
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-weight: 600; margin-bottom: 4px;">Applied to XRPL Grant Q1 2024</div>
+                        <div style="font-size: 0.85rem; color: #666;">Proposal submitted: DeFi Lending Protocol</div>
+                        <div style="font-size: 0.8rem; color: #999; margin-top: 4px;">2 days ago</div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 16px;">
+                    <div style="width: 40px; height: 40px; background: #e8f5e9; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #2d5016; font-size: 1.2rem; flex-shrink: 0;">
+                        🎯
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-weight: 600; margin-bottom: 4px;">New opportunity: 92% match</div>
+                        <div style="font-size: 0.85rem; color: #666;">Build on XRPL Hackathon - Payment Solutions</div>
+                        <div style="font-size: 0.8rem; color: #999; margin-top: 4px;">3 days ago</div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 16px;">
+                    <div style="width: 40px; height: 40px; background: #d4edda; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #155724; font-size: 1.2rem; flex-shrink: 0;">
+                        ✓
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-weight: 600; margin-bottom: 4px;">Completed Workshop: XRPL Hooks</div>
+                        <div style="font-size: 0.85rem; color: #666;">4 hours of practical content completed</div>
+                        <div style="font-size: 0.8rem; color: #999; margin-top: 4px;">1 week ago</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
