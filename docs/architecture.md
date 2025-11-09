@@ -222,10 +222,13 @@ xrpl-guru/
 | **Adaptive Learning Path (FR-2)** | AI Gateway + Conversation Manager | Azure OpenAI + RAG | `services/ai/gateway.py`, `services/ai/conversation_manager.py`, `services/ai/rag_client.py` |
 | **Proactive Success Guidance (FR-3)** | Matching Engine + Ecosystem Monitoring | pgvector + Celery | `services/matching/engine.py`, `services/monitoring/`, `tasks/matching.py` |
 | **Code Partner Bot (FR-4)** | Unified Bot + Multi-Channel Adapters | Slack SDK + Discord.py | `services/chat/unified_bot.py`, `services/chat/adapters/`, `services/xrpl/code_examples.py` |
-| **Multi-Channel Support (FR-5)** | Adapter Pattern + Context Sync | Redis pub/sub | `services/chat/adapters/base.py`, `services/chat/context_sync.py` |
-| **Developer Dashboard (FR-6)** | React Frontend + TypeScript SDK | React + TanStack | `frontend/src/routes/dashboard.tsx`, `frontend/src/client/` |
-| **Privacy Controls (FR-7)** | User Settings + GDPR Tools | PostgreSQL JSONB | `api/routes/developers.py`, `models/user.py` |
-| **Opportunity Pipeline (FR-8)** | Opportunity API + Match Storage | PostgreSQL + Redis | `api/routes/opportunities.py`, `models/match.py` |
+| **Empower Loop (FR-5)** | Challenge Engine + Gamification Service | Celery + PostgreSQL + Redis | `services/gamification/challenge_engine.py`, `services/gamification/xp_tracker.py`, `models/challenge.py`, `tasks/daily_challenges.py` |
+| **Market Bridge (FR-6)** | Job Monitor + Matching Engine + Mentor DB | Celery + pgvector + PostgreSQL | `services/market/job_monitor.py`, `services/market/mentor_matcher.py`, `models/job.py`, `tasks/job_scraping.py` |
+| **Impact Dashboard (FR-7)** | Analytics Engine + Portfolio Builder | PostgreSQL + React + Azure Blob | `services/analytics/metrics.py`, `services/analytics/portfolio_builder.py`, `api/routes/analytics.py`, `frontend/src/routes/impact.tsx` |
+| **Multi-Channel Support (FR-8)** | Adapter Pattern + Context Sync | Redis pub/sub | `services/chat/adapters/base.py`, `services/chat/context_sync.py` |
+| **Developer Dashboard (FR-9)** | React Frontend + TypeScript SDK | React + TanStack | `frontend/src/routes/dashboard.tsx`, `frontend/src/client/` |
+| **Privacy Controls (FR-10)** | User Settings + GDPR Tools | PostgreSQL JSONB | `api/routes/developers.py`, `models/user.py` |
+| **Opportunity Pipeline (FR-11)** | Opportunity API + Match Storage | PostgreSQL + Redis | `api/routes/opportunities.py`, `models/match.py` |
 | **Performance (NFR-1)** | Redis Cache + Async I/O | Redis + FastAPI | All services use `async/await`, RAG cache in `services/ai/gateway.py` |
 | **Scalability (NFR-2)** | Azure Container Apps + KEDA | Azure | `infra/bicep/container-apps.bicep` |
 | **Security (NFR-3)** | AES-256 + Key Vault + JWT | Azure Key Vault | `core/security.py`, `infra/bicep/key-vault.bicep` |
@@ -597,6 +600,569 @@ telemetry.track_event("opportunity_notification", {
     "channel": preferred_channel.platform,
     "action": "clicked" | "dismissed" | "applied"
 })
+```
+
+## Gamification Architecture: Empower Loop (FR-5)
+
+The Empower Loop provides challenge-based learning with XP/badge progression to maintain developer engagement through gamification.
+
+### Components
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    Gamification Orchestration                    │
+└─────────────────────────────────────────────────────────────────┘
+           ▲                    ▲                    ▲
+           │                    │                    │
+    ┌──────┴──────┐      ┌─────┴──────┐      ┌─────┴──────┐
+    │  Challenge  │      │   XP & Badge│      │ Leaderboard│
+    │   Engine    │      │   Tracker   │      │   Service  │
+    │  (Daily)    │      │  (Rewards)  │      │  (Rankings)│
+    └──────┬──────┘      └─────┬──────┘      └─────┬──────┘
+           │                    │                    │
+           │                    │                    │
+    ┌──────▼────────────────────▼────────────────────▼──────┐
+    │         PostgreSQL (Challenges, XP, Badges)           │
+    │         Redis (Leaderboard Cache, Streaks)            │
+    └───────────────────────────────────────────────────────┘
+```
+
+### Data Flow
+
+**Phase 1: Daily Challenge Generation** (9 AM developer timezone via Celery Beat)
+```python
+# tasks/daily_challenges.py
+@celery.app.task
+def generate_daily_challenges():
+    """Generate personalized challenges for all active developers"""
+    active_devs = await db.execute(
+        SELECT user_id, skill_level, recent_activity
+        FROM developer_profiles
+        WHERE (profile_data->>'active')::boolean = true
+    )
+
+    for dev in active_devs:
+        # Match challenge difficulty to developer capability
+        challenge = await challenge_engine.generate_challenge(
+            skill_level=dev.skill_level,
+            interests=dev.interests,
+            recent_topics=dev.recent_activity
+        )
+
+        # Send via preferred channel
+        await bot_service.send_challenge(
+            dev_id=dev.user_id,
+            challenge=challenge,
+            estimated_time=challenge.estimated_minutes
+        )
+```
+
+**Phase 2: XP & Badge Award** (On challenge completion)
+```python
+# services/gamification/xp_tracker.py
+async def award_challenge_completion(dev_id: UUID, challenge_id: UUID):
+    """Award XP and check badge eligibility"""
+    challenge = await db.get(Challenge, challenge_id)
+
+    # Award XP based on difficulty
+    xp_award = {
+        "easy": 25,      # ⭐
+        "medium": 50,    # ⭐⭐
+        "hard": 100,     # ⭐⭐⭐
+        "expert": 200    # ⭐⭐⭐⭐
+    }[challenge.difficulty]
+
+    # Bonus for streak
+    streak_days = await redis.get(f"streak:{dev_id}") or 0
+    if streak_days >= 7:
+        xp_award *= 1.5  # 50% bonus for 7+ day streak
+
+    # Update developer XP
+    await db.execute(
+        UPDATE developer_profiles
+        SET total_xp = total_xp + :xp,
+            level = floor(sqrt(total_xp / 100))
+        WHERE user_id = :dev_id
+    )
+
+    # Check badge eligibility
+    await check_and_award_badges(dev_id, challenge.category)
+
+    # Update leaderboard cache
+    await redis.zadd("leaderboard:global", {dev_id: total_xp})
+```
+
+**Phase 3: Leaderboard Management** (Real-time via Redis sorted sets)
+```python
+# services/gamification/leaderboard.py
+async def get_leaderboard(dev_id: UUID, scope: str = "global"):
+    """Get leaderboard with developer's position"""
+
+    # Redis sorted set: O(log N) for position lookup
+    rank = await redis.zrevrank(f"leaderboard:{scope}", dev_id)
+    top_10 = await redis.zrevrange(
+        f"leaderboard:{scope}",
+        0, 9,
+        withscores=True
+    )
+
+    # Get developer's neighbors (±5 positions)
+    neighbors = await redis.zrevrange(
+        f"leaderboard:{scope}",
+        max(0, rank - 5),
+        rank + 5,
+        withscores=True
+    )
+
+    return {
+        "your_rank": rank + 1,
+        "your_xp": await redis.zscore(f"leaderboard:{scope}", dev_id),
+        "top_10": top_10,
+        "neighbors": neighbors
+    }
+```
+
+### Implementation Strategy
+
+**Database Schema:**
+```sql
+-- Challenges table
+CREATE TABLE challenges (
+    id UUID PRIMARY KEY,
+    category VARCHAR(50),  -- 'payment', 'nft', 'defi', 'amm', etc.
+    difficulty VARCHAR(20), -- 'easy', 'medium', 'hard', 'expert'
+    title VARCHAR(200),
+    description TEXT,
+    validation_criteria JSONB,  -- How to verify completion
+    estimated_minutes INTEGER,
+    xp_reward INTEGER,
+    badge_id UUID REFERENCES badges(id),
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Developer challenges (completion tracking)
+CREATE TABLE developer_challenges (
+    developer_id UUID REFERENCES users(id),
+    challenge_id UUID REFERENCES challenges(id),
+    status VARCHAR(20),  -- 'active', 'completed', 'abandoned'
+    started_at TIMESTAMP,
+    completed_at TIMESTAMP,
+    completion_proof JSONB,  -- Transaction hash, code snippet, etc.
+    xp_awarded INTEGER,
+    PRIMARY KEY (developer_id, challenge_id)
+);
+
+-- Badges
+CREATE TABLE badges (
+    id UUID PRIMARY KEY,
+    name VARCHAR(100),
+    description TEXT,
+    icon_url VARCHAR(500),
+    criteria JSONB,  -- Unlock conditions
+    rarity VARCHAR(20)  -- 'common', 'rare', 'epic', 'legendary'
+);
+
+-- Developer badges (awards)
+CREATE TABLE developer_badges (
+    developer_id UUID REFERENCES users(id),
+    badge_id UUID REFERENCES badges(id),
+    awarded_at TIMESTAMP DEFAULT NOW(),
+    PRIMARY KEY (developer_id, badge_id)
+);
+```
+
+**Redis Caching:**
+```python
+# Leaderboards (sorted sets for O(log N) lookups)
+# leaderboard:global -> {dev_id: total_xp}
+# leaderboard:monthly -> {dev_id: monthly_xp}
+
+# Streaks (strings with expiry)
+# streak:{dev_id} -> consecutive_days (expires if >48h without activity)
+
+# Active challenges (hashes)
+# active_challenge:{dev_id} -> {challenge_id, started_at, progress}
+```
+
+## Market Bridge Architecture: Jobs, Mentors, Startups (FR-6)
+
+The Market Bridge connects developers to XRPL ecosystem opportunities: job openings, mentor relationships, and startup collaborations.
+
+### Components
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                  Market Bridge Orchestration                     │
+└─────────────────────────────────────────────────────────────────┘
+           ▲                    ▲                    ▲
+           │                    │                    │
+    ┌──────┴──────┐      ┌─────┴──────┐      ┌─────┴──────┐
+    │   Job       │      │   Mentor   │      │  Startup   │
+    │  Monitor    │      │  Matcher   │      │  Discovery │
+    │ (Scraping)  │      │(Expertise) │      │(Ecosystem) │
+    └──────┬──────┘      └─────┬──────┘      └─────┬──────┘
+           │                    │                    │
+           │                    │                    │
+    ┌──────▼────────────────────▼────────────────────▼──────┐
+    │   PostgreSQL (Jobs, Mentors, Startups) + pgvector    │
+    └───────────────────────────────────────────────────────┘
+```
+
+### Data Flow
+
+**Phase 1: Job Monitoring** (Daily scraping via Celery Beat)
+```python
+# tasks/job_scraping.py
+@celery.app.task
+def scrape_xrpl_jobs():
+    """Scrape XRPL ecosystem job boards"""
+    sources = [
+        scrape_ripple_careers(),      # Ripple official jobs
+        scrape_xrpl_labs_careers(),   # XRPL Labs
+        scrape_ecosystem_startups(),  # Partner companies
+        scrape_remote_boards()        # We Work Remotely, Remote.co
+    ]
+
+    new_jobs = await asyncio.gather(*sources)
+
+    for job in new_jobs:
+        # Generate skill embedding
+        job_vector = await embeddings_service.embed(
+            f"{job.title} {job.description} {job.required_skills}"
+        )
+
+        # Store with deduplication
+        await db.execute(
+            INSERT INTO jobs (company, title, description, skills_vector, posted_at)
+            VALUES (:company, :title, :desc, :vector, :posted)
+            ON CONFLICT (company, title) DO UPDATE
+            SET updated_at = NOW()
+        )
+
+        # Trigger matching
+        await match_job_to_developers.delay(job.id)
+```
+
+**Phase 2: Mentor Matching Algorithm**
+```python
+# services/market/mentor_matcher.py
+async def find_mentors(dev_id: UUID, focus_area: str):
+    """Match developer with relevant mentors"""
+    dev = await db.get(Developer, dev_id)
+
+    # Find mentors with expertise in focus area
+    mentors = await db.execute(
+        SELECT m.*, m.expertise_vector <=> :dev_vector AS distance
+        FROM mentors m
+        WHERE :focus_area = ANY(m.expertise_areas)
+        AND m.accepting_mentees = true
+        ORDER BY m.expertise_vector <=> :dev_vector
+        LIMIT 5
+    )
+
+    # Score mentors (0-100)
+    for mentor in mentors:
+        score = calculate_mentor_match(
+            dev_skills=dev.skill_vector,
+            mentor_expertise=mentor.expertise_vector,
+            dev_interests=dev.interests,
+            mentor_focus=mentor.expertise_areas,
+            language_overlap=set(dev.languages) & set(mentor.languages)
+        )
+        mentor.match_score = score
+
+    # Return top 3 with match explanations
+    return sorted(mentors, key=lambda m: m.match_score, reverse=True)[:3]
+```
+
+**Phase 3: Startup Discovery**
+```python
+# services/market/startup_discovery.py
+async def discover_startups(dev_id: UUID):
+    """Surface XRPL startups matching developer interests"""
+    dev = await db.get(Developer, dev_id)
+
+    # Query startups in ecosystem
+    startups = await db.execute(
+        SELECT s.*
+        FROM startups s
+        WHERE s.status = 'active'
+        AND s.category && :dev_interests  -- PostgreSQL array overlap
+        ORDER BY s.founded_date DESC
+        LIMIT 10
+    )
+
+    # Enrich with context
+    for startup in startups:
+        startup.why_relevant = f"Building in {startup.category} - matches your interest"
+        startup.open_roles = await db.execute(
+            SELECT COUNT(*) FROM jobs
+            WHERE company = :startup_name
+            AND status = 'open'
+        )
+
+    return startups
+```
+
+### Implementation Strategy
+
+**Database Schema:**
+```sql
+-- Jobs table
+CREATE TABLE jobs (
+    id UUID PRIMARY KEY,
+    company VARCHAR(200),
+    title VARCHAR(200),
+    description TEXT,
+    required_skills TEXT[],
+    skills_vector vector(384),  -- Embedding for semantic search
+    location VARCHAR(100),
+    remote_friendly BOOLEAN,
+    salary_range_min INTEGER,
+    salary_range_max INTEGER,
+    posted_at TIMESTAMP,
+    deadline TIMESTAMP,
+    status VARCHAR(20) DEFAULT 'open',
+    UNIQUE(company, title)
+);
+
+-- Mentors table
+CREATE TABLE mentors (
+    id UUID PRIMARY KEY,
+    user_id UUID REFERENCES users(id),
+    name VARCHAR(200),
+    expertise_areas TEXT[],  -- ['defi', 'nft', 'payments']
+    expertise_vector vector(384),  -- Embedding of expertise
+    bio TEXT,
+    languages TEXT[],  -- ['en', 'es', 'pt']
+    accepting_mentees BOOLEAN DEFAULT true,
+    max_mentees INTEGER DEFAULT 5,
+    current_mentees INTEGER DEFAULT 0,
+    calendar_link VARCHAR(500)
+);
+
+-- Startups table
+CREATE TABLE startups (
+    id UUID PRIMARY KEY,
+    name VARCHAR(200),
+    category TEXT[],  -- ['defi', 'remittance', 'gaming']
+    description TEXT,
+    founded_date DATE,
+    team_size VARCHAR(20),  -- '1-10', '11-50', '51-200'
+    funding_stage VARCHAR(50),  -- 'pre-seed', 'seed', 'series-a'
+    website VARCHAR(500),
+    status VARCHAR(20) DEFAULT 'active'
+);
+
+-- Job applications (tracking)
+CREATE TABLE job_applications (
+    developer_id UUID REFERENCES users(id),
+    job_id UUID REFERENCES jobs(id),
+    applied_at TIMESTAMP DEFAULT NOW(),
+    status VARCHAR(20),  -- 'applied', 'interviewing', 'accepted', 'rejected'
+    PRIMARY KEY (developer_id, job_id)
+);
+```
+
+## Analytics & Portfolio Architecture: Impact Dashboard (FR-7)
+
+The Impact Dashboard provides developers with progress visualization, metrics analysis, and auto-generated portfolio.
+
+### Components
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                   Analytics Orchestration                        │
+└─────────────────────────────────────────────────────────────────┘
+           ▲                    ▲                    ▲
+           │                    │                    │
+    ┌──────┴──────┐      ┌─────┴──────┐      ┌─────┴──────┐
+    │  Metrics    │      │ Portfolio  │      │   Export   │
+    │  Calculator │      │  Builder   │      │  Service   │
+    │ (Real-time) │      │(Auto-gen)  │      │(CSV/JSON)  │
+    └──────┬──────┘      └─────┬──────┘      └─────┬──────┘
+           │                    │                    │
+           │                    │                    │
+    ┌──────▼────────────────────▼────────────────────▼──────┐
+    │    PostgreSQL (Metrics, Projects, Portfolio Data)     │
+    │    Azure Blob Storage (Exports, Portfolio Pages)      │
+    └───────────────────────────────────────────────────────┘
+```
+
+### Data Flow
+
+**Phase 1: Metrics Calculation** (Real-time aggregation)
+```python
+# services/analytics/metrics.py
+async def calculate_developer_metrics(dev_id: UUID, period: str = "all_time"):
+    """Calculate comprehensive developer metrics"""
+
+    # Skills progression
+    skill_metrics = await db.execute(
+        SELECT
+            topic,
+            level,
+            validated_at
+        FROM knowledge_matrix
+        WHERE developer_id = :dev_id
+        ORDER BY validated_at
+    )
+
+    # Learning activity
+    activity_metrics = await db.execute(
+        SELECT
+            COUNT(*) FILTER (WHERE type = 'challenge') as challenges_completed,
+            COUNT(*) FILTER (WHERE type = 'conversation') as learning_sessions,
+            SUM(xp_gained) as total_xp,
+            array_agg(DISTINCT topic) as topics_explored
+        FROM developer_activity
+        WHERE developer_id = :dev_id
+        AND created_at >= :period_start
+    )
+
+    # Opportunities
+    opportunity_metrics = await db.execute(
+        SELECT
+            COUNT(*) FILTER (WHERE action = 'applied') as opportunities_applied,
+            COUNT(*) FILTER (WHERE action = 'accepted') as opportunities_accepted,
+            array_agg(opportunity_type) as opportunity_types
+        FROM match_interactions
+        WHERE developer_id = :dev_id
+    )
+
+    # XRPL Projects
+    project_metrics = await db.execute(
+        SELECT
+            COUNT(*) as total_projects,
+            array_agg(tech_stack) as technologies_used,
+            array_agg(github_url) as project_links
+        FROM developer_projects
+        WHERE developer_id = :dev_id
+    )
+
+    return {
+        "skills": skill_metrics,
+        "activity": activity_metrics,
+        "opportunities": opportunity_metrics,
+        "projects": project_metrics,
+        "level": floor(sqrt(activity_metrics.total_xp / 100)),
+        "badges_earned": await get_badge_count(dev_id)
+    }
+```
+
+**Phase 2: Portfolio Auto-Generation**
+```python
+# services/analytics/portfolio_builder.py
+async def generate_portfolio(dev_id: UUID):
+    """Auto-generate portfolio webpage at xrplguru.dev/@{username}"""
+    dev = await db.get(Developer, dev_id)
+    metrics = await calculate_developer_metrics(dev_id)
+
+    # Generate HTML portfolio
+    portfolio_html = await render_template("portfolio.html", {
+        "developer": dev,
+        "bio": dev.bio or auto_generate_bio(dev, metrics),
+        "skills": metrics["skills"],
+        "badges": await get_developer_badges(dev_id),
+        "projects": metrics["projects"],
+        "github": dev.github_username,
+        "level": metrics["level"],
+        "total_xp": metrics["activity"]["total_xp"]
+    })
+
+    # Upload to Azure Blob Storage
+    blob_client = blob_service.get_blob_client(
+        container="portfolios",
+        blob=f"{dev.username}.html"
+    )
+    await blob_client.upload_blob(portfolio_html, overwrite=True)
+
+    # Return public URL
+    return f"https://xrplguru.dev/@{dev.username}"
+```
+
+**Phase 3: Data Export Service**
+```python
+# services/analytics/export_service.py
+async def export_metrics(dev_id: UUID, format: str = "csv"):
+    """Export developer metrics to CSV or JSON"""
+    metrics = await calculate_developer_metrics(dev_id)
+
+    if format == "csv":
+        # Generate CSV
+        csv_data = generate_csv(metrics)
+        filename = f"{dev_id}_metrics_{datetime.utcnow().isoformat()}.csv"
+    else:
+        # Generate JSON
+        json_data = json.dumps(metrics, indent=2)
+        filename = f"{dev_id}_metrics_{datetime.utcnow().isoformat()}.json"
+
+    # Upload to Azure Blob (expires in 7 days)
+    blob_url = await upload_to_blob(
+        container="exports",
+        filename=filename,
+        data=csv_data or json_data,
+        expiry_days=7
+    )
+
+    # Send download link via chat
+    await bot_service.send_message(
+        dev_id=dev_id,
+        message=f"Your metrics export is ready! Download: {blob_url}\n(Expires in 7 days)"
+    )
+
+    return blob_url
+```
+
+### Implementation Strategy
+
+**Database Schema:**
+```sql
+-- Developer projects
+CREATE TABLE developer_projects (
+    id UUID PRIMARY KEY,
+    developer_id UUID REFERENCES users(id),
+    title VARCHAR(200),
+    description TEXT,
+    tech_stack TEXT[],  -- ['xrpl-py', 'react', 'fastapi']
+    github_url VARCHAR(500),
+    demo_url VARCHAR(500),
+    created_at TIMESTAMP DEFAULT NOW(),
+    featured BOOLEAN DEFAULT false
+);
+
+-- Developer activity log
+CREATE TABLE developer_activity (
+    id UUID PRIMARY KEY,
+    developer_id UUID REFERENCES users(id),
+    type VARCHAR(50),  -- 'challenge', 'conversation', 'validation', 'project'
+    topic VARCHAR(100),  -- 'nft', 'defi', 'payments'
+    xp_gained INTEGER DEFAULT 0,
+    metadata JSONB,  -- Activity-specific details
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Portfolio settings
+CREATE TABLE portfolio_settings (
+    developer_id UUID PRIMARY KEY REFERENCES users(id),
+    public_visibility BOOLEAN DEFAULT true,
+    show_github BOOLEAN DEFAULT true,
+    show_badges BOOLEAN DEFAULT true,
+    custom_bio TEXT,
+    theme VARCHAR(20) DEFAULT 'light',
+    updated_at TIMESTAMP DEFAULT NOW()
+);
+```
+
+**Azure Blob Storage Structure:**
+```
+portfolios/
+  {username}.html        # Auto-generated portfolio pages
+
+exports/
+  {dev_id}_metrics_YYYY-MM-DD.csv
+  {dev_id}_metrics_YYYY-MM-DD.json
+  (auto-deleted after 7 days via lifecycle policy)
 ```
 
 ## Implementation Patterns

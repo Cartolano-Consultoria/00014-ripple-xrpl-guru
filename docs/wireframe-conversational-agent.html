@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XRPL Guru - Wireframe Conversacional</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #2d5016;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .phone-mockup {
+            background: white;
+            border-radius: 30px;
+            padding: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            max-width: 450px;
+        }
+
+        .phone-header {
+            background: #2d5016;
+            color: white;
+            padding: 15px;
+            border-radius: 20px 20px 0 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .phone-header h3 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .status-bar {
+            font-size: 11px;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .chat-container {
+            background: #fafafa;
+            height: 600px;
+            overflow-y: auto;
+            padding: 15px;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message.guru {
+            align-items: flex-start;
+        }
+
+        .message.user {
+            align-items: flex-end;
+        }
+
+        .message-bubble {
+            max-width: 75%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .guru .message-bubble {
+            background: white;
+            color: #333;
+            border: 1px solid #e0e0e0;
+        }
+
+        .user .message-bubble {
+            background: #2d5016;
+            color: white;
+        }
+
+        .message-sender {
+            font-size: 11px;
+            color: #999;
+            margin-bottom: 4px;
+            padding: 0 8px;
+        }
+
+        .message-time {
+            font-size: 10px;
+            color: #aaa;
+            margin-top: 4px;
+            padding: 0 8px;
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .quick-action-btn {
+            background: white;
+            border: 1px solid #2d5016;
+            color: #2d5016;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .quick-action-btn:hover {
+            background: #2d5016;
+            color: white;
+        }
+
+        .service-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-left: 4px solid #2d5016;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 8px;
+        }
+
+        .service-card-title {
+            font-weight: 600;
+            color: #2d5016;
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+
+        .service-card-desc {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #f4a261;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: 6px;
+        }
+
+        .menu-list {
+            background: white;
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 8px;
+        }
+
+        .menu-item {
+            padding: 10px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .menu-number {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: #2d5016;
+            color: white;
+            text-align: center;
+            border-radius: 50%;
+            font-size: 11px;
+            line-height: 20px;
+            margin-right: 8px;
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 10px 16px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #999;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+
+        .section-title {
+            color: #2d5016;
+            font-size: 20px;
+            margin: 40px 0 20px 0;
+            font-weight: 600;
+        }
+
+        .explanation {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-left: 4px solid #2d5016;
+        }
+
+        .explanation h3 {
+            color: #2d5016;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .explanation p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .highlight {
+            background: #fffbeb;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            border: 1px solid #fbbf24;
+        }
+
+        .highlight strong {
+            color: #2d5016;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>XRPL Guru - Interface Conversacional (Spirit of the Tool)</h1>
+        <p class="subtitle">Wireframes mostrando os 7 serviços através do agente conversacional</p>
+
+        <div class="explanation">
+            <h3>🎯 Conceito: Agente Conversacional como Interface Principal</h3>
+            <p>Conforme feedback do stakeholder Joseph, a interface conversacional (chatbot) é o "spirit of the tool" - não o web dashboard. O usuário interage com XRPL Guru primariamente via WhatsApp, Discord ou Slack, onde o agente proativamente oferece os 7 serviços.</p>
+            <div class="highlight">
+                <strong>Joseph's Expectation:</strong> "The most important thing is the agent conversation window. Senior leadership only care about the agent in conversation."
+            </div>
+        </div>
+
+        <h2 class="section-title">1. Smart Onboarding (Service 1) - Conversational Flow de 2-3 Minutos</h2>
+
+        <div class="demo-grid">
+            <div class="phone-mockup">
+                <div class="phone-header">
+                    <div>
+                        <h3>XRPL Guru</h3>
+                        <div class="status-bar">WhatsApp • Online</div>
+                    </div>
+                </div>
+                <div class="chat-container">
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru</div>
+                        <div class="message-bubble">
+                            👋 Olá! Sou o XRPL Guru, seu parceiro no ecossistema XRPL. Vou te ajudar a ter sucesso como desenvolvedor XRPL.
+                        </div>
+                        <div class="message-time">14:23</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru</div>
+                        <div class="message-bubble">
+                            Para começar, me conta: você já trabalhou com blockchain antes?
+                        </div>
+                        <div class="quick-actions">
+                            <button class="quick-action-btn">Sim, sou experiente</button>
+                            <button class="quick-action-btn">Já mexi um pouco</button>
+                            <button class="quick-action-btn">Nunca usei</button>
+                        </div>
+                        <div class="message-time">14:23</div>
+                    </div>
+
+                    <div class="message user">
+                        <div class="message-bubble">
+                            Sim, já desenvolvi em Ethereum
+                        </div>
+                        <div class="message-time">14:24</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru</div>
+                        <div class="message-bubble">
+                            Ótimo! 🚀 Você vai adorar o XRPL - muito mais rápido e barato que Ethereum.
+                            <br><br>
+                            E o que te traz para o XRPL? O que você quer construir ou alcançar?
+                        </div>
+                        <div class="quick-actions">
+                            <button class="quick-action-btn">Construir DeFi</button>
+                            <button class="quick-action-btn">Criar NFTs</button>
+                            <button class="quick-action-btn">Aplicar para grants</button>
+                            <button class="quick-action-btn">Conseguir emprego</button>
+                        </div>
+                        <div class="message-time">14:24</div>
+                    </div>
+
+                    <div class="message user">
+                        <div class="message-bubble">
+                            Quero construir um protocolo DeFi e aplicar para grants
+                        </div>
+                        <div class="message-time">14:25</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru</div>
+                        <div class="message-bubble">
+                            Perfeito! ✅ Vou te ajudar nisso.
+                            <br><br>
+                            Deixa eu te mostrar o que posso fazer por você:
+                        </div>
+                        <div class="menu-list">
+                            <div class="menu-item"><span class="menu-number">1</span> Smart Onboarding - Conhecer seu perfil (estamos aqui!)</div>
+                            <div class="menu-item"><span class="menu-number">2</span> Adaptive Path - Caminho de aprendizado personalizado</div>
+                            <div class="menu-item"><span class="menu-number">3</span> Empower Loop - Desafios práticos e gamificação</div>
+                            <div class="menu-item"><span class="menu-number">4</span> Proactive Guidance - Te aviso de grants e oportunidades</div>
+                            <div class="menu-item"><span class="menu-number">5</span> Code Partner - Ajuda com código XRPL</div>
+                            <div class="menu-item"><span class="menu-number">6</span> Market Bridge - Jobs, mentores, startups</div>
+                            <div class="menu-item"><span class="menu-number">7</span> Impact Dashboard - Acompanhar seu progresso</div>
+                        </div>
+                        <div class="message-time">14:25</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru</div>
+                        <div class="message-bubble">
+                            Pronto! ✅ Seu perfil está criado. Vou começar a monitorar grants de DeFi para você.
+                            <br><br>
+                            Quer começar aprendendo sobre DeFi no XRPL ou precisa de ajuda com algum código agora?
+                        </div>
+                        <div class="quick-actions">
+                            <button class="quick-action-btn">Aprender DeFi XRPL</button>
+                            <button class="quick-action-btn">Preciso de ajuda com código</button>
+                            <button class="quick-action-btn">Ver oportunidades</button>
+                        </div>
+                        <div class="message-time">14:26</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phone-mockup">
+                <div class="phone-header">
+                    <div>
+                        <h3>XRPL Guru</h3>
+                        <div class="status-bar">Discord • Online</div>
+                    </div>
+                </div>
+                <div class="chat-container">
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru Bot</div>
+                        <div class="message-bubble">
+                            Onboarding completo! ⏱️ Levou apenas 2 minutos.
+                            <br><br>
+                            <strong>Seu perfil:</strong>
+                            <br>• Experiência: Intermediário (Ethereum)
+                            <br>• Interesse: DeFi
+                            <br>• Meta: Aplicar para grants
+                            <br><br>
+                            Vou ficar de olho em oportunidades para você! 👀
+                        </div>
+                        <div class="message-time">14:26</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru Bot</div>
+                        <div class="message-bubble">
+                            💡 <strong>Dica Proativa:</strong>
+                            <br><br>
+                            Como você quer aplicar para grants, preciso validar suas skills em DeFi no XRPL. Posso te fazer 2-3 perguntas rápidas ou você prefere mostrar um projeto que já construiu?
+                        </div>
+                        <div class="quick-actions">
+                            <button class="quick-action-btn">Fazer perguntas</button>
+                            <button class="quick-action-btn">Mostrar projeto</button>
+                            <button class="quick-action-btn">Depois</button>
+                        </div>
+                        <div class="message-time">14:27</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title">2. Adaptive Path (Service 2) - Validação Conversacional de Competências</h2>
+
+        <div class="demo-grid">
+            <div class="phone-mockup">
+                <div class="phone-header">
+                    <div>
+                        <h3>XRPL Guru</h3>
+                        <div class="status-bar">Slack • Direct Message</div>
+                    </div>
+                </div>
+                <div class="chat-container">
+                    <div class="message user">
+                        <div class="message-bubble">
+                            Como funciona AMM no XRPL?
+                        </div>
+                        <div class="message-time">15:30</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru</div>
+                        <div class="message-bubble">
+                            Boa pergunta! Antes de explicar, você já trabalhou com AMMs (Automated Market Makers) em outras blockchains?
+                        </div>
+                        <div class="message-time">15:30</div>
+                    </div>
+
+                    <div class="message user">
+                        <div class="message-bubble">
+                            Sim, já fiz fork do Uniswap V2
+                        </div>
+                        <div class="message-time">15:31</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru</div>
+                        <div class="message-bubble">
+                            Perfeito! ✅ Validei "DeFi Protocols - Intermediário" no seu Knowledge Matrix.
+                            <br><br>
+                            O AMM do XRPL é nativo (não precisa de smart contract!). Funciona similar ao Uniswap mas com algumas vantagens:
+                            <br><br>
+                            • Taxas de gas ultra baixas (~$0.0002)
+                            <br>• 3-5 segundos para confirmar
+                            <br>• Suporta qualquer par de tokens IOU
+                            <br><br>
+                            Aqui está um exemplo de código...
+                            <br>[código exemplo]
+                        </div>
+                        <div class="message-time">15:31</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru</div>
+                        <div class="message-bubble">
+                            🎉 Desbloqueio de oportunidades:
+                        </div>
+                        <div class="service-card">
+                            <div class="service-card-title">3 novos grants disponíveis!</div>
+                            <div class="service-card-desc">Você agora tem as competências necessárias para aplicar para esses grants de DeFi.</div>
+                        </div>
+                        <div class="quick-actions">
+                            <button class="quick-action-btn">Ver grants</button>
+                            <button class="quick-action-btn">Continuar aprendendo</button>
+                        </div>
+                        <div class="message-time">15:32</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phone-mockup">
+                <div class="phone-header">
+                    <div>
+                        <h3>XRPL Guru</h3>
+                        <div class="status-bar">WhatsApp • Typing...</div>
+                    </div>
+                </div>
+                <div class="chat-container">
+                    <div class="message user">
+                        <div class="message-bubble">
+                            /matrix
+                        </div>
+                        <div class="message-time">15:35</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru</div>
+                        <div class="message-bubble">
+                            📊 <strong>Seu Knowledge Matrix (75% completo)</strong>
+                            <br><br>
+                            <strong>✅ Validados:</strong>
+                            <br>• DeFi Protocols - Intermediário
+                            <br>• Smart Contracts - Básico
+                            <br>• Payments - Intermediário
+                            <br><br>
+                            <strong>🟡 Pendente validação:</strong>
+                            <br>• NFTs - Básico (auto-declarado)
+                            <br><br>
+                            <strong>❓ Ainda não explorados:</strong>
+                            <br>• Payment Channels
+                            <br>• Security Best Practices - Avançado
+                        </div>
+                        <div class="message-time">15:35</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru</div>
+                        <div class="message-bubble">
+                            💡 <strong>Próximo passo sugerido:</strong>
+                            <br><br>
+                            Para desbloquear o grant de $50K que encontrei, você precisa validar "Security Best Practices - Intermediário".
+                            <br><br>
+                            Quer validar agora ou deixo para depois?
+                        </div>
+                        <div class="quick-actions">
+                            <button class="quick-action-btn">Validar agora</button>
+                            <button class="quick-action-btn">Me lembre amanhã</button>
+                        </div>
+                        <div class="message-time">15:36</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title">3. Empower Loop (Service 5) - Challenges e Gamificação</h2>
+
+        <div class="demo-grid">
+            <div class="phone-mockup">
+                <div class="phone-header">
+                    <div>
+                        <h3>XRPL Guru</h3>
+                        <div class="status-bar">Discord • Online</div>
+                    </div>
+                </div>
+                <div class="chat-container">
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru Bot</div>
+                        <div class="message-bubble">
+                            🎯 <strong>Desafio Diário Desbloqueado!</strong>
+                            <br><br>
+                            <strong>Challenge: DeFi Builder</strong>
+                            <br>Crie um AMM pool no Testnet conectando XRP e um token customizado.
+                            <br><br>
+                            <strong>Recompensa:</strong> +50 XP, Badge "Liquidity Provider"
+                            <br><br>
+                            <strong>Dificuldade:</strong> Intermediário ⭐⭐⭐
+                        </div>
+                        <div class="quick-actions">
+                            <button class="quick-action-btn">Aceitar desafio</button>
+                            <button class="quick-action-btn">Ver outro</button>
+                        </div>
+                        <div class="message-time">09:00</div>
+                    </div>
+
+                    <div class="message user">
+                        <div class="message-bubble">
+                            Aceitar desafio
+                        </div>
+                        <div class="message-time">09:15</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru Bot</div>
+                        <div class="message-bubble">
+                            Ótimo! 🚀 Vou te guiar:
+                            <br><br>
+                            <strong>Passo 1:</strong> Criar token customizado
+                            <br>Aqui está o código para criar um token IOU...
+                            <br>[código exemplo]
+                            <br><br>
+                            Me avisa quando terminar!
+                        </div>
+                        <div class="message-time">09:15</div>
+                    </div>
+
+                    <div class="message user">
+                        <div class="message-bubble">
+                            Pronto! Token criado: rToken (RTK)
+                        </div>
+                        <div class="message-time">10:30</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru Bot</div>
+                        <div class="message-bubble">
+                            🎉 <strong>Desafio Completo!</strong>
+                            <br><br>
+                            Você ganhou:
+                            <br>• +50 XP (Total: 350 XP)
+                            <br>• Badge: "Liquidity Provider" 💧
+                            <br>• Skill validada: DeFi Protocols - Avançado ✅
+                            <br><br>
+                            <strong>Próximo milestone:</strong> 650 XP para "DeFi Expert" (faltam 300 XP)
+                        </div>
+                        <div class="message-time">10:31</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru Bot</div>
+                        <div class="message-bubble">
+                            🔥 <strong>Streak: 5 dias!</strong>
+                            <br><br>
+                            Continue completando desafios para manter sua sequência. Próximo desafio disponível amanhã às 09:00.
+                        </div>
+                        <div class="message-time">10:31</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title">4. Proactive Guidance (Service 4) - Alertas de Oportunidades</h2>
+
+        <div class="demo-grid">
+            <div class="phone-mockup">
+                <div class="phone-header">
+                    <div>
+                        <h3>XRPL Guru</h3>
+                        <div class="status-bar">WhatsApp • 1 New Message</div>
+                    </div>
+                </div>
+                <div class="chat-container">
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru</div>
+                        <div class="message-bubble">
+                            🚨 <strong>Oportunidade Perfeita para Você!</strong><span class="badge">92% Match</span>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-card-title">XRPL Grant - DeFi Protocol Development</div>
+                            <div class="service-card-desc">
+                                <strong>Valor:</strong> $50,000 USD
+                                <br><strong>Deadline:</strong> 15 de Novembro (8 dias)
+                                <br><strong>Foco:</strong> Innovative DeFi protocols on XRPL
+                            </div>
+                        </div>
+                        <div class="message-time">14:30</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru</div>
+                        <div class="message-bubble">
+                            <strong>Por que você está pronto:</strong>
+                            <br>✅ Você tem experiência DeFi (Uniswap fork)
+                            <br>✅ Completou 3 projetos XRPL
+                            <br>✅ Validou "DeFi Protocols - Avançado"
+                            <br>✅ Perfil alinha 92% com critérios do grant
+                            <br><br>
+                            Quer que eu te ajude a preparar a aplicação?
+                        </div>
+                        <div class="quick-actions">
+                            <button class="quick-action-btn">Sim, me ajuda!</button>
+                            <button class="quick-action-btn">Ver detalhes</button>
+                            <button class="quick-action-btn">Não tenho interesse</button>
+                        </div>
+                        <div class="message-time">14:30</div>
+                    </div>
+
+                    <div class="message user">
+                        <div class="message-bubble">
+                            Sim, me ajuda!
+                        </div>
+                        <div class="message-time">14:35</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru</div>
+                        <div class="message-bubble">
+                            Ótimo! 🎯 Vou preparar o rascunho da sua aplicação usando:
+                            <br><br>
+                            • Seu portfólio (3 projetos XRPL)
+                            <br>• Suas competências validadas
+                            <br>• Template de grants anteriores aprovados
+                            <br><br>
+                            Te envio o rascunho em 5 minutos para você revisar. Ok?
+                        </div>
+                        <div class="message-time">14:35</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru</div>
+                        <div class="typing-indicator">
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phone-mockup">
+                <div class="phone-header">
+                    <div>
+                        <h3>XRPL Guru</h3>
+                        <div class="status-bar">Slack • Direct Message</div>
+                    </div>
+                </div>
+                <div class="chat-container">
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru</div>
+                        <div class="message-bubble">
+                            📄 <strong>Rascunho da Aplicação Pronto!</strong>
+                            <br><br>
+                            Preparei sua aplicação para o grant de $50K. Incluí:
+                            <br><br>
+                            ✅ Executive Summary (seu background DeFi)
+                            <br>✅ Project Description (baseado no seu AMM prototype)
+                            <br>✅ Technical Approach (usando suas skills validadas)
+                            <br>✅ Timeline & Milestones (6 meses)
+                            <br>✅ Budget Breakdown ($50K allocation)
+                            <br><br>
+                            [Ver rascunho completo - Link]
+                        </div>
+                        <div class="message-time">14:40</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru</div>
+                        <div class="message-bubble">
+                            O que você acha? Quer revisar e fazer ajustes ou está bom para enviar?
+                        </div>
+                        <div class="quick-actions">
+                            <button class="quick-action-btn">Revisar documento</button>
+                            <button class="quick-action-btn">Fazer ajustes</button>
+                            <button class="quick-action-btn">Está bom, enviar!</button>
+                        </div>
+                        <div class="message-time">14:40</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru</div>
+                        <div class="message-bubble">
+                            ⏰ <strong>Lembretes configurados:</strong>
+                            <br>• 7 dias antes do deadline (8 Nov)
+                            <br>• 3 dias antes do deadline (12 Nov)
+                            <br>• 1 dia antes do deadline (14 Nov)
+                        </div>
+                        <div class="message-time">14:41</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title">5. Code Partner (Service 5) - Assistência de Código Conversacional</h2>
+
+        <div class="demo-grid">
+            <div class="phone-mockup">
+                <div class="phone-header">
+                    <div>
+                        <h3>XRPL Guru</h3>
+                        <div class="status-bar">Discord • #dev-help</div>
+                    </div>
+                </div>
+                <div class="chat-container">
+                    <div class="message user">
+                        <div class="message-bubble">
+                            Estou tendo um erro ao tentar fazer um payment: "tecNoPathToDestination"
+                        </div>
+                        <div class="message-time">16:20</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru Bot</div>
+                        <div class="message-bubble">
+                            Esse erro significa que não há trust line configurada entre as contas para esse token.
+                            <br><br>
+                            Me mostra o código que você está usando? Especialmente a parte do payment transaction.
+                        </div>
+                        <div class="message-time">16:20</div>
+                    </div>
+
+                    <div class="message user">
+                        <div class="message-bubble">
+                            ```python
+                            payment = Payment(
+                              account="rSender...",
+                              destination="rDest...",
+                              amount=IssuedCurrencyAmount(
+                                currency="USD",
+                                issuer="rIssuer...",
+                                value="100"
+                              )
+                            )
+                            ```
+                        </div>
+                        <div class="message-time">16:22</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru Bot</div>
+                        <div class="message-bubble">
+                            Encontrei o problema! 🔍
+                            <br><br>
+                            A conta de destino precisa ter uma trust line para USD com esse issuer. Você tem duas opções:
+                            <br><br>
+                            <strong>Opção 1:</strong> Criar trust line primeiro
+                            <br>```python
+                            <br>trust_set = TrustSet(
+                            <br>  account="rDest...",
+                            <br>  limit_amount=IssuedCurrencyAmount(...)
+                            <br>)
+                            <br>```
+                            <br><br>
+                            <strong>Opção 2:</strong> Usar XRP direto (não precisa trust line)
+                        </div>
+                        <div class="quick-actions">
+                            <button class="quick-action-btn">Ver exemplo completo</button>
+                            <button class="quick-action-btn">Explicar trust lines</button>
+                        </div>
+                        <div class="message-time">16:23</div>
+                    </div>
+
+                    <div class="message user">
+                        <div class="message-bubble">
+                            Ver exemplo completo
+                        </div>
+                        <div class="message-time">16:24</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru Bot</div>
+                        <div class="message-bubble">
+                            Aqui está o código completo e testado:
+                            <br><br>
+                            [código completo com trust line + payment]
+                            <br><br>
+                            ⚠️ <strong>Security tip:</strong> Sempre valide que o issuer é confiável antes de criar trust line. Tokens maliciosos podem drenar sua conta.
+                        </div>
+                        <div class="message-time">16:24</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru Bot</div>
+                        <div class="message-bubble">
+                            Funcionou? Me avisa se precisar de mais ajuda! 🚀
+                        </div>
+                        <div class="message-time">16:25</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phone-mockup">
+                <div class="phone-header">
+                    <div>
+                        <h3>XRPL Guru</h3>
+                        <div class="status-bar">WhatsApp • Online</div>
+                    </div>
+                </div>
+                <div class="chat-container">
+                    <div class="message user">
+                        <div class="message-bubble">
+                            Qual a melhor forma de fazer code review de um smart contract (Hook) no XRPL?
+                        </div>
+                        <div class="message-time">17:10</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru</div>
+                        <div class="message-bubble">
+                            Ótima pergunta! Para Hooks no XRPL, siga este checklist:
+                            <br><br>
+                            <strong>🔒 Security:</strong>
+                            <br>✅ Valida todas as entradas
+                            <br>✅ Checa limites de gas
+                            <br>✅ Protege contra reentrancy
+                            <br><br>
+                            <strong>⚡ Performance:</strong>
+                            <br>✅ Minimiza operações custosas
+                            <br>✅ Usa cache quando possível
+                            <br><br>
+                            <strong>🧪 Testing:</strong>
+                            <br>✅ Unit tests cobrindo edge cases
+                            <br>✅ Testado no Hooks Testnet
+                            <br><br>
+                            Quer que eu revise o seu Hook? Compartilha o código!
+                        </div>
+                        <div class="message-time">17:11</div>
+                    </div>
+
+                    <div class="message user">
+                        <div class="message-bubble">
+                            [compartilha código do Hook]
+                        </div>
+                        <div class="message-time">17:15</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru</div>
+                        <div class="message-bubble">
+                            Revisando... ⏳
+                        </div>
+                        <div class="typing-indicator">
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        </div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru</div>
+                        <div class="message-bubble">
+                            <strong>Code Review Completo:</strong>
+                            <br><br>
+                            ✅ <strong>3 pontos fortes:</strong>
+                            <br>• Input validation bem feita
+                            <br>• Gas limits configurados corretamente
+                            <br>• Bom uso de eventos
+                            <br><br>
+                            ⚠️ <strong>2 melhorias sugeridas:</strong>
+                            <br>• Linha 45: Adicionar check de overflow
+                            <br>• Linha 78: Pode otimizar com cache aqui
+                            <br><br>
+                            [Diff com sugestões de código]
+                        </div>
+                        <div class="message-time">17:16</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title">6. Market Bridge (Service 6) - Jobs, Mentores, Startups</h2>
+
+        <div class="demo-grid">
+            <div class="phone-mockup">
+                <div class="phone-header">
+                    <div>
+                        <h3>XRPL Guru</h3>
+                        <div class="status-bar">Slack • Direct Message</div>
+                    </div>
+                </div>
+                <div class="chat-container">
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru</div>
+                        <div class="message-bubble">
+                            💼 <strong>Job Match Encontrado!</strong><span class="badge">88% Match</span>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-card-title">Senior XRPL Developer - DeFi Focus</div>
+                            <div class="service-card-desc">
+                                <strong>Empresa:</strong> Ripple Partner Startup
+                                <br><strong>Localização:</strong> Remote (Brazil accepted)
+                                <br><strong>Salary:</strong> $80K - $120K USD
+                                <br><strong>Required:</strong> DeFi expertise, XRPL experience
+                            </div>
+                        </div>
+                        <div class="message-time">10:00</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru</div>
+                        <div class="message-bubble">
+                            <strong>Por que você faz match:</strong>
+                            <br>✅ DeFi Protocols - Avançado (validado)
+                            <br>✅ 3 projetos XRPL no portfólio
+                            <br>✅ Localização: Brazil ✓
+                            <br>✅ Experiência senior comprovada
+                            <br><br>
+                            Quer que eu prepare sua aplicação?
+                        </div>
+                        <div class="quick-actions">
+                            <button class="quick-action-btn">Aplicar agora</button>
+                            <button class="quick-action-btn">Saber mais</button>
+                            <button class="quick-action-btn">Não tenho interesse</button>
+                        </div>
+                        <div class="message-time">10:00</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phone-mockup">
+                <div class="phone-header">
+                    <div>
+                        <h3>XRPL Guru</h3>
+                        <div class="status-bar">WhatsApp • Online</div>
+                    </div>
+                </div>
+                <div class="chat-container">
+                    <div class="message user">
+                        <div class="message-bubble">
+                            /mentors
+                        </div>
+                        <div class="message-time">11:30</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru</div>
+                        <div class="message-bubble">
+                            🎓 <strong>Mentores XRPL Recomendados (3 matches):</strong>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-card-title">1. Marcus Chen - DeFi Expert</div>
+                            <div class="service-card-desc">
+                                • 5 anos XRPL, fundou 2 protocolos DeFi
+                                <br>• Especialidade: AMM, Liquidity Pools
+                                <br>• Disponibilidade: 2h/semana
+                                <br>• Match: 95% (mesmo foco DeFi)
+                            </div>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-card-title">2. Ana Silva - XRPL Core Contributor</div>
+                            <div class="service-card-desc">
+                                • Ripple employee, trabalha em Hooks
+                                <br>• Especialidade: Smart Contracts, Security
+                                <br>• Disponibilidade: 1h/semana
+                                <br>• Match: 82% (complementa suas skills)
+                            </div>
+                        </div>
+                        <div class="message-time">11:30</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru</div>
+                        <div class="message-bubble">
+                            Quer que eu faça a introdução com algum deles?
+                        </div>
+                        <div class="quick-actions">
+                            <button class="quick-action-btn">Marcus Chen</button>
+                            <button class="quick-action-btn">Ana Silva</button>
+                            <button class="quick-action-btn">Ver mais mentores</button>
+                        </div>
+                        <div class="message-time">11:31</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-grid">
+            <div class="phone-mockup">
+                <div class="phone-header">
+                    <div>
+                        <h3>XRPL Guru</h3>
+                        <div class="status-bar">Discord • Online</div>
+                    </div>
+                </div>
+                <div class="chat-container">
+                    <div class="message user">
+                        <div class="message-bubble">
+                            /startups
+                        </div>
+                        <div class="message-time">14:00</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru Bot</div>
+                        <div class="message-bubble">
+                            🚀 <strong>Startups XRPL Seeking Talent:</strong>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-card-title">LiquidX Protocol</div>
+                            <div class="service-card-desc">
+                                <strong>Stage:</strong> Seed (raised $2M)
+                                <br><strong>Focus:</strong> Cross-chain DeFi aggregator
+                                <br><strong>Looking for:</strong> Lead DeFi Engineer
+                                <br><strong>Equity:</strong> 0.5% - 2%
+                            </div>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-card-title">NFTBridge</div>
+                            <div class="service-card-desc">
+                                <strong>Stage:</strong> Pre-seed
+                                <br><strong>Focus:</strong> NFT marketplace on XRPL
+                                <br><strong>Looking for:</strong> Co-founder (Technical)
+                                <br><strong>Equity:</strong> 15% - 25%
+                            </div>
+                        </div>
+                        <div class="message-time">14:00</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru Bot</div>
+                        <div class="message-bubble">
+                            Seu perfil DeFi é perfeito para LiquidX. Quer que eu faça a introdução com o founder?
+                        </div>
+                        <div class="quick-actions">
+                            <button class="quick-action-btn">Sim, conectar!</button>
+                            <button class="quick-action-btn">Ver detalhes</button>
+                            <button class="quick-action-btn">Passar</button>
+                        </div>
+                        <div class="message-time">14:01</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title">7. Impact Dashboard (Service 7) - Progresso e Portfolio via Chat</h2>
+
+        <div class="demo-grid">
+            <div class="phone-mockup">
+                <div class="phone-header">
+                    <div>
+                        <h3>XRPL Guru</h3>
+                        <div class="status-bar">WhatsApp • Online</div>
+                    </div>
+                </div>
+                <div class="chat-container">
+                    <div class="message user">
+                        <div class="message-bubble">
+                            /dashboard
+                        </div>
+                        <div class="message-time">18:00</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru</div>
+                        <div class="message-bubble">
+                            📊 <strong>Seu Impact Dashboard</strong>
+                            <br><br>
+                            <strong>🎯 Progresso Geral:</strong>
+                            <br>• Knowledge Matrix: 75% completo
+                            <br>• XP Total: 350 XP (Level 4)
+                            <br>• Streak: 5 dias 🔥
+                            <br><br>
+                            <strong>✅ Skills Validadas (8):</strong>
+                            <br>• DeFi Protocols - Avançado
+                            <br>• Smart Contracts - Intermediário
+                            <br>• Payments - Intermediário
+                            <br>• NFTs - Básico
+                            <br>• Security - Intermediário
+                            <br>• Testing - Básico
+                            <br>• AMMs - Avançado
+                            <br>• Hooks - Básico
+                        </div>
+                        <div class="message-time">18:00</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru</div>
+                        <div class="message-bubble">
+                            <strong>🚀 Projetos Completados (3):</strong>
+                            <br>• AMM Liquidity Pool (Nov 2025)
+                            <br>• NFT Marketplace Prototype (Oct 2025)
+                            <br>• Payment Gateway Integration (Sep 2025)
+                            <br><br>
+                            <strong>🏆 Badges Conquistados (6):</strong>
+                            <br>• First Blood (primeiro projeto)
+                            <br>• DeFi Builder
+                            <br>• Liquidity Provider
+                            <br>• Code Reviewer
+                            <br>• Early Adopter
+                            <br>• 5-Day Streak
+                        </div>
+                        <div class="message-time">18:00</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru</div>
+                        <div class="message-bubble">
+                            <strong>📈 Oportunidades Pipeline (4):</strong>
+                            <br>• $50K DeFi Grant (aplicação em revisão)
+                            <br>• Senior Dev Job @ LiquidX (88% match)
+                            <br>• Hackathon XRPL Brasil (próx. mês)
+                            <br>• Mentoria com Marcus Chen (agendada)
+                            <br><br>
+                            <strong>🎯 Próximo Milestone:</strong>
+                            <br>"DeFi Expert" em 300 XP
+                        </div>
+                        <div class="quick-actions">
+                            <button class="quick-action-btn">Ver portfólio completo</button>
+                            <button class="quick-action-btn">Exportar para CV</button>
+                            <button class="quick-action-btn">Compartilhar</button>
+                        </div>
+                        <div class="message-time">18:01</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phone-mockup">
+                <div class="phone-header">
+                    <div>
+                        <h3>XRPL Guru</h3>
+                        <div class="status-bar">Slack • Direct Message</div>
+                    </div>
+                </div>
+                <div class="chat-container">
+                    <div class="message user">
+                        <div class="message-bubble">
+                            /portfolio
+                        </div>
+                        <div class="message-time">18:05</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru</div>
+                        <div class="message-bubble">
+                            🎨 <strong>Seu Portfolio Builder</strong>
+                            <br><br>
+                            Criei um portfolio showcasing seus projetos XRPL:
+                            <br><br>
+                            <strong>Portfolio Link:</strong>
+                            <br>https://xrplguru.dev/@your-username
+                            <br><br>
+                            <strong>O que está incluído:</strong>
+                            <br>✅ Bio profissional (baseada no seu perfil)
+                            <br>✅ 3 projetos XRPL com descrições
+                            <br>✅ Skills validadas com badges
+                            <br>✅ Contributions ao ecossistema
+                            <br>✅ Links para GitHub e demos
+                        </div>
+                        <div class="message-time">18:05</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru</div>
+                        <div class="message-bubble">
+                            Você pode compartilhar esse link com:
+                            <br>• Recrutadores
+                            <br>• Grant committees
+                            <br>• Potential co-founders
+                            <br>• XRPL community
+                            <br><br>
+                            Quer customizar algo no portfolio?
+                        </div>
+                        <div class="quick-actions">
+                            <button class="quick-action-btn">Ver portfolio</button>
+                            <button class="quick-action-btn">Editar bio</button>
+                            <button class="quick-action-btn">Adicionar projeto</button>
+                        </div>
+                        <div class="message-time">18:06</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Menu de Acesso aos 7 Serviços via Chat</h2>
+
+        <div class="demo-grid">
+            <div class="phone-mockup">
+                <div class="phone-header">
+                    <div>
+                        <h3>XRPL Guru</h3>
+                        <div class="status-bar">WhatsApp • Online</div>
+                    </div>
+                </div>
+                <div class="chat-container">
+                    <div class="message user">
+                        <div class="message-bubble">
+                            /menu
+                        </div>
+                        <div class="message-time">20:00</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru</div>
+                        <div class="message-bubble">
+                            🎯 <strong>XRPL Guru - Menu de Serviços</strong>
+                            <br><br>
+                            Escolha um serviço ou digite o comando:
+                        </div>
+                        <div class="menu-list">
+                            <div class="menu-item"><span class="menu-number">1</span> <strong>/onboarding</strong> - Atualizar perfil e preferências</div>
+                            <div class="menu-item"><span class="menu-number">2</span> <strong>/matrix</strong> - Ver Knowledge Matrix e validar skills</div>
+                            <div class="menu-item"><span class="menu-number">3</span> <strong>/challenges</strong> - Desafios diários e gamificação</div>
+                            <div class="menu-item"><span class="menu-number">4</span> <strong>/opportunities</strong> - Grants, hackathons e eventos</div>
+                            <div class="menu-item"><span class="menu-number">5</span> <strong>/help</strong> - Ajuda com código e debugging</div>
+                            <div class="menu-item"><span class="menu-number">6</span> <strong>/jobs</strong> - Jobs, mentores e startups</div>
+                            <div class="menu-item"><span class="menu-number">7</span> <strong>/dashboard</strong> - Progresso e portfolio</div>
+                        </div>
+                        <div class="message-time">20:00</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru</div>
+                        <div class="message-bubble">
+                            💡 <strong>Dica:</strong> Você também pode me perguntar diretamente qualquer coisa sobre XRPL!
+                            <br><br>
+                            Exemplos:
+                            <br>• "Como criar um NFT?"
+                            <br>• "Qual grant está aberto agora?"
+                            <br>• "Me ajuda com esse erro..."
+                        </div>
+                        <div class="message-time">20:00</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phone-mockup">
+                <div class="phone-header">
+                    <div>
+                        <h3>XRPL Guru</h3>
+                        <div class="status-bar">Discord • Online</div>
+                    </div>
+                </div>
+                <div class="chat-container">
+                    <div class="message user">
+                        <div class="message-bubble">
+                            /help
+                        </div>
+                        <div class="message-time">20:05</div>
+                    </div>
+
+                    <div class="message guru">
+                        <div class="message-sender">XRPL Guru Bot</div>
+                        <div class="message-bubble">
+                            🤖 <strong>Comandos Disponíveis:</strong>
+                            <br><br>
+                            <strong>📋 Navegação:</strong>
+                            <br>/menu - Menu principal
+                            <br>/status - Status da conexão
+                            <br>/settings - Configurações
+                            <br><br>
+                            <strong>🎯 Serviços:</strong>
+                            <br>/onboarding - Smart Onboarding
+                            <br>/matrix - Adaptive Path
+                            <br>/challenges - Empower Loop
+                            <br>/opportunities - Proactive Guidance
+                            <br>/code - Code Partner
+                            <br>/jobs, /mentors, /startups - Market Bridge
+                            <br>/dashboard, /portfolio - Impact Dashboard
+                            <br><br>
+                            <strong>⚡ Atalhos:</strong>
+                            <br>/quick - Resumo rápido do dia
+                            <br>/next - Próxima ação sugerida
+                        </div>
+                        <div class="message-time">20:05</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="explanation" style="margin-top: 50px;">
+            <h3>✅ Wireframes Completos - Os 7 Serviços Acessíveis via Conversação</h3>
+            <p><strong>Este wireframe demonstra:</strong></p>
+            <ul style="margin-top: 10px; line-height: 1.8; color: #666;">
+                <li>✅ <strong>Service 1 (Smart Onboarding):</strong> Onboarding conversacional de 2-3 minutos via chat</li>
+                <li>✅ <strong>Service 2 (Adaptive Path):</strong> Knowledge Matrix validado através de conversação natural</li>
+                <li>✅ <strong>Service 3 (Empower Loop):</strong> Desafios, gamificação e badges via notificações</li>
+                <li>✅ <strong>Service 4 (Proactive Guidance):</strong> Alertas proativos de grants e preparação de aplicações</li>
+                <li>✅ <strong>Service 5 (Code Partner):</strong> Assistência de código, debugging e code review conversacional</li>
+                <li>✅ <strong>Service 6 (Market Bridge):</strong> Jobs, mentores e startups acessíveis via comandos de chat</li>
+                <li>✅ <strong>Service 7 (Impact Dashboard):</strong> Progresso e portfolio visualizados no chat + link para web</li>
+            </ul>
+            <div class="highlight" style="margin-top: 20px;">
+                <strong>🎯 Spirit of the Tool:</strong> A interface conversacional (WhatsApp/Discord/Slack) é a experiência principal. O web dashboard existe como complemento para visualizações complexas (matrix, portfolio builder), mas o usuário pode fazer TUDO via chat se preferir.
+            </div>
+        </div>
+    </div>
+</body>
+</html>

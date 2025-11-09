@@ -426,6 +426,260 @@ Border-radius: 12px
 
 ---
 
+### 4.4 Journey 4: Code Partner - Conversational Coding Assistance
+
+**Entry Point:** Developer encounters coding problem or needs technical help
+
+**Flow:**
+1. **Problem Initiation (Any Channel)**
+   - User messages via WhatsApp/Discord/Slack: "I'm getting tecNoPathToDestination error"
+   - AI detects technical question, switches to Code Partner mode
+   - AI: "That error means no trust line configured. Show me your code?"
+
+2. **Context Gathering**
+   - User shares code snippet (Python/JavaScript)
+   - AI analyzes code, identifies issue
+   - AI checks developer's current project context from previous conversations
+   - AI: "I see you're working on the payment gateway project - this is for USD tokens, right?"
+
+3. **Solution Delivery**
+   - AI provides specific fix with code example
+   - AI explains WHY it's broken and HOW to fix it
+   - AI offers two approaches: quick fix vs. best practice
+   - Code formatted for easy copy-paste
+
+4. **Security & Best Practices Check**
+   - AI proactively identifies security issues in shared code
+   - AI: "⚠️ Security tip: Always validate issuer before creating trust line"
+   - AI suggests optimizations (gas/fee reduction)
+
+5. **Learning Moment**
+   - After solution: AI asks "Want me to explain trust lines in detail?"
+   - If yes: AI provides brief explainer + links to XRPL docs (via Ripple RAG)
+   - If no: AI stands by for next question
+
+6. **Competency Update**
+   - AI silently updates Knowledge Matrix based on interaction
+   - Example: If developer fixed trust line issue → validates "Payments - Intermediário"
+
+**Exit Point:** Problem solved, developer can continue coding, matrix updated
+
+**Chat-Specific Interactions:**
+- **WhatsApp:** Plain text code, link to full examples
+- **Discord:** Rich code blocks with syntax highlighting
+- **Slack:** Interactive buttons for "Show full example" / "Explain more"
+
+**Personality:** Helpful coding buddy, patient, never condescending, celebrates wins
+
+---
+
+### 4.5 Journey 5: Empower Loop - Gamified Challenges & Progression
+
+**Entry Point:** Daily challenge notification OR developer requests challenge
+
+**Flow:**
+1. **Challenge Delivery (Proactive)**
+   - AI sends morning notification (9 AM developer's timezone)
+   - AI: "🎯 Daily Challenge: DeFi Builder - Create AMM pool on Testnet"
+   - Shows: Difficulty (⭐⭐⭐), Reward (+50 XP, "Liquidity Provider" badge), Estimated time (30 min)
+
+2. **Challenge Acceptance**
+   - Developer clicks "Accept challenge"
+   - AI provides step-by-step guidance (not full solution)
+   - AI: "Step 1: Create custom token. Need help or want to try yourself first?"
+   - Developer controls pace: can ask for hints or try independently
+
+3. **Progress Tracking**
+   - Developer messages updates: "Created token RTK!"
+   - AI validates progress: "✅ Step 1 complete. Ready for Step 2?"
+   - AI adapts difficulty if developer struggles (offers more hints)
+
+4. **Completion & Rewards**
+   - Developer completes challenge
+   - AI: "🎉 Challenge Complete! +50 XP, Badge earned: Liquidity Provider 💧"
+   - AI: "Total XP: 350 (Level 4). Next milestone: 650 XP for 'DeFi Expert'"
+
+5. **Streak Tracking**
+   - AI: "🔥 5-day streak! Keep it up!"
+   - If streak breaks: AI gently reminds but doesn't guilt-trip
+   - AI: "New challenge available tomorrow at 9 AM"
+
+6. **Social Features (Optional)**
+   - AI: "3 other developers completed this challenge today. Want to see their approaches?"
+   - Leaderboard opt-in: "You're #47 in Brazil, #234 globally"
+
+**Exit Point:** Challenge completed, XP gained, new competency validated, next challenge queued
+
+**Web Dashboard Integration:**
+- View all available challenges (not just daily)
+- Filter by difficulty, topic, time commitment
+- See badge collection, XP history graph
+
+**Personality:** Encouraging coach, celebrates progress, never pushy about streaks
+
+---
+
+### 4.6 Journey 6: Market Bridge - Jobs, Mentors, Startup Connections
+
+**Entry Point:** AI detects match OR developer requests via command (/jobs, /mentors, /startups)
+
+**Flow A: Job Match (Proactive)**
+1. **Match Detection (Background)**
+   - AI monitors XRPL job boards, startup postings
+   - Matches developer skills + location + interests
+   - Match score ≥85%: AI sends notification
+
+2. **Proactive Notification**
+   - AI: "💼 Job Match! Senior XRPL Developer - DeFi Focus, $80K-$120K, Remote (Brazil OK)"
+   - Shows match breakdown: "88% match - your DeFi skills + 3 XRPL projects + location"
+
+3. **Application Preparation**
+   - Developer: "Tell me more"
+   - AI provides: Company background, role details, requirements
+   - AI: "Want me to prepare your application? I'll use your portfolio + validated skills"
+   - Developer: "Yes"
+   - AI drafts cover letter, highlights relevant projects, prepares resume talking points
+
+4. **Connection Facilitation**
+   - AI: "Ready to apply. I can submit directly or you can review/edit first?"
+   - Developer reviews, makes tweaks
+   - AI submits application, sets reminder to follow up in 1 week
+
+**Flow B: Mentor Matching (On-Demand)**
+1. **Request Initiation**
+   - Developer: "/mentors" or "I need a mentor for DeFi"
+   - AI: "Looking for DeFi mentors in XRPL ecosystem..."
+
+2. **Match Presentation**
+   - AI shows 2-3 top matches with:
+     - Name, expertise, availability (hours/week)
+     - Why they're a good match (complementary skills vs. same focus)
+     - Mentor bio + past mentees' success stories
+
+3. **Introduction**
+   - Developer: "Connect me with Marcus Chen"
+   - AI: "I'll intro you. What do you want to learn from Marcus?"
+   - Developer provides context
+   - AI sends warm introduction email/message to mentor with developer's background
+   - AI: "Introduction sent! Marcus usually responds within 2 days."
+
+4. **Follow-up**
+   - AI checks in after 3 days: "Heard back from Marcus?"
+   - If no response: AI offers alternative mentor
+   - If yes: AI asks "How was the session? Need to schedule next one?"
+
+**Flow C: Startup Discovery**
+1. **Exploration**
+   - Developer: "/startups"
+   - AI: "🚀 XRPL Startups Seeking Talent (2 matches for your profile)"
+
+2. **Startup Profiles**
+   - Shows: Stage (Seed/Pre-seed), funding, focus area, what they're building, what role they need
+   - Match reason: "Your DeFi expertise perfect for LiquidX's cross-chain aggregator"
+
+3. **Connection**
+   - Developer expresses interest
+   - AI: "LiquidX is led by Sarah (ex-Ripple engineer). Want intro?"
+   - AI facilitates warm introduction with founder
+   - AI: "Connecting you with Sarah. She's looking for a lead DeFi engineer or potential co-founder."
+
+**Exit Point:** Job applied, mentor connected, startup introduction made
+
+**Personality:** Professional networker, warm introducer, respects developer's time and interest level
+
+---
+
+### 4.7 Journey 7: Impact Dashboard - Progress Visualization & Portfolio
+
+**Entry Point:** Developer requests dashboard (/dashboard, /portfolio) OR periodic AI summary
+
+**Flow A: Progress Dashboard (Chat-Based)**
+1. **Request**
+   - Developer: "/dashboard"
+   - AI: "📊 Your Impact Dashboard - Last updated: today"
+
+2. **Summary Delivery (Conversational Format)**
+   - AI presents in chat-optimized format:
+     ```
+     🎯 Progress:
+     • Knowledge Matrix: 75% complete
+     • XP: 350 (Level 4)
+     • Streak: 5 days 🔥
+
+     ✅ Skills Validated (8):
+     • DeFi Protocols - Avançado
+     • Smart Contracts - Intermediário
+     [...]
+
+     🚀 Projects (3):
+     • AMM Liquidity Pool (Nov 2025)
+     • NFT Marketplace (Oct 2025)
+     [...]
+
+     📈 Opportunities Pipeline (4):
+     • $50K DeFi Grant (under review)
+     • Senior Dev Job @ LiquidX (88% match)
+     [...]
+     ```
+
+3. **Interactive Exploration**
+   - AI: "Want details on any section?"
+   - Developer can drill down: "Show me badge collection"
+   - AI provides details conversationally
+
+4. **Export Options**
+   - AI: "Export to CV? Share portfolio link?"
+   - Developer can request PDF resume, LinkedIn-formatted summary, public portfolio link
+
+**Flow B: Portfolio Builder (Web + Chat Hybrid)**
+1. **Portfolio Creation Request**
+   - Developer: "/portfolio"
+   - AI: "🎨 I created your XRPL portfolio: xrplguru.dev/@your-username"
+
+2. **What's Included**
+   - AI: "Your portfolio includes:"
+     - Professional bio (auto-generated from profile)
+     - 3 XRPL projects with descriptions, screenshots, GitHub links
+     - Validated skills with badges
+     - Contribution history to XRPL ecosystem
+     - Contact info (optional)
+
+3. **Customization**
+   - AI: "Want to edit anything?"
+   - Developer can request changes via chat:
+     - "Update bio to mention my Ethereum background"
+     - "Add my hackathon win"
+     - "Remove Project X"
+   - AI makes changes, confirms: "Updated! Check the link."
+
+4. **Sharing**
+   - AI: "Share this with recruiters, grant committees, or XRPL community"
+   - Portfolio is public URL, SEO-optimized
+   - AI tracks views (analytics): "Your portfolio had 23 views this week"
+
+**Flow C: Proactive Progress Updates**
+1. **Weekly Summary (Sunday evening)**
+   - AI: "📊 Weekly Wrap-Up: Great progress this week!"
+   - Highlights: XP gained, skills validated, challenges completed, opportunities engaged
+   - AI: "Next week goal: Validate 2 more skills to unlock 5 new grants"
+
+2. **Milestone Celebrations**
+   - When hitting major milestone (Level up, Matrix 100%, etc.)
+   - AI: "🎉 Milestone Achieved: DeFi Expert! You're now in top 10% of XRPL developers."
+   - AI shares achievement to community (opt-in): "Want me to share in #wins channel?"
+
+**Exit Point:** Developer sees full progress, portfolio shared, motivation boosted
+
+**Web Dashboard Role:**
+- Visual graphs of progress over time (XP curve, skills heatmap)
+- Interactive Knowledge Matrix with drill-down
+- Portfolio builder with drag-drop customization
+- Analytics deep-dive (opportunity funnel, time invested, ROI)
+
+**Personality:** Supportive cheerleader, data-driven, celebrates progress without being over-the-top
+
+---
+
 ## 5. Component Library Strategy
 
 ### 5.1 Core Components (Minimal Set)
