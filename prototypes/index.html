@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XRPL Guru - Your XRPL Success Partner</title>
+    <link rel="stylesheet" href="styles/common.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f0f2f5;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .app-container {
+            display: flex;
+            height: 100vh;
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+        }
+
+        /* Sidebar - 45% da tela (área de orientação proativa) */
+        .sidebar {
+            width: 45%;
+            background: white;
+            border-right: 1px solid #e0e0e0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            background: #2d5016;
+            color: white;
+            height: 72px;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar-header h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0;
+        }
+
+        .chat-header {
+            padding: 24px;
+            background: #2d5016;
+            border-bottom: 1px solid #e0e0e0;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .code-partner-button {
+            padding: 8px 16px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            color: white;
+            border-radius: 6px;
+            font-size: 0.945rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .code-partner-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: white;
+        }
+
+        .code-partner-button.active {
+            display: none;
+        }
+
+        .code-partner-button.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .chat-header.code-mode {
+            background: #1e3a8a;
+        }
+
+        .activities-button {
+            padding: 8px 16px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            color: white;
+            border-radius: 6px;
+            font-size: 0.945rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-left: 12px;
+            display: none;
+        }
+
+        .activities-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: white;
+        }
+
+        .activities-button.active {
+            background: #2d5016;
+            border-color: #2d5016;
+        }
+
+        /* Code Partner Mode */
+        .code-editor-panel {
+            display: none;
+            width: 50%;
+            background: #1e1e1e;
+            border-right: 1px solid #e0e0e0;
+            flex-direction: column;
+        }
+
+        .code-editor-panel.active {
+            display: flex;
+        }
+
+        .code-editor-header {
+            padding: 12px 16px;
+            background: #2d2d2d;
+            color: #ffffff;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-bottom: 1px solid #3d3d3d;
+        }
+
+        .code-textarea {
+            flex: 1;
+            padding: 16px;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            border: none;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.9rem;
+            resize: none;
+            outline: none;
+            line-height: 1.6;
+        }
+
+        .chat-area.code-mode {
+            width: 50%;
+        }
+
+        .sidebar.hidden {
+            display: none;
+        }
+
+        .services-menu.past-mode .service-item,
+        .services-menu.past-mode .action-row {
+            display: none;
+        }
+
+        .past-activities-list {
+            display: none;
+        }
+
+        .past-activities-list.active {
+            display: block;
+        }
+
+        .past-activity-item {
+            padding: 12px;
+            margin-bottom: 12px;
+            background: #f8f8f8;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .past-activity-item:hover {
+            background: white;
+            border-color: #2d5016;
+        }
+
+        .past-activity-title {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #2d5016;
+            margin-bottom: 4px;
+        }
+
+        .past-activity-date {
+            font-size: 0.75rem;
+            color: #999;
+            margin-bottom: 8px;
+        }
+
+        .past-activity-details {
+            font-size: 0.85rem;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .channels {
+            padding: 16px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .channels h3 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .channel-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 4px;
+        }
+
+        .channel-item:hover {
+            background: #f0f2f5;
+        }
+
+        .channel-item.active {
+            background: #e8f5e9;
+            border-left: 3px solid #2d5016;
+        }
+
+        .channel-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+            margin-right: 12px;
+            font-size: 0.9rem;
+        }
+
+        .slack { background: #4a154b; }
+        .discord { background: #5865F2; }
+        .whatsapp { background: #25D366; }
+
+        .channel-info {
+            flex: 1;
+        }
+
+        .channel-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 2px;
+        }
+
+        .channel-status {
+            font-size: 0.75rem;
+            color: #666;
+        }
+
+        .services-menu {
+            padding: 16px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .services-menu h3 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .action-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .heat-indicator {
+            font-size: 1.2rem;
+            line-height: 1;
+            margin-top: 12px;
+            flex-shrink: 0;
+            width: 24px;
+            text-align: center;
+        }
+
+        .service-item {
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid #e0e0e0;
+            flex: 1;
+            position: relative;
+        }
+
+        .service-item:hover {
+            background: #f8f8f8;
+            border-color: #2d5016;
+        }
+
+        .service-item.active {
+            background: #e8f5e9;
+            border-color: #2d5016;
+        }
+
+        .service-item.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .service-name {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #2d5016;
+            margin-bottom: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .service-title {
+            flex: 1;
+        }
+
+        .days-ago {
+            font-size: 0.75rem;
+            color: #999;
+            font-weight: 400;
+            flex-shrink: 0;
+            margin-left: 8px;
+        }
+
+        .service-desc {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .sidebar-footer {
+            padding: 16px;
+            border-top: 1px solid #e0e0e0;
+            height: 76px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-footer button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex: 1;
+            padding: 12px;
+            background: transparent;
+            border: 1px solid rgba(45, 80, 22, 0.3);
+            color: #2d5016;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .sidebar-footer button:hover {
+            background: rgba(45, 80, 22, 0.1);
+            border-color: #2d5016;
+        }
+
+        .sidebar-footer button.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        /* Chat Area */
+        .chat-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #f8f8f8;
+        }
+
+        /* Chat header removido - chat assume 100% vertical */
+
+        .messages-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+        }
+
+        .message {
+            display: flex;
+            margin-bottom: 16px;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message-bubble {
+            max-width: 60%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            line-height: 1.5;
+            font-size: 0.9rem;
+        }
+
+        .message.guru .message-bubble {
+            background: white;
+            border: 1px solid #e0e0e0;
+            color: #1a1a1a;
+        }
+
+        .message.user .message-bubble {
+            background: #2d5016;
+            color: white;
+        }
+
+        .message-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #2d5016;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 12px;
+            flex-shrink: 0;
+            font-size: 0.9rem;
+        }
+
+        .message.user .message-avatar {
+            margin-right: 0;
+            margin-left: 12px;
+            background: #4a7c28;
+        }
+
+        .chat-area.code-mode .message-avatar {
+            background: #1e3a8a;
+        }
+
+        .chat-area.code-mode .message.user .message-avatar {
+            background: #2563eb;
+        }
+
+        .message-time {
+            font-size: 0.7rem;
+            color: #999;
+            margin-top: 4px;
+        }
+
+        .quick-replies {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .quick-reply {
+            padding: 8px 14px;
+            background: white;
+            border: 1px solid #2d5016;
+            color: #2d5016;
+            border-radius: 18px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .quick-reply:hover {
+            background: #2d5016;
+            color: white;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .service-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .service-card:hover {
+            border-color: #2d5016;
+            box-shadow: 0 2px 8px rgba(45, 80, 22, 0.1);
+        }
+
+        .service-card-icon {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .service-card-title {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #2d5016;
+            margin-bottom: 4px;
+        }
+
+        .service-card-desc {
+            font-size: 0.75rem;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .chat-input-area {
+            padding: 16px 24px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            height: 76px;
+            display: flex;
+            align-items: center;
+        }
+
+        .chat-input-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #e0e0e0;
+            border-radius: 24px;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .chat-input:focus {
+            border-color: #2d5016;
+        }
+
+        .send-button {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: #2d5016;
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .send-button:hover {
+            background: #4a7c28;
+            transform: scale(1.05);
+        }
+
+        .chat-area.code-mode .send-button {
+            background: #1e3a8a;
+        }
+
+        .chat-area.code-mode .send-button:hover {
+            background: #2563eb;
+        }
+
+        .typing-indicator {
+            display: none;
+            padding: 12px 16px;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            width: 60px;
+        }
+
+        .typing-indicator.active {
+            display: inline-block;
+        }
+
+        .typing-indicator span {
+            height: 8px;
+            width: 8px;
+            background: #666;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 0 2px;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.5;
+            }
+            30% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .message-bubble {
+                max-width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Code Editor Panel (hidden by default) -->
+        <div class="code-editor-panel" id="codeEditorPanel">
+            <div class="code-editor-header">
+                Your Code
+            </div>
+            <textarea class="code-textarea" id="codeTextarea" placeholder="Paste your XRPL code here...
+
+Example:
+const xrpl = require('xrpl')
+
+async function main() {
+  const client = new xrpl.Client('wss://s.altnet.rippletest.net:51233')
+  await client.connect()
+
+  // Your code here
+
+  await client.disconnect()
+}
+
+main()"></textarea>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1>XRPL Guru</h1>
+            </div>
+
+            <!-- Área de Ações Proativas - Stack dinâmico -->
+            <div class="services-menu" id="servicesMenu">
+                <!-- Ação 1: Onboarding -->
+                <div class="action-row" id="onboarding-row">
+                    <div class="heat-indicator">🔥</div>
+                    <div class="service-item" onclick="sendActionMessage('onboarding')" style="cursor: pointer;">
+                        <div class="service-name">
+                            <span class="service-title">Complete Your Onboarding</span>
+                            <span class="days-ago">1d ago</span>
+                        </div>
+                        <div class="service-desc">2-3 minutes</div>
+                    </div>
+                </div>
+
+                <!-- Ação 2: Grant Opportunity -->
+                <div class="action-row">
+                    <div class="heat-indicator">🔥</div>
+                    <div class="service-item disabled" id="grant-item" onclick="sendActionMessage('grant')" style="cursor: pointer;">
+                        <div class="service-name">
+                            <span class="service-title">$50K DeFi Grant</span>
+                            <span class="days-ago">1d ago</span>
+                        </div>
+                        <div class="service-desc">92% match • Deadline Nov 15</div>
+                    </div>
+                </div>
+
+                <!-- Ação 3: Workshop -->
+                <div class="action-row">
+                    <div class="heat-indicator">🔥</div>
+                    <div class="service-item disabled" id="workshop-item" onclick="sendActionMessage('workshop')" style="cursor: pointer;">
+                        <div class="service-name">
+                            <span class="service-title">XRPL DeFi Workshop</span>
+                            <span class="days-ago">2d ago</span>
+                        </div>
+                        <div class="service-desc">Nov 20 • Online • Free registration</div>
+                    </div>
+                </div>
+
+                <!-- Ação 4: Hackathon -->
+                <div class="action-row">
+                    <div class="heat-indicator"></div>
+                    <div class="service-item disabled" id="hackathon-item" onclick="sendActionMessage('hackathon')" style="cursor: pointer;">
+                        <div class="service-name">
+                            <span class="service-title">XRPL Global Hackathon</span>
+                            <span class="days-ago">3d ago</span>
+                        </div>
+                        <div class="service-desc">$100K prize pool • Starts Dec 1</div>
+                    </div>
+                </div>
+
+                <!-- Ação 5: Job Match -->
+                <div class="action-row">
+                    <div class="heat-indicator"></div>
+                    <div class="service-item disabled" id="job-item" onclick="sendActionMessage('job')" style="cursor: pointer;">
+                        <div class="service-name">
+                            <span class="service-title">Senior XRPL Developer</span>
+                            <span class="days-ago">5d ago</span>
+                        </div>
+                        <div class="service-desc">Remote • $80K-$120K • 88% match</div>
+                    </div>
+                </div>
+
+                <!-- Ação 6: Mentorship -->
+                <div class="action-row">
+                    <div class="heat-indicator"></div>
+                    <div class="service-item disabled" id="mentor-item" onclick="sendActionMessage('mentor')" style="cursor: pointer;">
+                        <div class="service-name">
+                            <span class="service-title">Connect with XRPL Mentor</span>
+                            <span class="days-ago">7d ago</span>
+                        </div>
+                        <div class="service-desc">DeFi expert • 15 years experience</div>
+                    </div>
+                </div>
+
+                <!-- Ação 7: Community Event -->
+                <div class="action-row">
+                    <div class="heat-indicator"></div>
+                    <div class="service-item disabled" id="event-item" onclick="sendActionMessage('event')" style="cursor: pointer;">
+                        <div class="service-name">
+                            <span class="service-title">XRPL Developer Meetup</span>
+                            <span class="days-ago">10d ago</span>
+                        </div>
+                        <div class="service-desc">San Francisco • Nov 25 • Networking</div>
+                    </div>
+                </div>
+
+                <!-- Ação 8: Validate Knowledge -->
+                <div class="action-row">
+                    <div class="heat-indicator"></div>
+                    <div class="service-item disabled" id="validate-item" onclick="sendActionMessage('validate')" style="cursor: pointer;">
+                        <div class="service-name">
+                            <span class="service-title">Validate DeFi Knowledge</span>
+                            <span class="days-ago">12d ago</span>
+                        </div>
+                        <div class="service-desc">Unlocks advanced opportunities</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <button id="settingsBtn" class="disabled" onclick="window.location.href='settings.html'">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M12 1v6m0 6v6m5.196-15.804L13.804 6.59m-3.608 6.804l-3.392 3.392M23 12h-6m-6 0H1m15.804 5.196l-3.392-3.392m-6.804-3.608L2.196 6.804"></path>
+                    </svg>
+                    Settings
+                </button>
+            </div>
+        </div>
+
+        <!-- Chat Area - 55% da tela -->
+        <div class="chat-area" id="chatArea">
+            <div class="chat-header">
+                <button class="code-partner-button" id="codePartnerBtn" onclick="toggleCodePartner()">Code Partner</button>
+                <button class="activities-button" id="activitiesBtn" onclick="toggleActivities()">Activities</button>
+            </div>
+
+            <div class="messages-container" id="messages">
+                <!-- Messages will be inserted here by JavaScript -->
+            </div>
+
+            <div class="chat-input-area">
+                <div class="chat-input-container">
+                    <input type="text" class="chat-input" id="userInput" placeholder="Type a message or try: /menu, /dashboard, /challenges" onkeypress="handleEnter(event)">
+                    <button class="send-button" onclick="sendMessage()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let messageHistory = [];
+        let onboardingStep = 0;
+        let userName = '';
+
+        // Check localStorage for onboarding status
+        let onboardingCompleted = localStorage.getItem('onboardingCompleted') === 'true';
+        let hasInitialized = false;
+
+        function initializeChat() {
+            // Check if onboarding was already completed
+            if (onboardingCompleted) {
+                // Unlock everything
+                unlockAllItems();
+                document.getElementById('codePartnerBtn').classList.remove('disabled');
+                document.getElementById('settingsBtn').classList.remove('disabled');
+                document.getElementById('onboarding-row').style.display = 'none';
+
+                // Show welcome back message
+                addMessage('guru', 'Welcome back! Click on any suggestion from the left sidebar or use Code Partner.');
+                return;
+            }
+
+            // Only start onboarding once, on first load
+            if (hasInitialized) {
+                return;
+            }
+
+            hasInitialized = true;
+
+            // Disable Code Partner button until onboarding is complete
+            document.getElementById('codePartnerBtn').classList.add('disabled');
+
+            // Auto-start onboarding
+            setTimeout(() => {
+                addMessage('guru', 'Hi there! Welcome to XRPL Guru.');
+            }, 500);
+
+            setTimeout(() => {
+                addMessage('guru', 'Before we begin, I need to complete your onboarding (just 2-3 minutes). This will unlock all features including Code Partner and personalized recommendations.');
+            }, 1500);
+
+            setTimeout(() => {
+                addMessage('guru', 'Let\'s start! Question 1 of 4: What\'s your name?');
+                onboardingStep = 1;
+            }, 2500);
+        }
+
+        let isCodePartnerMode = false;
+
+        function toggleCodePartner() {
+            isCodePartnerMode = true;
+
+            // Hide sidebar, show code editor
+            document.getElementById('sidebar').classList.add('hidden');
+            document.getElementById('codeEditorPanel').classList.add('active');
+            document.getElementById('chatArea').classList.add('code-mode');
+
+            // Update header and buttons
+            document.querySelector('.chat-header').classList.add('code-mode');
+            document.getElementById('codePartnerBtn').classList.add('active');
+            document.getElementById('activitiesBtn').style.display = 'inline-block';
+            document.getElementById('activitiesBtn').classList.remove('active');
+
+            // Clear and start Code Partner conversation
+            document.getElementById('messages').innerHTML = '';
+            addMessage('guru', 'Code Partner activated! I\'m your XRPL coding assistant.');
+            setTimeout(() => {
+                addMessage('guru', 'Paste your code in the left panel and I\'ll help you with:\n• Debugging errors\n• Security review\n• Best practices\n• XRPL-specific optimizations');
+            }, 800);
+        }
+
+        function toggleActivities() {
+            isCodePartnerMode = false;
+
+            // Show sidebar, hide code editor
+            document.getElementById('sidebar').classList.remove('hidden');
+            document.getElementById('codeEditorPanel').classList.remove('active');
+            document.getElementById('chatArea').classList.remove('code-mode');
+
+            // Update header and buttons
+            document.querySelector('.chat-header').classList.remove('code-mode');
+            document.getElementById('codePartnerBtn').classList.remove('active');
+            document.getElementById('activitiesBtn').classList.add('active');
+            document.getElementById('activitiesBtn').style.display = 'none';
+
+            // Clear and restart normal chat
+            document.getElementById('messages').innerHTML = '';
+
+            // If onboarding was completed, show empty state
+            if (onboardingCompleted) {
+                addMessage('guru', 'Welcome back! Click on any suggestion from the left sidebar or use Code Partner.');
+            } else {
+                initializeChat();
+            }
+        }
+
+        let isPastActivitiesMode = false;
+
+        function showPastActivities() {
+            isPastActivitiesMode = true;
+
+            // Update user name in past activities
+            if (userName) {
+                document.getElementById('pastUserName').textContent = userName;
+            }
+
+            // Hide current activities, show past activities in sidebar
+            document.getElementById('servicesMenu').classList.add('past-mode');
+            document.getElementById('pastActivitiesList').classList.add('active');
+
+            // Update Past Activities button style
+            document.getElementById('pastActivitiesBtn').style.background = '#2d5016';
+            document.getElementById('pastActivitiesBtn').style.color = 'white';
+            document.getElementById('pastActivitiesBtn').style.borderColor = '#2d5016';
+
+            // Clear chat
+            document.getElementById('messages').innerHTML = '';
+            addMessage('guru', 'Showing your past activities in the left sidebar.');
+        }
+
+        function hidePastActivities() {
+            isPastActivitiesMode = false;
+
+            // Show current activities, hide past activities
+            document.getElementById('servicesMenu').classList.remove('past-mode');
+            document.getElementById('pastActivitiesList').classList.remove('active');
+
+            // Reset Past Activities button style
+            document.getElementById('pastActivitiesBtn').style.background = '#f8f8f8';
+            document.getElementById('pastActivitiesBtn').style.color = '#666';
+            document.getElementById('pastActivitiesBtn').style.borderColor = '#e0e0e0';
+        }
+
+        function viewPastActivity(activityType) {
+            // Return to current activities view
+            hidePastActivities();
+
+            // Clear chat and show activity details
+            document.getElementById('messages').innerHTML = '';
+
+            if (activityType === 'onboarding') {
+                addMessage('guru', 'Your Onboarding Summary:');
+                setTimeout(() => {
+                    addMessage('guru', `Name: ${userName || 'Joseph'}\nFocus: DeFi & Trading\nExperience: Intermediate\nInterest: Smart Contracts & Development`);
+                }, 800);
+                setTimeout(() => {
+                    addMessage('guru', 'Onboarding was completed on November 9, 2025. Your profile is active and all features are unlocked.');
+                }, 1600);
+            }
+        }
+
+        function addMessage(type, text, options = {}) {
+            const messagesContainer = document.getElementById('messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.textContent = type === 'guru' ? 'G' : 'You';
+
+            const bubble = document.createElement('div');
+            bubble.className = 'message-bubble';
+            bubble.textContent = text;
+
+            if (type === 'guru') {
+                messageDiv.appendChild(avatar);
+                messageDiv.appendChild(bubble);
+            } else {
+                messageDiv.appendChild(bubble);
+                messageDiv.appendChild(avatar);
+            }
+
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            messageHistory.push({ type, text });
+        }
+
+        function showServicesGrid() {
+            const messagesContainer = document.getElementById('messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message guru';
+
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.textContent = 'G';
+
+            const bubble = document.createElement('div');
+            bubble.className = 'message-bubble';
+            bubble.style.maxWidth = '80%';
+
+            bubble.innerHTML = `
+                <div style="margin-bottom: 12px; font-weight: 600;">🎯 My 7 Services for Your Success:</div>
+                <div class="services-grid">
+                    <div class="service-card" onclick="showService('onboarding')">
+                        <div class="service-card-icon">🚀</div>
+                        <div class="service-card-title">Smart Onboarding</div>
+                        <div class="service-card-desc">2-3 min conversational setup</div>
+                    </div>
+                    <div class="service-card" onclick="showService('adaptive')">
+                        <div class="service-card-icon">📚</div>
+                        <div class="service-card-title">Adaptive Path</div>
+                        <div class="service-card-desc">Knowledge Matrix validation</div>
+                    </div>
+                    <div class="service-card" onclick="showService('empower')">
+                        <div class="service-card-icon">🎯</div>
+                        <div class="service-card-title">Empower Loop</div>
+                        <div class="service-card-desc">Daily challenges & XP</div>
+                    </div>
+                    <div class="service-card" onclick="showService('proactive')">
+                        <div class="service-card-icon">⭐</div>
+                        <div class="service-card-title">Proactive Guidance</div>
+                        <div class="service-card-desc">THE HEART - opportunity matching</div>
+                    </div>
+                    <div class="service-card" onclick="showService('code')">
+                        <div class="service-card-icon">💻</div>
+                        <div class="service-card-title">Code Partner</div>
+                        <div class="service-card-desc">Coding help & debugging</div>
+                    </div>
+                    <div class="service-card" onclick="showService('market')">
+                        <div class="service-card-icon">💼</div>
+                        <div class="service-card-title">Market Bridge</div>
+                        <div class="service-card-desc">Jobs, mentors, startups</div>
+                    </div>
+                    <div class="service-card" onclick="showService('empower')">
+                        <div class="service-card-icon">📊</div>
+                        <div class="service-card-title">Impact Dashboard</div>
+                        <div class="service-card-desc">Track progress & build portfolio</div>
+                    </div>
+                </div>
+            `;
+
+            messageDiv.appendChild(avatar);
+            messageDiv.appendChild(bubble);
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function showQuickReplies(replies) {
+            const messagesContainer = document.getElementById('messages');
+            const lastMessage = messagesContainer.lastElementChild;
+
+            const quickRepliesDiv = document.createElement('div');
+            quickRepliesDiv.className = 'quick-replies';
+
+            replies.forEach(reply => {
+                const button = document.createElement('button');
+                button.className = 'quick-reply';
+                button.textContent = reply;
+                button.onclick = () => handleQuickReply(reply);
+                quickRepliesDiv.appendChild(button);
+            });
+
+            lastMessage.querySelector('.message-bubble').appendChild(quickRepliesDiv);
+        }
+
+        function handleQuickReply(reply) {
+            addMessage('user', reply);
+
+            setTimeout(() => {
+                if (reply === 'Tell me more') {
+                    addMessage('guru', 'I work differently from other tools. I\'m not just a chatbot - I\'m your success partner! I proactively monitor the XRPL ecosystem for grants, jobs, hackathons and notify you when YOU are ready.');
+                } else if (reply === 'Start onboarding') {
+                    showService('onboarding');
+                } else if (reply === 'Show challenges') {
+                    showService('empower');
+                } else if (reply === 'Find opportunities') {
+                    showService('proactive');
+                }
+            }, 800);
+        }
+
+        function unlockAllItems() {
+            document.getElementById('grant-item').classList.remove('disabled');
+            document.getElementById('workshop-item').classList.remove('disabled');
+            document.getElementById('hackathon-item').classList.remove('disabled');
+            document.getElementById('job-item').classList.remove('disabled');
+            document.getElementById('mentor-item').classList.remove('disabled');
+            document.getElementById('event-item').classList.remove('disabled');
+            document.getElementById('validate-item').classList.remove('disabled');
+        }
+
+        function startOnboarding() {
+            // This function is now called from sidebar click
+            // Just inform we're continuing
+            addMessage('user', 'Let me complete the onboarding');
+
+            setTimeout(() => {
+                addMessage('guru', 'Great! Let\'s continue. Question 1 of 4: What\'s your name?');
+                onboardingStep = 1;
+            }, 800);
+        }
+
+        function handleOnboardingResponse(response) {
+            if (onboardingStep === 1) {
+                // Question 1: Name
+                userName = response;
+                addMessage('user', response);
+                setTimeout(() => {
+                    addMessage('guru', `Nice to meet you, ${userName}!`);
+                }, 800);
+                setTimeout(() => {
+                    addMessage('guru', 'Question 2 of 4: What brings you to XRPL?\n\nA) Learning blockchain development\nB) Building a specific project\nC) Looking for grants/funding\nD) Career opportunities');
+                }, 1600);
+                onboardingStep = 2;
+
+            } else if (onboardingStep === 2) {
+                // Question 2: Main goal
+                addMessage('user', response);
+                setTimeout(() => {
+                    addMessage('guru', 'Great choice!');
+                }, 800);
+                setTimeout(() => {
+                    addMessage('guru', 'Question 3 of 4: What\'s your experience level with blockchain?\n\nA) Beginner - Just starting\nB) Intermediate - Built some projects\nC) Advanced - Professional experience');
+                }, 1600);
+                onboardingStep = 3;
+
+            } else if (onboardingStep === 3) {
+                // Question 3: Experience level
+                addMessage('user', response);
+                setTimeout(() => {
+                    addMessage('guru', 'Perfect! Almost done...');
+                }, 800);
+                setTimeout(() => {
+                    addMessage('guru', 'Question 4 of 4: What are you most interested in?\n\nA) DeFi & Trading\nB) NFTs & Digital Assets\nC) Payments & Remittance\nD) Smart Contracts & Development');
+                }, 1600);
+                onboardingStep = 4;
+
+            } else if (onboardingStep === 4) {
+                // Question 4: Interest area - Complete onboarding
+                addMessage('user', response);
+                setTimeout(() => {
+                    addMessage('guru', `Perfect, ${userName}!`);
+                }, 800);
+                setTimeout(() => {
+                    addMessage('guru', 'Your profile is all set! I\'ve analyzed your background and prepared personalized recommendations for you.');
+                }, 1600);
+                setTimeout(() => {
+                    addMessage('guru', 'Check out the suggestions on the left sidebar - they\'re tailored specifically for you!');
+                }, 2400);
+                setTimeout(() => {
+                    addMessage('guru', 'These suggestions will update automatically as you use the platform and as new opportunities emerge in the XRPL ecosystem.');
+                }, 3200);
+                setTimeout(() => {
+                    unlockAllItems();
+                    // Enable Code Partner button and Settings
+                    document.getElementById('codePartnerBtn').classList.remove('disabled');
+                    document.getElementById('settingsBtn').classList.remove('disabled');
+                    // Remove onboarding item
+                    document.getElementById('onboarding-row').style.display = 'none';
+                    onboardingCompleted = true;
+                    // Save to localStorage
+                    localStorage.setItem('onboardingCompleted', 'true');
+                }, 4000);
+                onboardingStep = 0; // Reset
+            }
+        }
+
+        function sendActionMessage(actionType) {
+            // Start onboarding flow
+            if (actionType === 'onboarding') {
+                startOnboarding();
+                return;
+            }
+
+            const actionMessages = {
+                'grant': {
+                    user: 'Tell me about the $50K DeFi grant',
+                    guru: [
+                        'XRPL Foundation DeFi Grant - $50,000\n\nMatch Score: 92% - You\'re ready!\nDeadline: November 15, 2025',
+                        'Why this matches YOU:\n• Your DeFi Protocols knowledge (Intermediate validated)\n• 3 XRPL projects in your portfolio\n• AMM and liquidity pool experience',
+                        'Want me to help you prepare your application? I can draft it based on your profile and projects.'
+                    ]
+                },
+                'workshop': {
+                    user: 'Tell me about the XRPL DeFi Workshop',
+                    guru: [
+                        'XRPL DeFi Workshop\n\nNovember 20, 2025\n2:00 PM - 5:00 PM UTC\nOnline (Zoom)',
+                        'What you\'ll learn:\n• Building AMM pools on XRPL\n• Integration with XRPL DEX\n• Best practices for DeFi security\n• Live coding session',
+                        'Match: 95% - This workshop aligns perfectly with your DeFi interests!\n\nWant me to register you? It\'s completely free!'
+                    ]
+                },
+                'hackathon': {
+                    user: 'Tell me about the XRPL Global Hackathon',
+                    guru: [
+                        'XRPL Global Hackathon 2025\n\nPrize Pool: $100,000\nDecember 1-15, 2025\nFully remote',
+                        'Tracks:\n• DeFi Innovation\n• NFT & Digital Assets\n• Payment Solutions\n• Developer Tools',
+                        'Based on your profile, I recommend the DeFi Innovation track!\n\nWant help forming a team or brainstorming project ideas?'
+                    ]
+                },
+                'job': {
+                    user: 'Tell me about the Senior XRPL Developer job',
+                    guru: [
+                        'Senior XRPL Developer - LiquidX\n\nRemote (worldwide)\n$80,000 - $120,000\nMatch: 88%',
+                        'About LiquidX:\nDeFi cross-chain aggregator startup, seed stage, backed by top VCs.',
+                        'Why you match:\n• Your DeFi expertise\n• 3 XRPL projects demonstrated\n• Remote work preference',
+                        'Want me to prepare your application? I can draft a cover letter using your portfolio.'
+                    ]
+                },
+                'mentor': {
+                    user: 'Tell me about the XRPL mentor',
+                    guru: [
+                        'Connect with Sarah Chen\n\nDeFi Protocol Architect at Ripple\n15 years in blockchain & finance\nExpertise: DeFi, AMMs, Cross-border payments',
+                        'Why Sarah is a great match:\n• Deep XRPL DeFi expertise\n• Has mentored 50+ developers\n• Active in XRPL community',
+                        'Sarah offers 1-hour monthly sessions. Want me to send a connection request on your behalf?'
+                    ]
+                },
+                'event': {
+                    user: 'Tell me about the XRPL Developer Meetup',
+                    guru: [
+                        'XRPL Developer Meetup - San Francisco\n\nNovember 25, 2025\n6:00 PM - 9:00 PM PST\nRipple HQ, San Francisco',
+                        'Expected attendees:\n• 100+ XRPL developers\n• Ripple core team members\n• VCs focused on blockchain\n• XRPL ecosystem startups',
+                        'Great for networking and finding collaborators!\n\nWant me to RSVP you? Food and drinks provided!'
+                    ]
+                },
+                'validate': {
+                    user: 'I want to validate my DeFi knowledge',
+                    guru: [
+                        'Let\'s validate your DeFi Protocols knowledge at Intermediate level.',
+                        'I\'ll ask you a few questions through natural conversation - no formal test!',
+                        'Quick question: Can you explain how an AMM (Automated Market Maker) determines token prices? What\'s the formula?'
+                    ]
+                }
+            };
+
+            const action = actionMessages[actionType];
+            if (!action) return;
+
+            // Send user message
+            addMessage('user', action.user);
+
+            // Send guru responses with delay
+            action.guru.forEach((msg, index) => {
+                setTimeout(() => {
+                    addMessage('guru', msg);
+                }, (index + 1) * 1200);
+            });
+        }
+
+        function showService(serviceName) {
+            const messages = {
+                onboarding: [
+                    { type: 'user', text: 'Tell me about Smart Onboarding' },
+                    { type: 'guru', text: '🚀 Smart Onboarding: I get to know you in 2-3 minutes through natural conversation.' },
+                    { type: 'guru', text: 'Quick questions:\n• What brings you to XRPL?\n• Have you worked with blockchain before?\n• What are you hoping to build?' },
+                    { type: 'guru', text: 'No long forms - just chat! I\'ll understand your background and goals to personalize everything for you.' }
+                ],
+                adaptive: [
+                    { type: 'user', text: 'Show me Adaptive Path' },
+                    { type: 'guru', text: '📚 Adaptive Path: NO courses! I use a Knowledge Matrix (Topic × Level) to validate what you already know.' },
+                    { type: 'guru', text: 'Example:\n✅ DeFi Protocols - Intermediário (validated via your AMM project)\n⏳ Smart Contracts - Básico (pending validation)\n❓ Payment Channels - Unknown' },
+                    { type: 'guru', text: 'I only teach what you DON\'t know. Skip the basics if you\'re advanced!' }
+                ],
+                empower: [
+                    { type: 'user', text: 'What are daily challenges?' },
+                    { type: 'guru', text: '🎯 Empower Loop: Daily challenges matched to YOUR skill level!' },
+                    { type: 'guru', text: '🎯 Daily Challenge: DeFi Builder\n⭐⭐⭐ Difficulty: Medium\n⏱️ Time: 30 minutes\n🏆 Reward: +50 XP + "Liquidity Provider" badge\n\nCreate an AMM pool on XRPL Testnet with custom tokens.' },
+                    { type: 'guru', text: 'Track XP, earn badges, climb leaderboards, and maintain streaks! 🔥', quickReplies: ['Accept challenge', 'Show my XP', 'View leaderboard'] }
+                ],
+                proactive: [
+                    { type: 'user', text: 'How does Proactive Guidance work?' },
+                    { type: 'guru', text: '⭐ Proactive Guidance - THE HEART of XRPL Guru!' },
+                    { type: 'guru', text: 'I monitor the XRPL ecosystem 24/7:\n• XRPL Grants ($10K-$200K)\n• XRPL Accelerator cohorts\n• Hackathons\n• Job opportunities\n• Community events' },
+                    { type: 'guru', text: 'When I find a match ≥70%, I proactively notify you:\n\n💡 New Opportunity!\n\n$50K DeFi Grant - XRPL Foundation\nDeadline: Next Friday\nMatch: 92%\n\nWhy? Your DeFi Protocols knowledge + 3 XRPL projects make you ready!\n\nWant to apply?', quickReplies: ['Yes, help me apply', 'Tell me more', 'Not now'] }
+                ],
+                code: [
+                    { type: 'user', text: 'I need coding help' },
+                    { type: 'guru', text: '💻 Code Partner: I\'m your XRPL coding assistant!' },
+                    { type: 'guru', text: 'Just share your error or question:\n• "Getting tecNoPathToDestination error"\n• "How do I create a trust line?"\n• "Review my payment code"' },
+                    { type: 'guru', text: 'I provide:\n✅ Code examples (Python/JavaScript)\n✅ Security best practices\n✅ Debugging help\n✅ XRPL-specific optimizations\n\nPowered by Ripple RAG service for accurate, authoritative answers!' }
+                ],
+                market: [
+                    { type: 'user', text: 'Show me jobs and mentors' },
+                    { type: 'guru', text: '💼 Market Bridge: Connecting you to XRPL ecosystem opportunities!' },
+                    { type: 'guru', text: 'I monitor and match:\n\n👔 Jobs: Senior XRPL Developer positions\n🎓 Mentors: Connect with XRPL experts\n🚀 Startups: Early-stage XRPL companies seeking talent\n🤝 Collaborators: Find hackathon teammates' },
+                    { type: 'guru', text: 'Example:\n\n💼 Job Match! (88%)\nSenior XRPL Developer - DeFi Focus\nRemote, $80K-$120K\n\nWhy you? Your DeFi expertise + 3 XRPL projects\n\nWant me to prepare your application?', quickReplies: ['Yes, prepare application', 'Show mentors instead', 'Find startups'] }
+                ],
+                impact: [
+                    { type: 'user', text: '/dashboard' },
+                    { type: 'guru', text: '📊 Your Impact Dashboard:' },
+                    { type: 'guru', text: '🎯 Progress:\n• Knowledge Matrix: 75% complete\n• XP: 350 (Level 4)\n• Streak: 5 days 🔥\n\n✅ Skills Validated: 8\n• DeFi Protocols - Avançado\n• Smart Contracts - Intermediário\n\n🚀 Projects: 3\n• AMM Liquidity Pool\n• NFT Marketplace\n\n📈 Opportunities: 4 active matches' },
+                    { type: 'guru', text: '🎨 Your portfolio is live:\nxrplguru.dev/@your-username\n\n23 views this week (+15 from last)', quickReplies: ['Update portfolio', 'Export to PDF', 'View web dashboard'] }
+                ]
+            };
+
+            const serviceMessages = messages[serviceName];
+            if (serviceMessages) {
+                serviceMessages.forEach((msg, index) => {
+                    setTimeout(() => {
+                        addMessage(msg.type, msg.text);
+                        if (msg.quickReplies) {
+                            setTimeout(() => showQuickReplies(msg.quickReplies), 300);
+                        }
+                    }, index * 1200);
+                });
+            }
+        }
+
+        function showMenu() {
+            addMessage('user', '/menu');
+            setTimeout(() => {
+                addMessage('guru', '📋 XRPL Guru Menu:\n\n🚀 /onboarding - Start setup\n📚 /skills - View Knowledge Matrix\n🎯 /challenges - Daily challenges\n⭐ /opportunities - Find grants/hackathons\n💻 /code - Coding help\n💼 /jobs - Job matches\n🎓 /mentors - Find mentors\n📊 /dashboard - View progress\n🎨 /portfolio - Portfolio link\n\nOr just talk naturally - I understand!');
+            }, 800);
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const text = input.value.trim();
+
+            if (!text) return;
+
+            input.value = '';
+
+            // Check if we're in onboarding mode
+            if (onboardingStep > 0) {
+                handleOnboardingResponse(text);
+                return;
+            }
+
+            addMessage('user', text);
+
+            // Simple command handling
+            setTimeout(() => {
+                if (text.startsWith('/')) {
+                    const command = text.slice(1).toLowerCase();
+                    if (command === 'menu') showMenu();
+                    else if (command === 'challenges') showService('empower');
+                    else if (command === 'dashboard') showService('impact');
+                    else if (command === 'jobs') showService('market');
+                    else if (command === 'code') showService('code');
+                    else if (command === 'opportunities') showService('proactive');
+                    else if (command === 'skills') showService('adaptive');
+                    else addMessage('guru', 'Command not recognized. Type /menu to see all commands!');
+                } else {
+                    addMessage('guru', 'That\'s interesting! I\'m a prototype, so my natural language processing is limited. Try using commands like /menu, /challenges, or clicking the services on the left!');
+                }
+            }, 800);
+        }
+
+        function handleEnter(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function resetDemo() {
+            document.getElementById('messages').innerHTML = '';
+            messageHistory = [];
+            initializeChat();
+        }
+
+        // Initialize on page load
+        window.onload = initializeChat;
+    </script>
+</body>
+</html>

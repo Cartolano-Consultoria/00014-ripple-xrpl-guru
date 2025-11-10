@@ -97,7 +97,6 @@ XRPL Guru is a unique hybrid combining multiple project patterns:
 **Tertiary: AI/ML-Powered Educational Platform**
 - Adaptive learning journeys
 - Personalized content delivery
-- Gamification and challenge systems
 - Progress tracking and skill assessment
 - Intelligent matching (opportunities to readiness)
 
@@ -258,19 +257,7 @@ XRPL Guru succeeds when developers **complete the full journey**: from initial i
 
 **Why MVP:** Respects developer's existing knowledge, provides granular matching for opportunities, reduces drop-off from forcing redundant content.
 
-**3. Empower Loop**
-- Challenge-based learning to maintain engagement momentum
-- Daily/weekly challenges matched to developer capability
-- Progressive difficulty scaling
-- Gamification elements: badges, XP system, milestones, progress visualization
-- Streak tracking and consistency rewards
-- Peer comparison (optional) to show progression benchmarks
-- Celebration moments for key achievements
-- Delivered via chat notifications with step-by-step guidance
-
-**Why MVP:** Keeps developers engaged and motivated through continuous practice - prevents drop-off between learning and building.
-
-**4. Proactive Guidance** ⭐ **THE HEART OF THE MAGIC**
+**3. Proactive Guidance** ⭐ **THE HEART OF THE MAGIC**
 - **Real-time ecosystem monitoring:**
   - XRPL Grants program (1B XRP, $10K-$200K range) - new openings, deadlines
   - XRPL Accelerator (12-week, up to $200K) - cohort openings
@@ -285,7 +272,7 @@ XRPL Guru succeeds when developers **complete the full journey**: from initial i
 
 **Why MVP:** This IS the differentiation - actively working for developer success, not waiting to be asked. Without this, it's just another chatbot.
 
-**5. Code Partner**
+**4. Code Partner**
 - Conversational coding assistance via chat (Slack, Discord, WhatsApp, Teams)
 - Context-aware XRPL technical help (understands current project and skill level)
 - XRPL best practices guidance and security recommendations
@@ -296,7 +283,7 @@ XRPL Guru succeeds when developers **complete the full journey**: from initial i
 
 **Why MVP:** Developers need practical coding help to make progress - maintains momentum and prevents frustration.
 
-**6. Market Bridge**
+**5. Market Bridge**
 - Job opportunity matching for XRPL ecosystem roles
 - Proactive job alerts when developer skills match openings
 - Mentor matching: connecting developers with experienced XRPL builders
@@ -307,7 +294,7 @@ XRPL Guru succeeds when developers **complete the full journey**: from initial i
 
 **Why MVP:** Critical for completing the full developer journey - from learning to employment/funding. Without career support, developers may learn but not convert to ecosystem contributors.
 
-**7. Impact Dashboard**
+**6. Impact Dashboard**
 - Personal progress visualization: skills acquired, projects completed, milestones reached
 - Portfolio builder: showcasing XRPL projects to potential employers/investors
 - Accessible via chat commands (/dashboard, /portfolio) with conversational summaries
@@ -1350,52 +1337,9 @@ Home/Dashboard
 - System understands multi-message exchanges about same topic
 - System can recall project details weeks later
 
-### FR-5: Empower Loop (Service 3) - Gamification & Challenges
+### FR-5: Market Bridge (Service 5) - Career & Network Connections
 
-**FR-5.1: Challenge Delivery System**
-- System generates daily/weekly challenges matched to developer's skill level
-- Challenge types: Code implementation, debugging scenarios, architecture design, security reviews
-- Difficulty progression: Challenges become harder as developer's skills improve
-- System delivers challenges via proactive chat notifications (9 AM developer timezone, configurable)
-- Developer can request additional challenges on-demand via "/challenges" command
-
-**FR-5.2: Challenge Structure**
-- Each challenge includes: Title, difficulty rating (1-5 stars), estimated time, XP reward, badge potential
-- Step-by-step guidance available on request (hints without full solution)
-- Testnet-based practical exercises (create AMM, mint NFT, deploy Hook, etc.)
-- Validation through code submission or conversation confirmation
-- Adaptive hints: if developer struggles, system offers progressively more detailed help
-
-**FR-5.3: XP & Leveling System**
-- XP awarded for: completing challenges, validating skills, completing projects, helping community
-- Level calculation: Level = floor(sqrt(Total_XP / 100))
-- Level milestones unlock new features: Advanced challenges, exclusive mentors, early grant access
-- System shows progress to next level: "350 XP (Level 4) - 300 XP to Level 5 (DeFi Expert)"
-- XP visible in chat via "/dashboard" and in web dashboard
-
-**FR-5.4: Badge & Achievement System**
-- Badges awarded for: Challenge streaks, skill validations, milestone completions, ecosystem contributions
-- Badge categories: Skill-based (DeFi Builder, NFT Creator), Behavior-based (5-Day Streak, Early Adopter), Achievement-based (First Project, Grant Winner)
-- Badges displayed in portfolio, visible to potential employers/grant committees
-- Rare badges for exceptional achievements (e.g., "Ripple Recognition" for featured developer)
-
-**FR-5.5: Streak Tracking**
-- System tracks consecutive days of activity (challenge completion or skill validation)
-- Streak bonuses: +10% XP at 3 days, +25% XP at 7 days, +50% XP at 30 days
-- Gentle reminder if streak at risk: "Complete today's challenge to keep your 5-day streak!"
-- Streak freeze (1 per month): Developer can skip one day without breaking streak
-- No guilt-tripping if streak breaks - encouraging restart message
-
-**FR-5.6: Leaderboard (Optional Opt-In)**
-- Global leaderboard: Top developers by XP (anonymous by default, opt-in to show name)
-- Regional leaderboards: Rank within country/region
-- Topic-specific leaderboards: Top in DeFi, NFTs, Payments, etc.
-- Privacy-first: Developer chooses visibility level (hidden, anonymous, public)
-- Friendly competition: "You're #47 in Brazil, #234 globally - keep growing!"
-
-### FR-6: Market Bridge (Service 6) - Career & Network Connections
-
-**FR-6.1: Job Opportunity Monitoring & Matching**
+**FR-5.1: Job Opportunity Monitoring & Matching**
 - System monitors XRPL ecosystem job boards daily (Ripple careers, partner companies, startups)
 - Job matching algorithm similar to opportunity matching:
   - Skill match: 40 points (developer skills ↔ job requirements)
@@ -1406,51 +1350,51 @@ Home/Dashboard
 - System only notifies if match score ≥85%
 - Proactive job alerts: "💼 Job Match! Senior XRPL Developer @ [Company], $80K-$120K, Remote"
 
-**FR-6.2: Application Preparation for Jobs**
+**FR-5.2: Application Preparation for Jobs**
 - System drafts cover letter using developer's portfolio and validated skills
 - System highlights relevant projects from portfolio that match job requirements
 - System prepares resume talking points emphasizing XRPL experience
 - System suggests interview prep topics based on job description
 - Developer reviews and edits before submission
 
-**FR-6.3: Mentor Matching & Connection**
+**FR-5.3: Mentor Matching & Connection**
 - System maintains mentor database: XRPL community experts willing to mentor
 - Mentor profiles include: Expertise areas, availability (hours/week), preferred mentee level
 - Matching criteria: Complementary skills (mentor expert in developer's growth area) or Similar path (shared interests)
 - System presents 2-3 top mentor matches when developer requests via "/mentors"
 - Warm introduction: System sends context-rich intro email to mentor on developer's behalf
 
-**FR-6.4: Startup Discovery & Connections**
+**FR-5.4: Startup Discovery & Connections**
 - System tracks XRPL-based startups seeking talent (seed/pre-seed stage)
 - Startup profiles include: Stage, funding, focus area, tech stack, open roles, equity range
 - Matching based on: Developer's interests + risk tolerance + desired role (co-founder vs. employee)
 - System facilitates warm introductions with founders
 - Transparency: System explains why match is good ("Your DeFi expertise perfect for LiquidX's cross-chain aggregator")
 
-**FR-6.5: Collaboration & Team Formation**
+**FR-5.5: Collaboration & Team Formation**
 - System suggests collaboration opportunities: Hackathon team formation, project partnerships
 - Complementary skills matching: Pairs frontend + backend, DeFi + NFT, etc.
 - Geographic/timezone consideration for remote collaboration
 - Icebreaker facilitation: System provides conversation starters when introducing developers
 
-**FR-6.6: Follow-Up & Relationship Management**
+**FR-5.6: Follow-Up & Relationship Management**
 - System checks in after introductions: "Heard back from Marcus (mentor)? How was first session?"
 - Reminder system for follow-ups (1 week, 2 weeks)
 - Success tracking: Job application outcomes, mentor relationship duration
 - Feedback loop: Improves matching algorithm based on successful connections
 
-### FR-7: Impact Dashboard (Service 7) - Progress Visualization & Portfolio
+### FR-6: Impact Dashboard (Service 6) - Progress Visualization & Portfolio
 
-**FR-7.1: Chat-Based Dashboard Access**
+**FR-6.1: Chat-Based Dashboard Access**
 - Developer requests dashboard via "/dashboard" command in any channel
 - System delivers conversational summary optimized for chat format:
-  - Progress overview: XP, Level, Knowledge Matrix %, Streak
+  - Progress overview: Knowledge Matrix %, Milestones
   - Skills: Count of validated competencies with top 3 highlighted
   - Projects: Count with most recent listed
   - Opportunities: Current pipeline count with top match
 - Interactive drill-down: "Want details on any section?" → Developer chooses → System provides
 
-**FR-7.2: Progress Metrics Tracking**
+**FR-6.2: Progress Metrics Tracking**
 - **Skills Progress:**
   - Total competencies validated (Topic × Level cells completed)
   - Skill distribution heatmap (Básico: X, Intermediário: Y, Avançado: Z)
@@ -1459,18 +1403,16 @@ Home/Dashboard
 - **Time Investment:**
   - Days active (since joining)
   - Conversation hours (estimated from message count × avg response time)
-  - Challenge completion time (actual vs. estimated)
 - **Engagement Metrics:**
   - Messages exchanged with Guru
-  - Challenges completed
   - Projects created
   - Community interactions
 
-**FR-7.3: Portfolio Builder**
+**FR-6.3: Portfolio Builder**
 - System auto-generates portfolio webpage: `xrplguru.dev/@{username}`
 - Portfolio sections:
   - Professional bio (auto-generated from profile, editable)
-  - Skills & badges (validated competencies + earned badges)
+  - Skills (validated competencies)
   - XRPL projects (title, description, tech stack, GitHub link, demo link)
   - Achievements & milestones
   - Ecosystem contributions (open-source, community help)
@@ -1481,14 +1423,14 @@ Home/Dashboard
   - "Add project: [details]" - System adds
   - "Remove project X" - System removes
 
-**FR-7.4: Project Management**
+**FR-6.4: Project Management**
 - System tracks developer's XRPL projects mentioned in conversations
 - Project metadata: Name, description, status (active/completed), tech stack, repository URL
 - System suggests adding projects to portfolio after completion
 - Evidence collection: Code snippets, deployment URLs, screenshots
 - Version history: Track project evolution over time
 
-**FR-7.5: Analytics Export**
+**FR-6.5: Analytics Export**
 - Developer can export progress data via chat: "Export my progress to PDF"
 - Export formats:
   - PDF resume (formatted for job applications)
@@ -1497,82 +1439,82 @@ Home/Dashboard
   - Ecosystem report (contribution summary for grants/accelerator)
 - System generates exports on-demand, delivers download link in chat
 
-**FR-7.6: Proactive Progress Updates**
-- Weekly summary (Sunday evening): "📊 Weekly Wrap-Up: +50 XP, 2 skills validated, 1 challenge completed"
-- Milestone celebrations: "🎉 Level Up! You're now Level 5 (DeFi Expert) - Top 10% of XRPL developers"
+**FR-6.6: Proactive Progress Updates**
+- Weekly summary (Sunday evening): "Weekly Wrap-Up: 2 skills validated this week"
+- Milestone celebrations: "Milestone achieved! You've validated all DeFi fundamentals"
 - Unlock notifications: "New opportunities unlocked: 3 grants now match your profile"
 - Portfolio views tracking: "Your portfolio had 23 views this week (+15 from last week)"
-- Opt-in sharing: "Want me to share your Level Up in #wins channel?" (community recognition)
+- Opt-in sharing: "Want me to share your milestone in #wins channel?" (community recognition)
 
-**FR-7.7: Comparative Analytics (Optional)**
+**FR-6.7: Comparative Analytics (Optional)**
 - Peer comparison (anonymous, opt-in): "Average developer at your level has 12 skills validated (you have 15)"
-- Ecosystem benchmarks: "Top 25% of XRPL developers reach Level 5 in 4 months (you did it in 3)"
+- Ecosystem benchmarks: "Top 25% of XRPL developers validate foundational skills in 2-3 months"
 - Goal suggestions: "Developers similar to you typically complete 1 project/month - want to set that goal?"
 - Never competitive pressure - always supportive framing
 
-### FR-8: Multi-Channel Architecture (Cross-Service)
+### FR-7: Multi-Channel Architecture (Cross-Service)
 
-**FR-5.1: Unified Identity**
+**FR-7.1: Unified Identity**
 - One email = one Guru identity across all channels
 - All profile data, progress, and preferences stored centrally
 - All channels access same developer profile
 
-**FR-5.2: Cross-Channel Context Continuity**
+**FR-7.2: Cross-Channel Context Continuity**
 - Conversation in Slack continues seamlessly in Discord or WhatsApp
 - System remembers context regardless of channel
 - Example: "We talked about your NFT project in Slack yesterday" (said in WhatsApp)
 
-**FR-5.3: Channel-Specific Adaptation**
+**FR-7.3: Channel-Specific Adaptation**
 - System uses rich formatting in Slack/Discord (buttons, code blocks, embeds)
 - System uses plain text in WhatsApp (no rich UI available)
 - System respects platform limitations (WhatsApp 24-hour window)
 
-**FR-5.4: Session Management**
+**FR-7.4: Session Management**
 - Once authenticated, session persists in channel
 - No re-authentication required for subsequent conversations
 - Developer can revoke channel access via web dashboard
 
-### FR-6: Web Dashboard (Optional Interface)
+### FR-8: Web Dashboard (Optional Interface)
 
-**FR-6.1: Account Management**
+**FR-8.1: Account Management**
 - Developer can view/edit email address (requires verification)
 - Developer can view connected channels (Slack, Discord, WhatsApp)
 - Developer can disconnect/reconnect channels
 - Developer can export all their data (GDPR compliance)
 - Developer can delete account and all data
 
-**FR-6.2: Profile & Preferences**
+**FR-8.2: Profile & Preferences**
 - Developer can set/edit learning goals
 - Developer can set/edit career objectives
 - Developer can configure notification preferences (frequency, quiet hours)
 - Developer can set opportunity filters (minimum amount, preferred types, interests)
 
-**FR-6.3: Progress Visualization**
+**FR-8.3: Progress Visualization**
 - Dashboard shows skills acquired with visual representation
 - Dashboard shows projects completed with descriptions
 - Dashboard shows milestones reached on timeline
 - Dashboard suggests next steps based on current state
 
-**FR-6.4: Opportunity Pipeline**
+**FR-8.4: Opportunity Pipeline**
 - Dashboard lists all matched opportunities (grants, hackathons, jobs, events)
 - Each opportunity shows: name, type, amount/prize, deadline, match score
 - Developer can filter by type, deadline, amount
 - Developer can take action: "I'm interested", "Not now", "Hide this type"
 
-**FR-6.5: Conversation History**
+**FR-8.5: Conversation History**
 - Dashboard provides full-text search across all conversations
 - Search filters: by channel, date range, topic
 - Search returns relevant conversation excerpts with context
 
-### FR-7: Analytics & Reporting
+### FR-9: Analytics & Reporting
 
-**FR-7.1: Developer-Facing Analytics**
+**FR-9.1: Developer-Facing Analytics**
 - Developer can view time invested in learning (hours, days active)
 - Developer can see completion rates (% of learning path completed)
 - Developer can identify knowledge gaps (topics not yet covered)
 - Developer can track opportunity engagement (applications submitted, success rate)
 
-**FR-7.2: Ecosystem-Facing Analytics (Aggregated)**
+**FR-9.2: Ecosystem-Facing Analytics (Aggregated)**
 - System provides Ripple with aggregated metrics (no individual PII):
   - Total active developers
   - Grant application rates from Guru users
@@ -1580,31 +1522,31 @@ Home/Dashboard
   - Most popular learning paths
 - Developers can opt-in to share individual profiles with Ripple for opportunities
 
-**FR-7.3: Success Tracking**
+**FR-9.3: Success Tracking**
 - System tracks which suggested opportunities led to developer action
 - System tracks application outcomes (submitted, accepted, rejected)
 - System uses outcome data to improve matching algorithm
 - System measures success rate: suggested opportunity → application → success
 
-### FR-8: Privacy & Data Management
+### FR-10: Privacy & Data Management
 
-**FR-8.1: Data Collection Transparency**
+**FR-10.1: Data Collection Transparency**
 - System explains what data is collected and why (on first interaction)
 - System provides link to privacy policy
 - Developer can review all data collected at any time (web dashboard)
 
-**FR-8.2: Data Retention Control**
+**FR-10.2: Data Retention Control**
 - Developer can set conversation retention period (90 days, 1 year, or indefinite)
 - System automatically deletes conversations after retention period
 - Developer can manually delete specific conversations or all history
 
-**FR-8.3: GDPR Compliance**
+**FR-10.3: GDPR Compliance**
 - Developer can request full data export (machine-readable format)
 - Developer can request data deletion (account + all associated data)
 - System processes deletion within 30 days
 - System provides confirmation of deletion
 
-**FR-8.4: Opt-In Sharing**
+**FR-10.4: Opt-In Sharing**
 - By default, developer data is NOT shared with Ripple
 - Developer can opt-in to share profile with Ripple for ecosystem analytics
 - Developer can opt-in to be featured in success stories/case studies

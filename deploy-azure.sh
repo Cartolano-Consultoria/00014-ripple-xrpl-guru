@@ -17,7 +17,7 @@ NC='\033[0m' # No Color
 RESOURCE_GROUP="00014-ripple-xrpl-guru"
 LOCATION="eastus2"
 APP_NAME="xrpl-guru-prototype"
-SOURCE_DIR="docs/prototypes"
+SOURCE_DIR="prototypes"
 
 # Banner
 echo -e "${BLUE}"
