@@ -1177,6 +1177,39 @@ Final HTML prototypes reflecting all refinements:
 
 ---
 
+### 11.6 Wireframe Screenshots
+
+**Dashboard - 4 Modes (index.html):**
+
+#### My Cockpit Mode
+![My Cockpit](../prototypes/img/my-cockpit.jpg)
+*Dashboard showing personalized opportunities, recent activities, and next actions for the developer*
+
+#### My Code Partner Mode
+![My Code Partner](../prototypes/img/my-code-partner.jpg)
+*Conversational coding assistance interface with context-aware XRPL help*
+
+#### My Learning Path Mode
+![My Learning Path](../prototypes/img/my-learning-path.jpg)
+*Knowledge Matrix grid and personalized learning suggestions based on skill gaps and opportunities*
+
+#### Knowledge Base Mode
+![Knowledge Base - Categories](../prototypes/img/knowlodge-base.jpg)
+*Knowledge Base category view showing XRPL documentation organized by topic (no emoji icons)*
+
+![Knowledge Base - Content](../prototypes/img/knowlodge-base-content.jpg)
+*Knowledge Base article view with example queries and categorized content*
+
+**Design Notes:**
+- All screenshots reflect v1.1 minimalist refinements
+- No emoji icons in category headers or section titles
+- Clean, text-only navigation and labels
+- Earth Green color scheme (#2d5016) throughout
+- 90% width layout with breathing room
+- Consistent use of ✓ checkmarks for validation/completion states
+
+---
+
 ## Document Control
 
 **Version History:**

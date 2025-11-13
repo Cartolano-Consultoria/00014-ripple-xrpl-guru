@@ -255,6 +255,10 @@ XRPL Guru succeeds when developers **complete the full journey**: from initial i
 - Integration with XRPL.org documentation (via Ripple RAG service)
 - Opportunities unlock based on competency cells, not "course completion"
 
+**Visual Reference - My Learning Path:**
+![My Learning Path](../prototypes/img/my-learning-path.jpg)
+*Knowledge Matrix grid showing validated skills (✓), pending validation (○), and unexplored topics (?). Learning suggestions appear below based on skill gaps and opportunity matching.*
+
 **Why MVP:** Respects developer's existing knowledge, provides granular matching for opportunities, reduces drop-off from forcing redundant content.
 
 **3. Proactive Guidance** ⭐ **THE HEART OF THE MAGIC**
@@ -270,6 +274,10 @@ XRPL Guru succeeds when developers **complete the full journey**: from initial i
 - **Application preparation:** Guides grant/accelerator applications with contextual help
 - **Timeline management:** Reminds developers of deadlines, helps plan submissions
 
+**Visual Reference - My Cockpit:**
+![My Cockpit](../prototypes/img/my-cockpit.jpg)
+*Dashboard showing personalized opportunity matches, recent activities, and proactive next actions. Each opportunity card displays match percentage, timing, and why it matches the developer's profile.*
+
 **Why MVP:** This IS the differentiation - actively working for developer success, not waiting to be asked. Without this, it's just another chatbot.
 
 **4. Code Partner**
@@ -280,6 +288,14 @@ XRPL Guru succeeds when developers **complete the full journey**: from initial i
 - Debug assistance and error explanation
 - Real-time answers to XRPL technical questions
 - Powered by Ripple RAG service for accurate, authoritative responses
+
+**Visual Reference - My Code Partner:**
+![My Code Partner](../prototypes/img/my-code-partner.jpg)
+*Conversational interface for coding assistance, showing chat-style interactions with code examples, error debugging, and access to XRPL documentation via Ripple RAG service.*
+
+**Visual Reference - Knowledge Base:**
+![Knowledge Base](../prototypes/img/knowlodge-base.jpg)
+*Categorized XRPL documentation with example queries. Clean, text-only interface (no emoji icons) for efficient knowledge discovery and search.*
 
 **Why MVP:** Developers need practical coding help to make progress - maintains momentum and prevents frustration.
 
