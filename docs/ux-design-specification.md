@@ -1052,6 +1052,131 @@ breakpoints = {
 
 ---
 
+## 11. Design Refinements (Post-Approval)
+
+**Date:** 2025-11-13
+**Refinement Type:** Minimalist Enhancement Pass
+**Applied To:** HTML prototypes (index.html, knowledge-matrix.html, profile.html, opportunity-detail.html, settings.html)
+
+### 11.1 Emoji Removal - Stronger Minimalism
+
+**Rationale:** Further emphasizing the "Minimal and Direct" design philosophy (Section 1, Core Design Philosophy, line 17) and the "Why No Icons?" decision (Section 10, line 1040).
+
+**Changes Applied Across All Prototypes:**
+
+**Knowledge Base (index.html):**
+- ❌ Removed `📚` from category headers in `showCategory()` function
+- ❌ Removed `📚` from `updateKnowledgePanel()` function
+- Result: Category titles display as plain text (e.g., "XRPL Fundamentals" instead of "📚 XRPL Fundamentals")
+
+**Learning Path (knowledge-matrix.html):**
+- ❌ Removed `💡` from "Recommended Next Steps" section header (line 218)
+- ❌ Removed `🎓` from learning modal title (line 327)
+- Result: Cleaner section headers and modal dialogs
+
+**Profile Page (profile.html):**
+- ❌ Removed `🔗` from social links: GitHub, LinkedIn, Twitter (lines 47-54)
+- ✅ Replaced `📝` with `✓` in activity timeline for validation events (line 273)
+- ✅ Replaced `🎯` with `✓` in activity timeline for goal/opportunity events (line 284)
+- Result: Consistent use of `✓` checkmark for all positive timeline events, no decorative emojis
+
+**Opportunity Detail (opportunity-detail.html):**
+- ❌ Removed all section header emojis:
+  - `🎯` from "Why this matches you" (line 175)
+  - `📋` from "Requirements" (line 200)
+  - `📝` from "Description" (line 252)
+  - `📅` from "Timeline" (line 278)
+  - `🔗` from "Links & Resources" (line 321)
+- ❌ Removed `🤖` from application modal (line 363)
+- Result: Professional, text-only section headers throughout detail pages
+
+**Design Impact:**
+- Reinforces "no icons" principle consistently across all interfaces
+- Creates more professional, less playful aesthetic
+- Improves scannability (text hierarchy without visual noise)
+- Maintains warmth through color and typography, not decorative elements
+
+### 11.2 Header & Label Simplification
+
+**Rationale:** Reduce redundant labeling and visual noise. Content should speak for itself without over-explanation.
+
+**Changes Applied to Learning Path Panel (index.html):**
+
+**Removed Headers:**
+- ❌ "My Learning Path" main title (line 1105)
+- ❌ "Personalized suggestions based on your goals" subtitle (line 1106)
+- ❌ "Knowledge Matrix" section title (line 1106)
+- ❌ "65% Complete" progress badge (line 1108)
+- ❌ "Learning Suggestions" subsection title (line 1135)
+- ❌ "Based on knowledge gaps and available opportunities" description (lines 1141-1143)
+
+**Result:**
+- Learning Path panel displays content directly without redundant labels
+- Knowledge Matrix grid appears immediately (self-explanatory)
+- Learning suggestion cards appear immediately (self-explanatory)
+- Visual hierarchy created through spacing and card design, not text labels
+- Cleaner, more minimal interface that respects user intelligence
+
+**Design Impact:**
+- Aligns with "Minimal and Direct" philosophy (Section 1, line 17)
+- Reduces cognitive load (less text to parse before seeing content)
+- Creates breathing room and stronger visual focus on actionable content
+- Demonstrates confidence in UI clarity (doesn't need to explain itself)
+
+### 11.3 Settings Page Structure Refinement
+
+**Rationale:** Separation of concerns - Knowledge Matrix belongs in learning context (main dashboard), not configuration context (settings page).
+
+**Changes Applied to Settings (settings.html):**
+
+**Removed Sections:**
+- ❌ Entire "Learning" section including Knowledge Matrix table (lines 318-394)
+- ❌ "Learning" navigation link from settings sidebar (line 287)
+
+**Current Settings Structure:**
+```
+Settings Navigation:
+- Account (profile info, bio)
+- Projects (portfolio management)
+- Channels (Slack, Discord, WhatsApp integration)
+- Notifications (proactivity preferences, frequency)
+- Privacy (data sharing, visibility)
+- Project Page (public portfolio settings)
+```
+
+**Design Impact:**
+- Settings page focused purely on configuration and preferences
+- Knowledge Matrix remains in main dashboard where learning context exists
+- Cleaner information architecture (learning ≠ settings)
+- Reduces settings page complexity
+
+### 11.4 Updated Component Specifications
+
+**Knowledge Matrix Component (Section 5.2 Update):**
+- **Location:** Main dashboard (index.html) in "My Learning Path" panel ONLY
+- **NOT in:** Settings page (removed for clarity)
+- Component structure remains as specified in lines 712-736
+
+**Settings Components:**
+- Simplified to 6 sections: Account, Projects, Channels, Notifications, Privacy, Project Page
+- No learning/education components in settings context
+- Focus on user preferences and integrations
+
+### 11.5 Visual Assets - Final Prototypes
+
+**Prototype References (Section 9 Addition):**
+
+Final HTML prototypes reflecting all refinements:
+- `prototypes/index.html` - Main dashboard with 4-mode interface (My Cockpit, My Code Partner, My Learning Path, Knowledge Base)
+- `prototypes/knowledge-matrix.html` - Dedicated Knowledge Matrix view with recommendations
+- `prototypes/profile.html` - User profile with projects, skills, activity timeline
+- `prototypes/opportunity-detail.html` - Detailed opportunity view with match analysis
+- `prototypes/settings.html` - User preferences and configuration (6 sections)
+
+**Status:** ✅ Prototypes represent final minimalist refinement with all emoji removals and header simplifications applied.
+
+---
+
 ## Document Control
 
 **Version History:**
@@ -1059,16 +1184,19 @@ breakpoints = {
 | Version | Date | Changes |
 |---------|------|---------|
 | 1.0 | 2025-11-05 | Final approved specification |
+| 1.1 | 2025-11-13 | Minimalist refinements - emoji removal, header simplification, settings structure update |
 
 **Approvals:**
-- [x] Product Manager (Etienne) - Approved layout and colors
+- [x] Product Manager (Etienne) - Approved layout and colors (v1.0)
+- [x] Product Manager (Etienne) - Approved minimalist refinements (v1.1)
 - [ ] Technical Lead - Pending
 - [ ] Accessibility Specialist - Pending
 
 **Next Steps:**
-1. ✅ UX Design approved
-2. → Run Solutioning Gate Check to validate alignment (PRD + Architecture + UX)
-3. → Begin sprint planning and implementation
+1. ✅ UX Design approved (v1.0)
+2. ✅ Minimalist refinements applied (v1.1)
+3. → Run Solutioning Gate Check to validate alignment (PRD + Architecture + UX)
+4. → Begin sprint planning and implementation
 
 ---
 
