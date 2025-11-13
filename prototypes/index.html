@@ -28,9 +28,9 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.12);
         }
 
-        /* Sidebar - 45% da tela (área de orientação proativa) */
+        /* Sidebar - 50% da tela (área de orientação proativa) */
         .sidebar {
-            width: 45%;
+            width: 50%;
             background: white;
             border-right: 1px solid #e0e0e0;
             display: flex;
@@ -59,30 +59,48 @@
             display: flex;
             align-items: center;
             justify-content: flex-start;
+            gap: 12px;
         }
 
-        .code-partner-button {
-            padding: 8px 16px;
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            color: white;
-            border-radius: 6px;
-            font-size: 0.945rem;
+        /* Mode Buttons - Always visible, fixed colors */
+        .mode-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
+            color: white;
         }
 
-        .code-partner-button:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: white;
+        .mode-button.cockpit-btn {
+            background: #2d5016;
         }
 
-        .code-partner-button.active {
-            display: none;
+        .mode-button.code-partner-btn {
+            background: #1e40af;
         }
 
-        .code-partner-button.disabled {
+        .mode-button.learning-path-btn {
+            background: #ea580c;
+        }
+
+        .mode-button.knowledge-base-btn {
+            background: #7c3aed;
+        }
+
+        .mode-button.active {
+            opacity: 0.3;
+            cursor: default;
+        }
+
+        .mode-button:not(.active):hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .mode-button.disabled {
             opacity: 0.4;
             cursor: not-allowed;
             pointer-events: none;
@@ -92,28 +110,12 @@
             background: #1e3a8a;
         }
 
-        .activities-button {
-            padding: 8px 16px;
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            color: white;
-            border-radius: 6px;
-            font-size: 0.945rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-left: 12px;
-            display: none;
+        .chat-header.learning-mode {
+            background: #ea580c;
         }
 
-        .activities-button:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: white;
-        }
-
-        .activities-button.active {
-            background: #2d5016;
-            border-color: #2d5016;
+        .chat-header.knowledge-mode {
+            background: #7c3aed;
         }
 
         /* Code Partner Mode */
@@ -151,8 +153,323 @@
             line-height: 1.6;
         }
 
+        /* Learning Path Mode */
+        .learning-panel {
+            display: none;
+            width: 50%;
+            background: #fff7ed;
+            border-right: 1px solid #e0e0e0;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .learning-panel.active {
+            display: flex;
+        }
+
+        .learning-content {
+            padding: 24px;
+        }
+
+        .learning-header {
+            margin-bottom: 24px;
+        }
+
+        .learning-header h2 {
+            font-size: 1.8rem;
+            color: #ea580c;
+            margin-bottom: 8px;
+        }
+
+        .learning-header p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .knowledge-matrix {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .matrix-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .matrix-header h3 {
+            font-size: 1.2rem;
+            color: #ea580c;
+        }
+
+        .progress-badge {
+            background: #ea580c;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: 150px repeat(3, 1fr);
+            gap: 1px;
+            background: #e0e0e0;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .matrix-cell {
+            background: white;
+            padding: 12px 8px;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        .matrix-cell.header {
+            background: #f8f8f8;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .matrix-cell.topic {
+            background: #f8f8f8;
+            font-weight: 600;
+            text-align: left;
+            color: #333;
+            padding-left: 12px;
+        }
+
+        .skill-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .skill-badge.validated {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .skill-badge.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .skill-badge.unknown {
+            background: #f0f0f0;
+            color: #999;
+        }
+
+        .learning-suggestions {
+            margin-top: 24px;
+        }
+
+        .learning-suggestions h3 {
+            font-size: 1.2rem;
+            color: #ea580c;
+            margin-bottom: 12px;
+        }
+
+        .learning-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .learning-card:hover {
+            border-color: #ea580c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(234, 88, 12, 0.1);
+        }
+
+        .learning-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .learning-card h4 {
+            font-size: 1rem;
+            color: #ea580c;
+        }
+
+        .difficulty-badge {
+            background: #ea580c;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .learning-card p {
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .learning-meta {
+            display: flex;
+            gap: 12px;
+            font-size: 0.8rem;
+            color: #999;
+        }
+
         .chat-area.code-mode {
             width: 50%;
+        }
+
+        .chat-area.learning-mode {
+            width: 50%;
+        }
+
+        .chat-area.knowledge-mode {
+            width: 50%;
+        }
+
+        /* Knowledge Base Mode */
+        .knowledge-panel {
+            display: none;
+            width: 50%;
+            background: #f5f3ff;
+            border-right: 1px solid #e0e0e0;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .knowledge-panel.active {
+            display: flex;
+        }
+
+        .knowledge-content {
+            padding: 24px;
+        }
+
+        .knowledge-header {
+            margin-bottom: 24px;
+        }
+
+        .knowledge-header h2 {
+            font-size: 1.8rem;
+            color: #7c3aed;
+            margin-bottom: 8px;
+        }
+
+        .knowledge-header p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .knowledge-search {
+            background: white;
+            border: 2px solid #7c3aed;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .knowledge-search input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .knowledge-search input::placeholder {
+            color: #999;
+        }
+
+        .knowledge-categories {
+            margin-bottom: 24px;
+        }
+
+        .knowledge-categories h3 {
+            font-size: 1.2rem;
+            color: #7c3aed;
+            margin-bottom: 12px;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .category-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .category-card:hover {
+            border-color: #7c3aed;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.1);
+        }
+
+        .category-card h4 {
+            font-size: 1rem;
+            color: #7c3aed;
+            margin-bottom: 8px;
+        }
+
+        .category-card p {
+            font-size: 0.85rem;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .category-badge {
+            display: inline-block;
+            background: #7c3aed;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        .chat-area.knowledge-mode .message-avatar {
+            background: #7c3aed;
+        }
+
+        .chat-area.knowledge-mode .message.user .message-avatar {
+            background: #a78bfa;
+        }
+
+        .chat-area.knowledge-mode .send-button {
+            background: #7c3aed;
+        }
+
+        .chat-area.knowledge-mode .send-button:hover {
+            background: #a78bfa;
+        }
+
+        .chat-area.knowledge-mode .chat-input:focus {
+            border-color: #7c3aed;
         }
 
         .sidebar.hidden {
@@ -390,9 +707,9 @@
             pointer-events: none;
         }
 
-        /* Chat Area */
+        /* Chat Area - 50% em todos os modos */
         .chat-area {
-            flex: 1;
+            width: 50%;
             display: flex;
             flex-direction: column;
             background: #f8f8f8;
@@ -467,6 +784,26 @@
 
         .chat-area.code-mode .message.user .message-avatar {
             background: #2563eb;
+        }
+
+        .chat-area.learning-mode .message-avatar {
+            background: #ea580c;
+        }
+
+        .chat-area.learning-mode .message.user .message-avatar {
+            background: #fb923c;
+        }
+
+        .chat-area.learning-mode .send-button {
+            background: #ea580c;
+        }
+
+        .chat-area.learning-mode .send-button:hover {
+            background: #fb923c;
+        }
+
+        .chat-area.learning-mode .chat-input:focus {
+            border-color: #ea580c;
         }
 
         .message-time {
@@ -673,6 +1010,195 @@ async function main() {
 main()"></textarea>
         </div>
 
+        <!-- Knowledge Base Panel (hidden by default) -->
+        <div class="knowledge-panel" id="knowledgePanel">
+            <div class="knowledge-content" id="knowledgeContent">
+                <div class="knowledge-header">
+                    <h2>Knowledge Base</h2>
+                    <p>Complete XRPL documentation and learning resources</p>
+                </div>
+
+                <div class="knowledge-search">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <input type="text" id="knowledgeSearchInput" placeholder="Search documentation..." />
+                </div>
+
+                <div class="knowledge-categories">
+                    <h3>Categories</h3>
+                    <div class="category-grid">
+                        <div class="category-card" onclick="showCategory('XRPL Fundamentals')">
+                            <h4>XRPL Fundamentals</h4>
+                            <p>Basic concepts, accounts, wallets and first transactions</p>
+                            <span class="category-badge">24 articles</span>
+                        </div>
+
+                        <div class="category-card" onclick="showCategory('Payments & Tokens')">
+                            <h4>Payments & Tokens</h4>
+                            <p>Payments, IOUs, trust lines and issued currencies</p>
+                            <span class="category-badge">18 articles</span>
+                        </div>
+
+                        <div class="category-card" onclick="showCategory('DeFi & AMM')">
+                            <h4>DeFi & AMM</h4>
+                            <p>Automated Market Makers, liquidity pools and DEX</p>
+                            <span class="category-badge">15 articles</span>
+                        </div>
+
+                        <div class="category-card" onclick="showCategory('NFTs')">
+                            <h4>NFTs</h4>
+                            <p>NFTokens, minting, trading and marketplaces</p>
+                            <span class="category-badge">12 articles</span>
+                        </div>
+
+                        <div class="category-card" onclick="showCategory('Smart Contracts')">
+                            <h4>Smart Contracts</h4>
+                            <p>Hooks, development and deployment</p>
+                            <span class="category-badge">20 articles</span>
+                        </div>
+
+                        <div class="category-card" onclick="showCategory('APIs & SDKs')">
+                            <h4>APIs & SDKs</h4>
+                            <p>xrpl.js, Python, REST APIs and WebSocket</p>
+                            <span class="category-badge">16 articles</span>
+                        </div>
+
+                        <div class="category-card" onclick="showCategory('Security')">
+                            <h4>Security</h4>
+                            <p>Best practices, key management and auditing</p>
+                            <span class="category-badge">10 articles</span>
+                        </div>
+
+                        <div class="category-card" onclick="showCategory('Troubleshooting')">
+                            <h4>Troubleshooting</h4>
+                            <p>Common errors, debugging and solutions</p>
+                            <span class="category-badge">14 articles</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 20px; margin-top: 24px;">
+                    <h3 style="color: #7c3aed; margin-bottom: 12px; font-size: 1.1rem;">Most Accessed</h3>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <div style="padding: 12px; border-left: 3px solid #7c3aed; background: #f5f3ff; border-radius: 4px; cursor: pointer;">
+                            <div style="font-weight: 600; color: #7c3aed; margin-bottom: 4px;">Getting Started with XRPL</div>
+                            <div style="font-size: 0.85rem; color: #666;">Complete tutorial for beginners</div>
+                        </div>
+                        <div style="padding: 12px; border-left: 3px solid #7c3aed; background: #f5f3ff; border-radius: 4px; cursor: pointer;">
+                            <div style="font-weight: 600; color: #7c3aed; margin-bottom: 4px;">How to Create a Trust Line</div>
+                            <div style="font-size: 0.85rem; color: #666;">Step-by-step with code examples</div>
+                        </div>
+                        <div style="padding: 12px; border-left: 3px solid #7c3aed; background: #f5f3ff; border-radius: 4px; cursor: pointer;">
+                            <div style="font-weight: 600; color: #7c3aed; margin-bottom: 4px;">Understanding AMM on XRPL</div>
+                            <div style="font-size: 0.85rem; color: #666;">Deep dive into Automated Market Makers</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Learning Path Panel (hidden by default) -->
+        <div class="learning-panel" id="learningPanel">
+            <div class="learning-content">
+                <div class="knowledge-matrix">
+                    <div class="matrix-grid">
+                        <div class="matrix-cell header"></div>
+                        <div class="matrix-cell header">Basic</div>
+                        <div class="matrix-cell header">Intermediate</div>
+                        <div class="matrix-cell header">Advanced</div>
+
+                        <div class="matrix-cell topic">DeFi Protocols</div>
+                        <div class="matrix-cell"><span class="skill-badge validated">✓</span></div>
+                        <div class="matrix-cell"><span class="skill-badge validated">✓</span></div>
+                        <div class="matrix-cell"><span class="skill-badge unknown">?</span></div>
+
+                        <div class="matrix-cell topic">Smart Contracts</div>
+                        <div class="matrix-cell"><span class="skill-badge validated">✓</span></div>
+                        <div class="matrix-cell"><span class="skill-badge pending">○</span></div>
+                        <div class="matrix-cell"><span class="skill-badge unknown">?</span></div>
+
+                        <div class="matrix-cell topic">NFTs & Tokens</div>
+                        <div class="matrix-cell"><span class="skill-badge validated">✓</span></div>
+                        <div class="matrix-cell"><span class="skill-badge unknown">?</span></div>
+                        <div class="matrix-cell"><span class="skill-badge unknown">?</span></div>
+
+                        <div class="matrix-cell topic">Payment Channels</div>
+                        <div class="matrix-cell"><span class="skill-badge unknown">?</span></div>
+                        <div class="matrix-cell"><span class="skill-badge unknown">?</span></div>
+                        <div class="matrix-cell"><span class="skill-badge unknown">?</span></div>
+                    </div>
+                </div>
+
+                <div class="learning-suggestions">
+                    <div class="learning-card">
+                        <div class="learning-card-header">
+                            <h4>Advanced DeFi - AMM Deep Dive</h4>
+                            <span class="difficulty-badge">Advanced</span>
+                        </div>
+                        <p>
+                            Learn how to implement Automated Market Makers on XRPL.
+                            This knowledge unlocks <strong>3 grants</strong> available now.
+                        </p>
+                        <div class="learning-meta">
+                            <span>2-3 hours</span>
+                            <span>Unlocks 3 opportunities</span>
+                            <span>High priority</span>
+                        </div>
+                    </div>
+
+                    <div class="learning-card">
+                        <div class="learning-card-header">
+                            <h4>Smart Contracts - Intermediate Hooks</h4>
+                            <span class="difficulty-badge">Intermediate</span>
+                        </div>
+                        <p>
+                            Complete Hooks validation to unlock the $50K DeFi grant.
+                            Current status: Pending validation.
+                        </p>
+                        <div class="learning-meta">
+                            <span>1 hour</span>
+                            <span>Unlocks $50K grant</span>
+                            <span>Urgent - 15 days</span>
+                        </div>
+                    </div>
+
+                    <div class="learning-card">
+                        <div class="learning-card-header">
+                            <h4>Intermediate NFTs - Marketplaces</h4>
+                            <span class="difficulty-badge">Intermediate</span>
+                        </div>
+                        <p>
+                            Learn how to create NFT marketplaces on XRPL.
+                            Complements your token expertise.
+                        </p>
+                        <div class="learning-meta">
+                            <span>3-4 hours</span>
+                            <span>Unlocks 2 opportunities</span>
+                            <span>Medium priority</span>
+                        </div>
+                    </div>
+
+                    <div class="learning-card">
+                        <div class="learning-card-header">
+                            <h4>Payment Channels - Fundamentals</h4>
+                            <span class="difficulty-badge">Basic</span>
+                        </div>
+                        <p>
+                            Introduction to Payment Channels and State Channels on XRPL.
+                            New topic on your radar.
+                        </p>
+                        <div class="learning-meta">
+                            <span>2 hours</span>
+                            <span>Important foundation</span>
+                            <span>Exploration</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Sidebar -->
         <div class="sidebar" id="sidebar">
             <div class="sidebar-header">
@@ -792,8 +1318,10 @@ main()"></textarea>
         <!-- Chat Area - 55% da tela -->
         <div class="chat-area" id="chatArea">
             <div class="chat-header">
-                <button class="code-partner-button" id="codePartnerBtn" onclick="toggleCodePartner()">Code Partner</button>
-                <button class="activities-button" id="activitiesBtn" onclick="toggleActivities()">Activities</button>
+                <button class="mode-button cockpit-btn active" id="cockpitBtn" onclick="switchToCockpit()" style="width: 165px;">My Cockpit</button>
+                <button class="mode-button code-partner-btn disabled" id="codePartnerBtn" onclick="switchToCodePartner()" style="width: 165px;">My Code Partner</button>
+                <button class="mode-button learning-path-btn disabled" id="learningPathBtn" onclick="switchToLearningPath()" style="width: 165px;">My Learning Path</button>
+                <button class="mode-button knowledge-base-btn disabled" id="knowledgeBaseBtn" onclick="switchToKnowledgeBase()" style="width: 165px;">Knowledge Base</button>
             </div>
 
             <div class="messages-container" id="messages">
@@ -829,11 +1357,13 @@ main()"></textarea>
                 // Unlock everything
                 unlockAllItems();
                 document.getElementById('codePartnerBtn').classList.remove('disabled');
+                document.getElementById('learningPathBtn').classList.remove('disabled');
+                document.getElementById('knowledgeBaseBtn').classList.remove('disabled');
                 document.getElementById('settingsBtn').classList.remove('disabled');
                 document.getElementById('onboarding-row').style.display = 'none';
 
                 // Show welcome back message
-                addMessage('guru', 'Welcome back! Click on any suggestion from the left sidebar or use Code Partner.');
+                addMessage('guru', 'Welcome back! Click on any suggestion from the left sidebar, or try Code Partner, Learning Path or Knowledge Base.');
                 return;
             }
 
@@ -862,21 +1392,65 @@ main()"></textarea>
             }, 2500);
         }
 
-        let isCodePartnerMode = false;
+        let currentMode = 'cockpit';
 
-        function toggleCodePartner() {
-            isCodePartnerMode = true;
+        function switchToCockpit() {
+            if (currentMode === 'cockpit') return;
+            currentMode = 'cockpit';
+
+            // Hide all panels except sidebar
+            document.getElementById('sidebar').classList.remove('hidden');
+            document.getElementById('codeEditorPanel').classList.remove('active');
+            document.getElementById('learningPanel').classList.remove('active');
+            document.getElementById('knowledgePanel').classList.remove('active');
+            document.getElementById('chatArea').classList.remove('code-mode', 'learning-mode', 'knowledge-mode');
+
+            // Update header
+            const header = document.querySelector('.chat-header');
+            header.classList.remove('code-mode', 'learning-mode', 'knowledge-mode');
+            header.style.background = '#2d5016';
+
+            // Update buttons
+            document.getElementById('cockpitBtn').classList.add('active');
+            document.getElementById('codePartnerBtn').classList.remove('active');
+            document.getElementById('learningPathBtn').classList.remove('active');
+            document.getElementById('knowledgeBaseBtn').classList.remove('active');
+
+            // Reset input placeholder
+            document.getElementById('userInput').placeholder = 'Type a message or try: /menu, /dashboard, /challenges';
+
+            // Clear and restart chat
+            document.getElementById('messages').innerHTML = '';
+            if (onboardingCompleted) {
+                addMessage('guru', 'Welcome back to Cockpit! Click on any suggestion from the left sidebar.');
+            } else {
+                initializeChat();
+            }
+        }
+
+        function switchToCodePartner() {
+            if (currentMode === 'code-partner') return;
+            currentMode = 'code-partner';
 
             // Hide sidebar, show code editor
             document.getElementById('sidebar').classList.add('hidden');
             document.getElementById('codeEditorPanel').classList.add('active');
+            document.getElementById('learningPanel').classList.remove('active');
+            document.getElementById('knowledgePanel').classList.remove('active');
             document.getElementById('chatArea').classList.add('code-mode');
+            document.getElementById('chatArea').classList.remove('learning-mode', 'knowledge-mode');
 
-            // Update header and buttons
-            document.querySelector('.chat-header').classList.add('code-mode');
+            // Update header
+            const header = document.querySelector('.chat-header');
+            header.classList.add('code-mode');
+            header.classList.remove('learning-mode', 'knowledge-mode');
+            header.style.background = '#1e40af';
+
+            // Update buttons
+            document.getElementById('cockpitBtn').classList.remove('active');
             document.getElementById('codePartnerBtn').classList.add('active');
-            document.getElementById('activitiesBtn').style.display = 'inline-block';
-            document.getElementById('activitiesBtn').classList.remove('active');
+            document.getElementById('learningPathBtn').classList.remove('active');
+            document.getElementById('knowledgeBaseBtn').classList.remove('active');
 
             // Clear and start Code Partner conversation
             document.getElementById('messages').innerHTML = '';
@@ -886,29 +1460,74 @@ main()"></textarea>
             }, 800);
         }
 
-        function toggleActivities() {
-            isCodePartnerMode = false;
+        function switchToLearningPath() {
+            if (currentMode === 'learning-path') return;
+            currentMode = 'learning-path';
 
-            // Show sidebar, hide code editor
-            document.getElementById('sidebar').classList.remove('hidden');
+            // Hide sidebar, show learning panel
+            document.getElementById('sidebar').classList.add('hidden');
             document.getElementById('codeEditorPanel').classList.remove('active');
-            document.getElementById('chatArea').classList.remove('code-mode');
+            document.getElementById('learningPanel').classList.add('active');
+            document.getElementById('knowledgePanel').classList.remove('active');
+            document.getElementById('chatArea').classList.add('learning-mode');
+            document.getElementById('chatArea').classList.remove('code-mode', 'knowledge-mode');
 
-            // Update header and buttons
-            document.querySelector('.chat-header').classList.remove('code-mode');
+            // Update header
+            const header = document.querySelector('.chat-header');
+            header.classList.add('learning-mode');
+            header.classList.remove('code-mode', 'knowledge-mode');
+            header.style.background = '#ea580c';
+
+            // Update buttons
+            document.getElementById('cockpitBtn').classList.remove('active');
             document.getElementById('codePartnerBtn').classList.remove('active');
-            document.getElementById('activitiesBtn').classList.add('active');
-            document.getElementById('activitiesBtn').style.display = 'none';
+            document.getElementById('learningPathBtn').classList.add('active');
+            document.getElementById('knowledgeBaseBtn').classList.remove('active');
 
-            // Clear and restart normal chat
+            // Clear and start Learning Path conversation
             document.getElementById('messages').innerHTML = '';
+            addMessage('guru', 'Learning Path activated! I\'ve identified some important knowledge gaps that can unlock opportunities.');
+            setTimeout(() => {
+                addMessage('guru', 'See in the left panel:\n• Knowledge Matrix with your current progress\n• Suggestions prioritized by impact\n• Connection with available opportunities');
+            }, 800);
+        }
 
-            // If onboarding was completed, show empty state
-            if (onboardingCompleted) {
-                addMessage('guru', 'Welcome back! Click on any suggestion from the left sidebar or use Code Partner.');
-            } else {
-                initializeChat();
-            }
+        function switchToKnowledgeBase() {
+            if (currentMode === 'knowledge-base') return;
+            currentMode = 'knowledge-base';
+
+            // Hide sidebar, show knowledge panel
+            document.getElementById('sidebar').classList.add('hidden');
+            document.getElementById('codeEditorPanel').classList.remove('active');
+            document.getElementById('learningPanel').classList.remove('active');
+            document.getElementById('knowledgePanel').classList.add('active');
+            document.getElementById('chatArea').classList.add('knowledge-mode');
+            document.getElementById('chatArea').classList.remove('code-mode', 'learning-mode');
+
+            // Update header
+            const header = document.querySelector('.chat-header');
+            header.classList.add('knowledge-mode');
+            header.classList.remove('code-mode', 'learning-mode');
+            header.style.background = '#7c3aed';
+
+            // Update buttons
+            document.getElementById('cockpitBtn').classList.remove('active');
+            document.getElementById('codePartnerBtn').classList.remove('active');
+            document.getElementById('learningPathBtn').classList.remove('active');
+            document.getElementById('knowledgeBaseBtn').classList.add('active');
+
+            // Update input placeholder
+            document.getElementById('userInput').placeholder = 'Try: "How do I create a trust line?" or "What is an AMM pool?"';
+
+            // Clear and start Knowledge Base conversation
+            document.getElementById('messages').innerHTML = '';
+            addMessage('guru', 'Knowledge Base activated! Full access to XRPL documentation.');
+            setTimeout(() => {
+                addMessage('guru', 'Browse categories on the left or ask me something specific.\n\n💡 Try: "How do I create a trust line?" or "What is an AMM pool?"');
+            }, 800);
+            setTimeout(() => {
+                addMessage('guru', 'When you ask questions, I\'ll dynamically update the left panel with relevant documentation, code examples, and related topics!');
+            }, 1600);
         }
 
         let isPastActivitiesMode = false;
@@ -1160,8 +1779,10 @@ main()"></textarea>
                 }, 3200);
                 setTimeout(() => {
                     unlockAllItems();
-                    // Enable Code Partner button and Settings
+                    // Enable mode buttons and Settings
                     document.getElementById('codePartnerBtn').classList.remove('disabled');
+                    document.getElementById('learningPathBtn').classList.remove('disabled');
+                    document.getElementById('knowledgeBaseBtn').classList.remove('disabled');
                     document.getElementById('settingsBtn').classList.remove('disabled');
                     // Remove onboarding item
                     document.getElementById('onboarding-row').style.display = 'none';
@@ -1320,6 +1941,493 @@ main()"></textarea>
             }, 800);
         }
 
+        const articleDatabase = {
+            'What is a Trust Line?': {
+                title: 'What is a Trust Line?',
+                time: '5 min read',
+                content: `
+<h3 style="color: #7c3aed; margin-bottom: 16px;">Understanding Trust Lines on XRPL</h3>
+
+<p style="line-height: 1.8; margin-bottom: 16px;">A <strong>trust line</strong> is a fundamental concept in the XRP Ledger that represents a relationship of trust between two accounts for holding and transferring issued currencies (tokens).</p>
+
+<h4 style="color: #7c3aed; margin-top: 24px; margin-bottom: 12px;">What Does "Trust" Mean?</h4>
+
+<p style="line-height: 1.8; margin-bottom: 16px;">When you create a trust line, you're essentially saying: "I trust this issuer to hold up to X amount of this currency." It's like setting a credit limit - you're willing to accept and hold tokens from that issuer up to the specified limit.</p>
+
+<div style="background: #f5f3ff; border-left: 4px solid #7c3aed; padding: 16px; margin: 20px 0; border-radius: 4px;">
+    <strong style="color: #7c3aed;">💡 Key Analogy:</strong><br/>
+    Think of a trust line like a bank account relationship. You trust your bank to hold your money. On XRPL, a trust line means you trust an issuer to honor the tokens they issue.
+</div>
+
+<h4 style="color: #7c3aed; margin-top: 24px; margin-bottom: 12px;">Use Cases</h4>
+
+<ul style="line-height: 2; margin-bottom: 16px; margin-left: 20px;">
+    <li><strong>Stablecoins:</strong> Hold USD, EUR, or other fiat-backed tokens</li>
+    <li><strong>Custom Tokens:</strong> Accept project-specific tokens</li>
+    <li><strong>IOUs:</strong> Track debts between parties</li>
+    <li><strong>Asset Tokenization:</strong> Represent real-world assets on-chain</li>
+</ul>
+
+<h4 style="color: #7c3aed; margin-top: 24px; margin-bottom: 12px;">Important Properties</h4>
+
+<p style="line-height: 1.8; margin-bottom: 12px;"><strong>Limit Amount:</strong> Maximum balance you'll hold of that currency</p>
+<p style="line-height: 1.8; margin-bottom: 12px;"><strong>Quality In/Out:</strong> Exchange rate preferences for incoming/outgoing transfers</p>
+<p style="line-height: 1.8; margin-bottom: 12px;"><strong>Flags:</strong> Configuration options like authorized trust lines, freeze, etc.</p>
+
+<div style="background: #fff3cd; border-left: 4px solid #ea580c; padding: 16px; margin: 20px 0; border-radius: 4px;">
+    <strong style="color: #ea580c;">⚠️ Reserve Requirement:</strong><br/>
+    Each trust line increases your account reserve by 2 XRP. Make sure your account has sufficient XRP before creating trust lines.
+</div>
+                `
+            },
+            'Creating Trust Lines with xrpl.js': {
+                title: 'Creating Trust Lines with xrpl.js',
+                time: '10 min read',
+                content: `
+<h3 style="color: #7c3aed; margin-bottom: 16px;">Creating Trust Lines with xrpl.js</h3>
+
+<p style="line-height: 1.8; margin-bottom: 16px;">This tutorial walks you through creating trust lines programmatically using the xrpl.js library.</p>
+
+<h4 style="color: #7c3aed; margin-top: 24px; margin-bottom: 12px;">Step 1: Setup</h4>
+
+<pre style="background: #1e1e1e; color: #d4d4d4; padding: 16px; border-radius: 8px; overflow-x: auto; margin: 16px 0;">
+const xrpl = require('xrpl')
+
+// Connect to testnet
+const client = new xrpl.Client('wss://s.altnet.rippletest.net:51233')
+await client.connect()
+</pre>
+
+<h4 style="color: #7c3aed; margin-top: 24px; margin-bottom: 12px;">Step 2: Prepare the Transaction</h4>
+
+<pre style="background: #1e1e1e; color: #d4d4d4; padding: 16px; border-radius: 8px; overflow-x: auto; margin: 16px 0;">
+const wallet = xrpl.Wallet.fromSeed('sXXXXXXXXXXXXXXX')
+
+const trustSetTx = {
+  TransactionType: 'TrustSet',
+  Account: wallet.address,
+  LimitAmount: {
+    currency: 'USD',
+    issuer: 'rN7n7otQDd6FczFgLdlmvcgcczb6A8btUM',
+    value: '10000' // Trust up to 10,000 USD
+  }
+}
+</pre>
+
+<h4 style="color: #7c3aed; margin-top: 24px; margin-bottom: 12px;">Step 3: Submit and Wait</h4>
+
+<pre style="background: #1e1e1e; color: #d4d4d4; padding: 16px; border-radius: 8px; overflow-x: auto; margin: 16px 0;">
+const prepared = await client.autofill(trustSetTx)
+const signed = wallet.sign(prepared)
+const result = await client.submitAndWait(signed.tx_blob)
+
+console.log('Trust line created:', result)
+</pre>
+
+<div style="background: #d4edda; border-left: 4px solid #28a745; padding: 16px; margin: 20px 0; border-radius: 4px;">
+    <strong style="color: #155724;">✅ Success!</strong><br/>
+    Your trust line is now active and you can receive tokens from the issuer.
+</div>
+                `
+            },
+            'AMM Overview on XRPL': {
+                title: 'AMM Overview on XRPL',
+                time: '7 min read',
+                content: `
+<h3 style="color: #7c3aed; margin-bottom: 16px;">Automated Market Makers on XRPL</h3>
+
+<p style="line-height: 1.8; margin-bottom: 16px;">The XRP Ledger features native AMM functionality, allowing anyone to create liquidity pools for token pairs without intermediaries.</p>
+
+<h4 style="color: #7c3aed; margin-top: 24px; margin-bottom: 12px;">How AMMs Work</h4>
+
+<p style="line-height: 1.8; margin-bottom: 16px;">AMMs use a constant product formula (x * y = k) to determine prices:</p>
+
+<ul style="line-height: 2; margin-bottom: 16px; margin-left: 20px;">
+    <li>Pool has two assets (e.g., XRP and USD)</li>
+    <li>When you buy XRP, you add USD and remove XRP</li>
+    <li>Price adjusts automatically based on the ratio</li>
+    <li>Liquidity providers earn fees from trades</li>
+</ul>
+
+<div style="background: #f5f3ff; border-left: 4px solid #7c3aed; padding: 16px; margin: 20px 0; border-radius: 4px;">
+    <strong style="color: #7c3aed;">💡 Key Formula:</strong><br/>
+    Price = Reserve_B / Reserve_A<br/>
+    After trade: Reserve_A * Reserve_B = k (constant)
+</div>
+
+<h4 style="color: #7c3aed; margin-top: 24px; margin-bottom: 12px;">Benefits of XRPL AMM</h4>
+
+<ul style="line-height: 2; margin-bottom: 16px; margin-left: 20px;">
+    <li><strong>Native Implementation:</strong> Built into the protocol, no smart contracts needed</li>
+    <li><strong>Low Fees:</strong> Minimal transaction costs compared to other chains</li>
+    <li><strong>Fast Settlement:</strong> 3-5 second finality</li>
+    <li><strong>Auction Mechanism:</strong> Unique voting slots for better governance</li>
+</ul>
+
+<p style="line-height: 1.8; margin-top: 24px;">Learn how to create your own AMM pool in the next article!</p>
+                `
+            }
+        };
+
+        function showArticle(articleTitle, topicContext) {
+            const knowledgeContent = document.getElementById('knowledgeContent');
+            const article = articleDatabase[articleTitle];
+
+            if (!article) return;
+
+            // Add chat message
+            addMessage('guru', `Opening "${articleTitle}" - check the left panel!`);
+
+            knowledgeContent.innerHTML = `
+                <div style="margin-bottom: 20px;">
+                    <button onclick="updateKnowledgePanel('${topicContext}')" style="
+                        background: white;
+                        border: 1px solid #7c3aed;
+                        color: #7c3aed;
+                        padding: 8px 16px;
+                        border-radius: 6px;
+                        cursor: pointer;
+                        font-weight: 600;
+                        font-size: 0.9rem;
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        transition: all 0.2s;
+                    " onmouseover="this.style.background='#7c3aed'; this.style.color='white';" onmouseout="this.style.background='white'; this.style.color='#7c3aed';">
+                        <span>←</span> Back to ${topicContext === 'trust line' ? 'Trust Lines' : 'AMM'}
+                    </button>
+                </div>
+
+                <div style="background: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 24px;">
+                    <div style="border-bottom: 2px solid #7c3aed; padding-bottom: 16px; margin-bottom: 24px;">
+                        <h2 style="color: #7c3aed; font-size: 1.8rem; margin-bottom: 8px;">${article.title}</h2>
+                        <div style="color: #999; font-size: 0.85rem;">${article.time}</div>
+                    </div>
+
+                    <div style="color: #333; font-size: 1rem;">
+                        ${article.content}
+                    </div>
+                </div>
+            `;
+        }
+
+        function showCategory(categoryName) {
+            const knowledgeContent = document.getElementById('knowledgeContent');
+
+            const categoryData = {
+                'XRPL Fundamentals': {
+                    articles: [
+                        { title: 'What is XRPL?', desc: 'Introduction to XRP Ledger blockchain', time: '8 min read' },
+                        { title: 'Creating Your First Wallet', desc: 'Step-by-step wallet setup guide', time: '6 min read' },
+                        { title: 'Understanding Accounts', desc: 'Account structure and reserve requirements', time: '10 min read' },
+                        { title: 'Your First Transaction', desc: 'Send your first XRP payment', time: '12 min read' },
+                        { title: 'Transaction Types Overview', desc: 'All available transaction types explained', time: '15 min read' },
+                        { title: 'Network Basics', desc: 'Mainnet, Testnet, and Devnet explained', time: '7 min read' }
+                    ],
+                    searchExample: 'account reserve'
+                },
+                'Payments & Tokens': {
+                    articles: [
+                        { title: 'What is a Trust Line?', desc: 'Understanding the concept and use cases', time: '5 min read' },
+                        { title: 'Creating Trust Lines with xrpl.js', desc: 'Complete code tutorial', time: '10 min read' },
+                        { title: 'Issuing Custom Tokens', desc: 'How to create your own currency', time: '14 min read' },
+                        { title: 'Cross-Currency Payments', desc: 'Path finding and auto-bridging', time: '12 min read' },
+                        { title: 'Payment Channels', desc: 'High-speed micropayments', time: '16 min read' }
+                    ],
+                    searchExample: 'trust line limit'
+                },
+                'DeFi & AMM': {
+                    articles: [
+                        { title: 'AMM Overview on XRPL', desc: 'How AMM pools work', time: '7 min read' },
+                        { title: 'Creating an AMM Pool', desc: 'Step-by-step pool creation', time: '12 min read' },
+                        { title: 'Providing Liquidity', desc: 'Deposit and withdraw LP tokens', time: '9 min read' },
+                        { title: 'Trading on DEX', desc: 'Using the decentralized exchange', time: '10 min read' },
+                        { title: 'Auction Slots', desc: 'Voting mechanisms for liquidity providers', time: '13 min read' }
+                    ],
+                    searchExample: 'liquidity pool'
+                },
+                'NFTs': {
+                    articles: [
+                        { title: 'NFT Basics on XRPL', desc: 'Understanding NFTokens', time: '8 min read' },
+                        { title: 'Minting NFTs', desc: 'Create your first NFToken', time: '11 min read' },
+                        { title: 'NFT Marketplace', desc: 'Buy, sell, and trade NFTs', time: '14 min read' },
+                        { title: 'Batch Minting', desc: 'Mint multiple NFTs efficiently', time: '10 min read' }
+                    ],
+                    searchExample: 'mint NFT'
+                },
+                'Smart Contracts': {
+                    articles: [
+                        { title: 'Hooks Introduction', desc: 'Smart contracts on XRPL', time: '12 min read' },
+                        { title: 'Writing Your First Hook', desc: 'C development tutorial', time: '20 min read' },
+                        { title: 'Hook Security', desc: 'Best practices and vulnerabilities', time: '15 min read' },
+                        { title: 'Deploying Hooks', desc: 'SetHook transaction guide', time: '10 min read' }
+                    ],
+                    searchExample: 'hooks tutorial'
+                },
+                'APIs & SDKs': {
+                    articles: [
+                        { title: 'xrpl.js Quick Start', desc: 'JavaScript library setup', time: '9 min read' },
+                        { title: 'Python SDK Guide', desc: 'Using xrpl-py library', time: '11 min read' },
+                        { title: 'WebSocket API', desc: 'Real-time updates and subscriptions', time: '13 min read' },
+                        { title: 'REST API Reference', desc: 'HTTP endpoints documentation', time: '16 min read' }
+                    ],
+                    searchExample: 'websocket subscribe'
+                },
+                'Security': {
+                    articles: [
+                        { title: 'Key Management', desc: 'Safely storing private keys', time: '10 min read' },
+                        { title: 'Multi-Signing', desc: 'Requiring multiple signatures', time: '14 min read' },
+                        { title: 'Account Security', desc: 'Master key, regular key, and signer lists', time: '12 min read' },
+                        { title: 'Secure Coding', desc: 'Avoiding common vulnerabilities', time: '15 min read' }
+                    ],
+                    searchExample: 'master key disable'
+                },
+                'Troubleshooting': {
+                    articles: [
+                        { title: 'Common Error Codes', desc: 'tecNO_TARGET, tefPAST_SEQ and more', time: '11 min read' },
+                        { title: 'Transaction Failed?', desc: 'Debugging failed transactions', time: '9 min read' },
+                        { title: 'Connection Issues', desc: 'WebSocket and network problems', time: '8 min read' },
+                        { title: 'Fee Calculations', desc: 'Understanding transaction costs', time: '7 min read' }
+                    ],
+                    searchExample: 'error tecNO_TARGET'
+                }
+            };
+
+            const category = categoryData[categoryName];
+            if (!category) return;
+
+            // Update search input with example
+            document.getElementById('knowledgeSearchInput').placeholder = `Try: "${category.searchExample}"`;
+
+            // Add chat message
+            addMessage('guru', `Opening "${categoryName}" category - ${category.articles.length} articles available!`);
+
+            knowledgeContent.innerHTML = `
+                <div style="margin-bottom: 20px;">
+                    <button onclick="restoreKnowledgeBase()" style="
+                        background: white;
+                        border: 1px solid #7c3aed;
+                        color: #7c3aed;
+                        padding: 8px 16px;
+                        border-radius: 6px;
+                        cursor: pointer;
+                        font-weight: 600;
+                        font-size: 0.9rem;
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        transition: all 0.2s;
+                    " onmouseover="this.style.background='#7c3aed'; this.style.color='white';" onmouseout="this.style.background='white'; this.style.color='#7c3aed';">
+                        <span>←</span> Back to Categories
+                    </button>
+                </div>
+
+                <div class="knowledge-header">
+                    <h2>${categoryName}</h2>
+                    <p>${category.articles.length} articles in this category</p>
+                </div>
+
+                <div style="background: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 20px;">
+                    ${category.articles.map(article => `
+                        <div onclick="showArticle('${article.title}', '${categoryName}')" style="padding: 16px; border-left: 3px solid #7c3aed; background: #f5f3ff; border-radius: 4px; margin-bottom: 12px; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.transform='translateX(4px)'; this.style.boxShadow='0 2px 8px rgba(124, 58, 237, 0.15)';" onmouseout="this.style.transform='translateX(0)'; this.style.boxShadow='none';">
+                            <div style="font-weight: 600; color: #7c3aed; margin-bottom: 6px; font-size: 1.05rem;">${article.title}</div>
+                            <div style="font-size: 0.9rem; color: #666; margin-bottom: 6px;">${article.desc}</div>
+                            <div style="font-size: 0.8rem; color: #999;">${article.time}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function restoreKnowledgeBase() {
+            const knowledgeContent = document.getElementById('knowledgeContent');
+
+            knowledgeContent.innerHTML = `
+                <div class="knowledge-header">
+                    <h2>Knowledge Base</h2>
+                    <p>Complete XRPL documentation and learning resources</p>
+                </div>
+
+                <div class="knowledge-search">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <input type="text" id="knowledgeSearchInput" placeholder="Search documentation..." />
+                </div>
+
+                <div class="knowledge-categories">
+                    <h3>Categories</h3>
+                    <div class="category-grid">
+                        <div class="category-card" onclick="showCategory('XRPL Fundamentals')">
+                            <h4>XRPL Fundamentals</h4>
+                            <p>Basic concepts, accounts, wallets and first transactions</p>
+                            <span class="category-badge">24 articles</span>
+                        </div>
+
+                        <div class="category-card" onclick="showCategory('Payments & Tokens')">
+                            <h4>Payments & Tokens</h4>
+                            <p>Payments, IOUs, trust lines and issued currencies</p>
+                            <span class="category-badge">18 articles</span>
+                        </div>
+
+                        <div class="category-card" onclick="showCategory('DeFi & AMM')">
+                            <h4>DeFi & AMM</h4>
+                            <p>Automated Market Makers, liquidity pools and DEX</p>
+                            <span class="category-badge">15 articles</span>
+                        </div>
+
+                        <div class="category-card" onclick="showCategory('NFTs')">
+                            <h4>NFTs</h4>
+                            <p>NFTokens, minting, trading and marketplaces</p>
+                            <span class="category-badge">12 articles</span>
+                        </div>
+
+                        <div class="category-card" onclick="showCategory('Smart Contracts')">
+                            <h4>Smart Contracts</h4>
+                            <p>Hooks, development and deployment</p>
+                            <span class="category-badge">20 articles</span>
+                        </div>
+
+                        <div class="category-card" onclick="showCategory('APIs & SDKs')">
+                            <h4>APIs & SDKs</h4>
+                            <p>xrpl.js, Python, REST APIs and WebSocket</p>
+                            <span class="category-badge">16 articles</span>
+                        </div>
+
+                        <div class="category-card" onclick="showCategory('Security')">
+                            <h4>Security</h4>
+                            <p>Best practices, key management and auditing</p>
+                            <span class="category-badge">10 articles</span>
+                        </div>
+
+                        <div class="category-card" onclick="showCategory('Troubleshooting')">
+                            <h4>Troubleshooting</h4>
+                            <p>Common errors, debugging and solutions</p>
+                            <span class="category-badge">14 articles</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 20px; margin-top: 24px;">
+                    <h3 style="color: #7c3aed; margin-bottom: 12px; font-size: 1.1rem;">Most Accessed</h3>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <div style="padding: 12px; border-left: 3px solid #7c3aed; background: #f5f3ff; border-radius: 4px; cursor: pointer;">
+                            <div style="font-weight: 600; color: #7c3aed; margin-bottom: 4px;">Getting Started with XRPL</div>
+                            <div style="font-size: 0.85rem; color: #666;">Complete tutorial for beginners</div>
+                        </div>
+                        <div style="padding: 12px; border-left: 3px solid #7c3aed; background: #f5f3ff; border-radius: 4px; cursor: pointer;">
+                            <div style="font-weight: 600; color: #7c3aed; margin-bottom: 4px;">How to Create a Trust Line</div>
+                            <div style="font-size: 0.85rem; color: #666;">Step-by-step with code examples</div>
+                        </div>
+                        <div style="padding: 12px; border-left: 3px solid #7c3aed; background: #f5f3ff; border-radius: 4px; cursor: pointer;">
+                            <div style="font-weight: 600; color: #7c3aed; margin-bottom: 4px;">Understanding AMM on XRPL</div>
+                            <div style="font-size: 0.85rem; color: #666;">Deep dive into Automated Market Makers</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function updateKnowledgePanel(topic) {
+            const knowledgeContent = document.getElementById('knowledgeContent');
+
+            const topics = {
+                'trust line': {
+                    title: 'Trust Lines',
+                    articles: [
+                        { title: 'What is a Trust Line?', desc: 'Understanding the concept and use cases', time: '5 min read' },
+                        { title: 'Creating Trust Lines with xrpl.js', desc: 'Complete code tutorial', time: '10 min read' },
+                        { title: 'Trust Line Flags and Limits', desc: 'Advanced configuration options', time: '8 min read' },
+                        { title: 'Trust Line Security Best Practices', desc: 'Avoid common pitfalls', time: '6 min read' }
+                    ],
+                    code: `// Create a trust line
+const wallet = xrpl.Wallet.fromSeed('s...')
+const tx = {
+  TransactionType: 'TrustSet',
+  Account: wallet.address,
+  LimitAmount: {
+    currency: 'USD',
+    issuer: 'rN7n7otQDd6FczFgLdlmvcgcczb...',
+    value: '1000'
+  }
+}
+const prepared = await client.autofill(tx)
+const signed = wallet.sign(prepared)
+await client.submitAndWait(signed.tx_blob)`,
+                    related: ['Issued Currencies', 'Rippling', 'Gateway Operations']
+                },
+                'amm': {
+                    title: 'Automated Market Makers (AMM)',
+                    articles: [
+                        { title: 'AMM Overview on XRPL', desc: 'How AMM pools work', time: '7 min read' },
+                        { title: 'Creating an AMM Pool', desc: 'Step-by-step pool creation', time: '12 min read' },
+                        { title: 'Providing Liquidity', desc: 'Deposit and withdraw LP tokens', time: '9 min read' },
+                        { title: 'AMM Trading Mechanics', desc: 'Understanding fees and slippage', time: '11 min read' }
+                    ],
+                    code: `// Create an AMM pool
+const ammCreate = {
+  TransactionType: 'AMMCreate',
+  Account: wallet.address,
+  Amount: '1000000000', // 1000 XRP
+  Amount2: {
+    currency: 'USD',
+    issuer: 'rN7n7otQDd...',
+    value: '5000'
+  },
+  TradingFee: 500 // 0.5%
+}
+const result = await client.submitAndWait(ammCreate)`,
+                    related: ['DeFi Protocols', 'Liquidity Pools', 'DEX Trading', 'LP Tokens']
+                }
+            };
+
+            const textLower = topic.toLowerCase();
+            let matchedTopic = null;
+
+            if (textLower.includes('trust line') || textLower.includes('trustline')) {
+                matchedTopic = topics['trust line'];
+            } else if (textLower.includes('amm') || textLower.includes('market maker')) {
+                matchedTopic = topics['amm'];
+            }
+
+            if (matchedTopic) {
+                const topicKey = textLower.includes('trust') ? 'trust line' : 'amm';
+
+                knowledgeContent.innerHTML = `
+                    <div class="knowledge-header">
+                        <h2>${matchedTopic.title}</h2>
+                        <p>Documentation and code examples</p>
+                    </div>
+
+                    <div style="background: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+                        <h3 style="color: #7c3aed; margin-bottom: 12px;">Articles</h3>
+                        ${matchedTopic.articles.map(article => `
+                            <div onclick="showArticle('${article.title}', '${topicKey}')" style="padding: 12px; border-left: 3px solid #7c3aed; background: #f5f3ff; border-radius: 4px; margin-bottom: 10px; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.transform='translateX(4px)'; this.style.boxShadow='0 2px 8px rgba(124, 58, 237, 0.15)';" onmouseout="this.style.transform='translateX(0)'; this.style.boxShadow='none';">
+                                <div style="font-weight: 600; color: #7c3aed; margin-bottom: 4px;">${article.title}</div>
+                                <div style="font-size: 0.85rem; color: #666; margin-bottom: 4px;">${article.desc}</div>
+                                <div style="font-size: 0.75rem; color: #999;">${article.time}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <div style="background: #1e1e1e; border: 1px solid #e0e0e0; border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+                        <h3 style="color: #a78bfa; margin-bottom: 12px;">Code Example</h3>
+                        <pre style="color: #d4d4d4; font-family: 'Courier New', monospace; font-size: 0.85rem; line-height: 1.6; overflow-x: auto;">${matchedTopic.code}</pre>
+                    </div>
+
+                    <div style="background: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 20px;">
+                        <h3 style="color: #7c3aed; margin-bottom: 12px;">Related Topics</h3>
+                        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                            ${matchedTopic.related.map(rel => `
+                                <span style="background: #f5f3ff; color: #7c3aed; padding: 6px 12px; border-radius: 16px; font-size: 0.85rem; border: 1px solid #e0d4ff;">${rel}</span>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
         function sendMessage() {
             const input = document.getElementById('userInput');
             const text = input.value.trim();
@@ -1336,7 +2444,30 @@ main()"></textarea>
 
             addMessage('user', text);
 
-            // Simple command handling
+            // Knowledge Base mode - update left panel dynamically
+            if (currentMode === 'knowledge-base') {
+                setTimeout(() => {
+                    const textLower = text.toLowerCase();
+                    if (textLower.includes('trust line') || textLower.includes('trustline')) {
+                        updateKnowledgePanel(text);
+                        addMessage('guru', 'Great question! I\'ve updated the left panel with everything about Trust Lines:');
+                        setTimeout(() => {
+                            addMessage('guru', '✅ 4 detailed articles\n✅ Complete code example\n✅ Related topics\n\nA Trust Line is like a credit limit - you\'re telling the XRPL "I trust this issuer up to X amount of this currency."');
+                        }, 800);
+                    } else if (textLower.includes('amm') || textLower.includes('market maker')) {
+                        updateKnowledgePanel(text);
+                        addMessage('guru', 'Excellent topic! I\'ve loaded AMM documentation in the left panel:');
+                        setTimeout(() => {
+                            addMessage('guru', '✅ AMM overview and mechanics\n✅ Code example for creating pools\n✅ Liquidity provision guides\n\nXRPL\'s native AMM lets you create liquidity pools with any token pair!');
+                        }, 800);
+                    } else {
+                        addMessage('guru', 'I can help with that! Try asking:\n• "How do I create a trust line?"\n• "What is an AMM pool?"\n\nThese will update the left panel with relevant docs and code!');
+                    }
+                }, 800);
+                return;
+            }
+
+            // Simple command handling for other modes
             setTimeout(() => {
                 if (text.startsWith('/')) {
                     const command = text.slice(1).toLowerCase();
